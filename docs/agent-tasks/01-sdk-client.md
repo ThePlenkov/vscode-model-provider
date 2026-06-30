@@ -35,7 +35,7 @@ typecheck and run vitest against. You do not run the tests yourself.
 
 **TDD order (mandatory)**
 
-1. **RED.**  Write `cliClient.test.ts` with the three tests in §Required tests below. Run `cd apps/extension && npx vitest run src/client/cliClient.test.ts`. It must fail with **module not found**, not with a typo in the test.
+1. **RED.**  Write `cliClient.test.ts` with the three tests in §Required tests below. Run `cd packages/acpify && npx vitest run src/client/cliClient.test.ts`. It must fail with **module not found**, not with a typo in the test.
 2. **GREEN.** Write `cliClient.ts` and `streamBridge.ts`. Tests must pass.
 3. **REFACTOR.** Tighten types. No "while I'm here" changes. Do not touch `extension.ts` beyond the import swap.
 
@@ -57,7 +57,7 @@ export interface CliClientHandlers {
   onWaitForExit: (req: acp.WaitForExitRequest, signal?: AbortSignal) => Promise<acp.WaitForExitResponse>;
   onReleaseTerminal: (req: acp.ReleaseTerminalRequest) => Promise<acp.ReleaseTerminalResponse>;
   onRequestPermission: (req: acp.RequestPermissionRequest, signal?: AbortSignal) => Promise<acp.RequestPermissionResponse>;
-  onElicitation?: (req: acp.CreateElicitationRequest, signal?: AbortSignal) => Promise<acp.CreateElicitationResponse>;
+  onCreateElicitation?: (req: acp.CreateElicitationRequest, signal?: AbortSignal) => Promise<acp.CreateElicitationResponse>;
 }
 
 export class CliAcpClient {
@@ -81,11 +81,12 @@ output channel for now; PR 02 replaces that with the session pool.
 
 **Success criteria (all must hold)**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/client/cliClient.test.ts` exits 0
+- `cd packages/acpify && npm run build` succeeds (resolves the `@theplenkov/acpify/provider/barebone` export for downstream consumers)
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/client/cliClient.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 8 files changed
-- `apps/extension/src/provider.ts` and `provider.test.ts` are gone
-- `extension.ts` does not import `./provider.js`; it imports `./client/cliClient.js`
+- `packages/acpify/src/provider/barebone.ts` and `barebone.test.ts` are deleted
+- `extension.ts` no longer references `AcpBareboneProvider`; it instantiates the SDK client wiring instead
 
 **Output contract** — return, in this exact order:
 

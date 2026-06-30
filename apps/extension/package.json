@@ -43,14 +43,13 @@
     ]
   },
   "scripts": {
-    "prepare": "npm run build -w @theplenkov/acpify -w @theplenkov/claude-config -w @theplenkov/claude-acp && npm run build",
+    "prepare": "npm run build -w @theplenkov/acpify -w @theplenkov/claude-config -w @theplenkov/claude-acp",
     "build": "npm run build -w @theplenkov/acpify && npm run build -w @theplenkov/claude-config && npm run build -w @theplenkov/claude-acp && tsdown",
     "watch": "npm run build -w @theplenkov/acpify && tsdown --watch",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "package": "npx @vscode/vsce package --no-dependencies",
     "test": "vitest run --config vitest.config.ts --passWithNoTests",
     "test:watch": "vitest --config vitest.config.ts",
-    "test:host": "node test/runTest.ts",
     "lint": "eslint src --max-warnings 0"
   },
   "dependencies": {

@@ -55,13 +55,13 @@ export function makeTerminalHandlers(): {
 **Behaviour contract**
 
 - The bridge keeps an in-memory `Map<terminalId, vscode.Terminal>`. On extension `deactivate`, all live terminals are disposed.
-- `create` accepts an optional `env` map; the bridge forwards it via `vscode.EnvironmentVariableCollection` on the workspace.
+- `create` accepts an optional `env` map; the bridge forwards it via `ExtensionContext.environmentVariableCollection` (passed into the factory from `extension.ts`, not fetched from `vscode.*` at module scope).
 - `output` does **not** allow raw ANSI control codes (only `\n`, `\r`, `\t`).
 
 **Success criteria**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/capabilities/vscodeTerminalBridge.test.ts` exits 0
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/capabilities/vscodeTerminalBridge.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 4 files changed
 
 **Output contract** — same shape as task 01.

@@ -15,7 +15,7 @@ This monorepo is organised as independently publishable npm packages:
 |---|---|
 | `apps/extension` | Thin VS Code shell (~100 LOC at first). The only file that imports `vscode` at runtime. |
 | `@theplenkov/acpify` | The core library — turn any CLI or API into an ACP-compatible agent. Agent-agnostic. |
-| `@theplenkov/claude-config` | Claude Code config resolver: env vars (`ANTHROPIC_API_KEY` / `_AUTH_TOKEN` / `_BASE_URL`), settings.json, CLAUDE.md paths. |
+| `@theplenkov/claude-config` | Claude Code config resolver: env vars (`ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`, `ANTHROPIC_BASE_URL`, `CLAUDE_CONFIG_DIR`), settings.json, CLAUDE.md paths. |
 | `@theplenkov/claude-acp` | The Claude Code ACP adapter: `cliCommand: "claude"`, `cliArgs: ["--acp"]`, model mapping. |
 
 Each per-agent adapter (one package per agent) follows the `<agent>-acp` naming — e.g. `gemini-acp`, `codex-acp`, `kilo-acp` — so any editor can depend on whichever agents it wants without pulling in the rest. See [`docs/architecture.md`](docs/architecture.md) for the full picture.

@@ -75,7 +75,7 @@ export default defineConfig({
 
 **Success criteria**
 
-- `cd apps/extension && npx vitest run` exits 0 with both projects green
+- `cd packages/acpify && npx vitest run` exits 0 with both projects green
 - `git diff --stat base/barebone..HEAD` shows ≤ 4 files changed
 
 **Output contract** — same shape as task 01, with a third command output: `npx vitest run`.

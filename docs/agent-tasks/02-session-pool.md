@@ -112,8 +112,8 @@ The barebone provider stays in `provider.ts`; the wiring change is in
 
 **Success criteria**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/session/session.test.ts` exits 0
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/session/session.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 12 files changed
 
 **Output contract** — same shape as task 01.

@@ -52,12 +52,12 @@ export function makeFsHandlers(): {
 
 - `req.path` is interpreted as a workspace-relative path. If the path is absolute, it must be inside a trusted workspace folder; otherwise the bridge returns `RequestError` with a clear message.
 - `req.lineStart` / `req.lineCount` are honoured. The bridge returns a substring of `getText()` limited to the requested line range.
-- Write requests are *not* silently overwritten. The bridge shows a VS Code confirmation prompt via `vscode.window.showInformationMessage(["Apply", "Cancel"])`; on "Cancel" it returns the same `RequestError` as user-denied.
+- Write requests are *not* silently overwritten. The bridge shows a VS Code confirmation prompt via `vscode.window.showInformationMessage("Overwrite <path>?", "Apply", "Cancel")`; on "Cancel" it returns the same `RequestError` as user-denied.
 
 **Success criteria**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/capabilities/vscodeFsBridge.test.ts` exits 0
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/capabilities/vscodeFsBridge.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 4 files changed
 
 **Output contract** — same shape as task 01.

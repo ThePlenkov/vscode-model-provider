@@ -2,9 +2,9 @@
 
 The goal of `vscode-model-provider` is to expose any
 [ACP](https://agentclientprotocol.com)-compatible coding agent (Claude
-Code, Gemini CLI, Codex, OpenCode, Cursor, Kilo, …) as a native chat
-model in VS Code's Copilot Chat, while inheriting every plugin, hook,
-skill, subagent, and MCP server the CLI already exposes.
+Code, Gemini CLI, Codex, OpenCode, …) as a native chat model in VS Code's
+Copilot Chat, while inheriting every plugin, hook, skill, subagent, and
+MCP server the CLI already exposes.
 
 The architecture is split into **independent packages**, one per concern.
 Each is independently buildable, testable, and (eventually) publishable.

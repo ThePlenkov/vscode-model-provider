@@ -56,8 +56,8 @@ export function makeElicitationHandlers(): {
 
 **Success criteria**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/capabilities/vscodeElicitationBridge.test.ts` exits 0
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/capabilities/vscodeElicitationBridge.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 4 files changed
 
 **Output contract** — same shape as task 01.

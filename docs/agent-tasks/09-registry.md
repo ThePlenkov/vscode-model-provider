@@ -64,17 +64,17 @@ return after the first text chunk (the bug in
 
 **Mapping rules**
 
-- `acp.ContentPart { type: "text" }` → `vscode.LanguageModelTextPart`
-- `acp.ContentPart { type: "image" }` → `vscode.LanguageModelDataPart(mime)`
+- `acp.ContentPart { type: "text" }` → `vscode.LanguageModelTextPart(text)`
+- `acp.ContentPart { type: "image" }` → `vscode.LanguageModelDataPart.image(data, mime)` (the static factory, not the constructor — the constructor is not exported)
 - `acp.ToolCall` (kind from `tool_call` update) → `vscode.LanguageModelToolCallPart(id, name, input)`
-- `acp.ToolCallUpdate.content` → `LanguageModelTextPart` / `LanguageModelDataPart`
+- `acp.ToolCallUpdate.content` → `LanguageModelTextPart` / `LanguageModelDataPart.image(data, mime)`
 - `vscode.LanguageModelToolResultPart` in the incoming messages is dropped here; PR 02's session pool feeds it back into the next prompt as a `tool_result` block.
 
 **Success criteria**
 
-- `cd apps/extension && npx tsc --noEmit -p tsconfig.json` exits 0
-- `cd apps/extension && npx vitest run src/provider/acpProvider.test.ts` exits 0
+- `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
+- `cd packages/acpify && npx vitest run src/provider/acpProvider.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 8 files changed
-- The old `apps/extension/src/provider.ts` and `provider.test.ts` are gone
+- The barebone `packages/acpify/src/provider/barebone.ts` and `barebone.test.ts` are deleted
 
 **Output contract** — same shape as task 01.

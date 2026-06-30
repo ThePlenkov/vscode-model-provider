@@ -13,10 +13,14 @@
 
 import * as vscode from "vscode";
 // Relative import (not `@theplenkov/acpify`) so tsdown treats this as a
-// local file and bundles `AcpBareboneProvider` directly into `dist/extension.mjs`.
-// The npm workspace dependency in package.json is preserved for the typecheck
-// path, but at bundle time we use the relative path so the resulting `.vsix`
-// is self-contained.
+// local source file and bundles `AcpBareboneProvider` directly into
+// `dist/extension.mjs`. The resulting `.vsix` is self-contained.
+//
+// For typecheck, `apps/extension/tsconfig.json` sets `rootDir` to the repo
+// root and includes the package's source file, so the import resolves
+// cleanly and tsc validates both files. The npm workspace dependency in
+// `apps/extension/package.json` is still required for IDE hover and
+// jump-to-definition.
 import { AcpBareboneProvider } from "../../../packages/acpify/src/provider/barebone.js";
 
 const OUTPUT_CHANNEL_NAME = "ACP Model Provider";

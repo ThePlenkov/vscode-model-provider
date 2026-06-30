@@ -9,13 +9,21 @@ Claude Code configuration resolver. Agent-specific — Claude Code only.
   - `ANTHROPIC_AUTH_TOKEN` — bearer token (preferred for proxies)
   - `ANTHROPIC_BASE_URL` — proxy / API-helper endpoint
   - `CLAUDE_CONFIG_DIR` — overrides `~/.claude`
-  - `NO_COLOR` — strip ANSI from stderr
-- **Settings resolution order** — `CLAUDE_CONFIG_DIR/settings.json` →
-  `~/.claude/settings.json` → managed settings (macOS MDM, Windows HKLM/HKCU).
+- **Settings resolution order** (highest precedence first):
+  1. Managed settings — macOS MDM (`/Library/Application Support/ClaudeCode/managed-settings.json`)
+     / Windows HKLM / Linux `/etc/claude-code/managed-settings.json`
+  2. CLI flags (`--settings <path>`, `--setting`)
+  3. `.claude/settings.local.json` (project-local, not committed)
+  4. `.claude/settings.json` (project, committed)
+  5. `~/.claude/settings.json` (user-global)
 - **Session log directory** — `~/.claude/projects/<sha(cwd)>/`.
-- **`CLAUDE.md` discovery** — per-cwd and per-parent-directory lookups.
+- **`CLAUDE.md` discovery** — per-cwd and per-parent-directory lookups, plus imported `CLAUDE.md` from `~/.claude/CLAUDE.md`.
 - **Plugin/skill/agent/MCP paths** — `.claude/{plugins,skills,agents}/`,
   `~/.claude/{plugins,skills,agents}/`, `.mcp.json` resolution.
+
+Note: Claude Code does **not** honour `NO_COLOR`. ANSI can be stripped by
+launching the CLI through a wrapper or by setting `--output-format` to
+`json` for machine-readable output.
 
 ## Status (barebone)
 
