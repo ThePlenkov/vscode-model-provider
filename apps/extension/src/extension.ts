@@ -86,16 +86,35 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   void client;
   void noopHandlers(output);
 
-  ctx.subscriptions.push(registration, output, { dispose: () => { void client.disconnect(); } });
+  /* Session pool — constructed but not yet dispatching. The pool takes
+     a `clientFactory` (returns a fresh `CliAcpClient` per session) and
+     a `connectFn` (runs `initialize` + `session/new` on the client and
+     returns the session id). Wiring that to a real CLI is PR 07/10's
+     job; for now the pool is held so PR 02's lifecycle is testable
+     without spawning a process. */
+  const pool = new SessionPool(
+    () => new CliAcpClient(),
+    async (_c, _key) => {
+      throw new Error("SessionPool.connectFn is not wired (PR 07/10)");
+    },
+  );
+  void pool;
+
+  ctx.subscriptions.push(registration, output, {
+    dispose: () => {
+      void pool.shutdownAll();
+      void client.disconnect();
+    },
+  });
 
   output.appendLine(
     "[ACP Model Provider] Registered as vendor 'acp'. " +
     "Barebone provider + CliAcpClient shell online. " +
-    "PR 02 will own CLI spawn; PR 09 swaps the barebone for the real registry.",
+    "SessionPool constructed; PR 07/10 wires the real connectFn. " +
+    "PR 09 swaps the barebone for the real registry.",
   );
 }
 
 export function deactivate(): void {
-  // No persistent resources to release in the barebone. The full session
-  // pool is added by subagent PR 02 (see docs/agent-tasks/02-session-pool.md).
+  // The pool shuts itself down via its `dispose` subscription above.
 }
