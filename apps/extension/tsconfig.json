@@ -5,6 +5,11 @@
     "outDir": "./dist",
     "types": ["node", "vscode"]
   },
-  "include": ["src", "../../packages/acpify/src/provider/barebone.ts", "vscode.d.ts"],
+  "include": [
+    "src",
+    "../../packages/acpify/src/provider/barebone.ts",
+    "../../packages/acpify/src/client/cliClient.ts",
+    "vscode.d.ts"
+  ],
   "exclude": ["dist", "out", "node_modules", "test"]
 }

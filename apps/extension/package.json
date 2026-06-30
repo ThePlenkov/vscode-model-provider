@@ -70,5 +70,9 @@
   "exports": {
     ".": "./dist/extension.mjs",
     "./package.json": "./package.json"
+  },
+  "inlinedDependencies": {
+    "@agentclientprotocol/sdk": "1.1.0",
+    "zod": "4.4.3"
   }
 }
