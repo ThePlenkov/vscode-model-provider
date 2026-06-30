@@ -5,6 +5,7 @@ on:
     branches: [main]
   release:
     types: [published]
+  workflow_dispatch: {}
 
 env:
   EXTENSION_NAME: vscode-model-provider
@@ -88,7 +89,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4 with: node-version: lts/*
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
 
       - name: Download VSIX
         uses: actions/download-artifact@v4
@@ -130,7 +133,10 @@ jobs:
     if: false  # TODO: change to workflow_dispatch when ready for Marketplace
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4 with: node-version: lts/* cache: npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
       - run: npm ci && npm run compile
       - name: Download VSIX
         uses: actions/download-artifact@v4
