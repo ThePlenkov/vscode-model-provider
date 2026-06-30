@@ -3,5 +3,8 @@ import baseConfig from "../../tsdown.config.base.ts";
 
 export default defineConfig({
   ...baseConfig,
-  entry: ["./src/index.ts"],
+  entry: {
+    index: "./src/index.ts",
+    "provider/barebone": "./src/provider/barebone.ts",
+  },
 });

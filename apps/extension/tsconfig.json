@@ -1,20 +1,10 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
-    "strict": false,
-    "outDir": "./out",
-    "rootDir": "./src",
-    "declaration": true,
-    "sourceMap": true,
-    "lib": ["ES2022"],
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "noImplicitAny": false,
-    "types": ["node"]
+    "rootDir": "../..",
+    "outDir": "./dist",
+    "types": ["node", "vscode"]
   },
-  "include": ["src", "vscode.d.ts"],
-  "exclude": ["node_modules", "out", "src/test"]
+  "include": ["src", "../../packages/acpify/src/provider/barebone.ts", "vscode.d.ts"],
+  "exclude": ["dist", "out", "node_modules", "test"]
 }
