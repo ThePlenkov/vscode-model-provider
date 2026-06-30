@@ -12,7 +12,6 @@
     "nx": "nx",
     "build": "nx run-many -t build",
     "build:extension": "nx build extension",
-    "build:acpr": "cd libs/acpr && npm run build",
     "test": "nx run-many -t test",
     "graph": "nx graph"
   },
@@ -22,11 +21,5 @@
     "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
     "@types/node": "^20.0.0"
-  },
-  "exports": {
-    "./apps/extension/src/extension": "./dist/apps/extension/src/extension.mjs",
-    "./libs/acpr/src/adapters/claude": "./dist/libs/acpr/src/adapters/claude.mjs",
-    "./libs/acpr/src/cli": "./dist/libs/acpr/src/cli.mjs",
-    "./package.json": "./package.json"
   }
 }

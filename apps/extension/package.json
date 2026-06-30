@@ -2,7 +2,7 @@
   "name": "vscode-model-provider",
   "displayName": "ACP Model Provider",
   "description": "Expose ACP-compatible agent models (Claude Code, Gemini CLI, Codex, OpenCode, and more) to VS Code Copilot Chat via the LanguageModelChatProvider API",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "publisher": "theplenkov",
   "repository": {
@@ -27,196 +27,43 @@
     "Chat"
   ],
   "activationEvents": [
-    "onStartupFinished",
-    "onLanguageModelChatProvider:acp",
-    "onCommand:acpModelProvider.openUI",
-    "onCommand:acpModelProvider.manage",
-    "onCommand:acpModelProvider.reload",
-    "onCommand:acpModelProvider.refreshAgents",
-    "onView:acpModelProvider.agentsView"
+    "onLanguageModelChatProvider:acp"
   ],
   "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "acpModelProvider",
-          "title": "ACP Agents",
-          "icon": "resources/icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "acpModelProvider": [
-        {
-          "id": "acpModelProvider.agentsView",
-          "name": "Agents"
-        }
-      ]
-    },
     "languageModelChatProviders": [
       {
         "vendor": "acp",
         "displayName": "ACP Agents"
       }
-    ],
-    "configuration": {
-      "title": "ACP Model Provider",
-      "properties": {
-        "acpModelProvider.agents": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique identifier for this agent config (e.g. 'claude-code')"
-              },
-              "label": {
-                "type": "string",
-                "description": "Display name in VS Code model picker (e.g. 'Claude Code')"
-              },
-              "cliCommand": {
-                "type": "string",
-                "description": "CLI command to spawn the agent (e.g. 'claude', 'gemini', 'opencode')"
-              },
-              "cliArgs": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "default": [
-                  "--acp"
-                ],
-                "description": "Arguments passed to the CLI (default: ['--acp'])"
-              },
-              "enabled": {
-                "type": "boolean",
-                "default": true,
-                "description": "Enable or disable this agent"
-              },
-              "modelMapping": {
-                "type": "object",
-                "default": {},
-                "description": "Map model IDs to aliases (e.g., {\"claude/sonnet-4.6\": \"sonnet\"})"
-              }
-            },
-            "required": [
-              "id",
-              "label",
-              "cliCommand"
-            ]
-          },
-          "default": [
-            {
-              "id": "claude-code",
-              "label": "Claude Code",
-              "cliCommand": "/mnt/wsl/workspace/ubuntu/vscode-model-provider/libs/acpr/dist/adapters/claude-acp.mjs",
-              "cliArgs": [],
-              "enabled": true,
-              "modelMapping": {
-                "claude-3-5-sonnet-20241022": "claude-3-5-sonnet-20241022",
-                "claude-3-5-haiku-20241022": "claude-3-5-haiku-20241022"
-              }
-            }
-          ],
-          "description": "List of ACP-compatible agent configurations to expose as models"
-        },
-        "acpModelProvider.autoDiscover": {
-          "type": "boolean",
-          "default": false,
-          "description": "Automatically discover available ACP agents on the system PATH"
-        },
-        "acpModelProvider.modelDisplayPrefix": {
-          "type": "string",
-          "default": "ACP",
-          "description": "Prefix shown in the VS Code model picker for models from this provider"
-        }
-      }
-    },
-    "commands": [
-      {
-        "command": "acpModelProvider.openUI",
-        "title": "ACP: Open Agent Manager UI",
-        "category": "ACP Model Provider"
-      },
-      {
-        "command": "acpModelProvider.manage",
-        "title": "ACP: Manage Agents",
-        "category": "ACP Model Provider"
-      },
-      {
-        "command": "acpModelProvider.reload",
-        "title": "ACP: Reload Window",
-        "category": "ACP Model Provider"
-      },
-      {
-        "command": "acpModelProvider.refreshAgents",
-        "title": "ACP: Refresh Agents",
-        "category": "ACP Model Provider",
-        "icon": "$(refresh)"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "acpModelProvider.reload",
-        "key": "ctrl+r",
-        "mac": "cmd+r",
-        "when": "extensionDevelopmentMode"
-      }
-    ],
-    "menus": {
-      "view/title": [
-        {
-          "command": "acpModelProvider.refreshAgents",
-          "when": "view == acpModelProvider.agentsView",
-          "group": "navigation"
-        }
-      ]
-    }
-  },
-  "bin": {
-    "vscode-model-provider": "./scripts/self-install.js"
+    ]
   },
   "scripts": {
-    "prepare": "npm run compile",
-    "compile": "tsc -p ./",
+    "prepare": "npm run build",
     "build": "tsdown",
-    "lint": "eslint src --ext ts",
-    "watch": "tsc -watch -p ./",
-    "install:vsix": "node scripts/self-install.js",
-    "test": "npm run test:unit",
+    "watch": "tsdown --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "package": "npx @vscode/vsce package --no-dependencies",
+    "test": "npm run typecheck && npm run test:unit",
     "test:unit": "npx vitest run --config vitest.config.ts",
     "test:unit:watch": "npx vitest --config vitest.config.ts",
-    "test:e2e": "npm run compile && node test/runTest.ts",
-    "test:smoke": "npx playwright test --config src/test/playwright/playwright.config.ts"
+    "test:host": "node test/runTest.ts"
   },
   "dependencies": {
-    "@agentclientprotocol/sdk": "1.0.0",
-    "acpr": "workspace:*"
+    "@agentclientprotocol/sdk": "^1.1.0"
   },
   "devDependencies": {
-    "@nx/js": "^23.0.1",
-    "@playwright/test": "^1.61.1",
-    "@types/glob": "^9.0.0",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^26.0.1",
+    "@types/node": "^20.0.0",
     "@types/vscode": "^1.104.0",
     "@vscode/test-electron": "^3.0.0",
-    "brace-expansion": "^1.1.15",
-    "es-module-lexer": "^2.1.0",
-    "glob": "^13.0.6",
-    "mocha": "^11.7.6",
-    "nx": "^23.0.1",
-    "playwright": "^1.61.1",
-    "ts-node": "^10.9.0",
+    "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9"
   },
+  "main": "./dist/extension.mjs",
+  "module": "./dist/extension.mjs",
+  "types": "./dist/extension.d.mts",
   "exports": {
     ".": "./dist/extension.mjs",
     "./package.json": "./package.json"
-  },
-  "main": "./dist/extension.mjs",
-  "module": "./dist/extension.mjs",
-  "types": "./dist/extension.d.mts"
+  }
 }

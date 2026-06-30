@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
-    "strict": false,
-    "outDir": "./out",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "lib": ["ES2022"],
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "types": ["node"]
   },
   "include": ["src", "vscode.d.ts"],
-  "exclude": ["node_modules", "out", "src/test"]
+  "exclude": ["node_modules", "dist", "out", "test"]
 }
