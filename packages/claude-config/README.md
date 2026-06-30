@@ -12,7 +12,7 @@ Claude Code configuration resolver. Agent-specific — Claude Code only.
 - **Settings resolution order** (highest precedence first):
   1. Managed settings — macOS MDM (`/Library/Application Support/ClaudeCode/managed-settings.json`)
      / Windows HKLM / Linux `/etc/claude-code/managed-settings.json`
-  2. CLI flags (`--settings <path>`, `--setting`)
+  2. CLI flags: `--settings <path-or-json-string>` overrides the same keys for the session
   3. `.claude/settings.local.json` (project-local, not committed)
   4. `.claude/settings.json` (project, committed)
   5. `~/.claude/settings.json` (user-global)

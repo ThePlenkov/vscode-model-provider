@@ -55,7 +55,7 @@ export function makeTerminalHandlers(): {
 **Behaviour contract**
 
 - The bridge keeps an in-memory `Map<terminalId, vscode.Terminal>`. On extension `deactivate`, all live terminals are disposed.
-- `create` accepts an optional `env` map; the bridge forwards it via `ExtensionContext.environmentVariableCollection` (passed into the factory from `extension.ts`, not fetched from `vscode.*` at module scope).
+- `create` accepts an optional `env` map; the bridge forwards it via `vscode.TerminalOptions.env` so the env is scoped to **that terminal only** (not to the whole workspace — `ExtensionContext.environmentVariableCollection` would leak env to every terminal the extension spawns, and is the wrong tool for per-call env injection).
 - `output` does **not** allow raw ANSI control codes (only `\n`, `\r`, `\t`).
 
 **Success criteria**

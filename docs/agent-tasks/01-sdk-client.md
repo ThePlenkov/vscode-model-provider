@@ -81,12 +81,12 @@ output channel for now; PR 02 replaces that with the session pool.
 
 **Success criteria (all must hold)**
 
-- `cd packages/acpify && npm run build` succeeds (resolves the `@theplenkov/acpify/provider/barebone` export for downstream consumers)
 - `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
 - `cd packages/acpify && npx vitest run src/client/cliClient.test.ts` exits 0
 - `git diff --stat base/barebone..HEAD` shows ≤ 8 files changed
-- `packages/acpify/src/provider/barebone.ts` and `barebone.test.ts` are deleted
-- `extension.ts` no longer references `AcpBareboneProvider`; it instantiates the SDK client wiring instead
+- `packages/acpify/src/client/{cliClient.ts,streamBridge.ts,cliClient.test.ts}` exist and the tests pass
+- `extension.ts` continues to import `AcpBareboneProvider` from `@theplenkov/acpify/provider/barebone` (the barebone stays until PR 09 deletes it). The new SDK client is wired in alongside, not in place of.
+- The barebone provider files (`packages/acpify/src/provider/barebone.ts`, `barebone.test.ts`) are NOT deleted in this PR — that belongs to PR 09.
 
 **Output contract** — return, in this exact order:
 

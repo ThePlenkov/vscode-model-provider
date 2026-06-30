@@ -65,7 +65,7 @@ return after the first text chunk (the bug in
 **Mapping rules**
 
 - `acp.ContentPart { type: "text" }` → `vscode.LanguageModelTextPart(text)`
-- `acp.ContentPart { type: "image" }` → `vscode.LanguageModelDataPart.image(data, mime)` (the static factory, not the constructor — the constructor is not exported)
+- `acp.ContentPart { type: "image" }` → `vscode.LanguageModelDataPart.image(data, mime)` (prefer the static factory; `new LanguageModelDataPart(data, mime)` is the generic constructor form, exported alongside the factories)
 - `acp.ToolCall` (kind from `tool_call` update) → `vscode.LanguageModelToolCallPart(id, name, input)`
 - `acp.ToolCallUpdate.content` → `LanguageModelTextPart` / `LanguageModelDataPart.image(data, mime)`
 - `vscode.LanguageModelToolResultPart` in the incoming messages is dropped here; PR 02's session pool feeds it back into the next prompt as a `tool_result` block.
