@@ -1,18 +1,49 @@
 import { spawn, ChildProcess } from "child_process";
 import { EventEmitter } from "events";
 import {
-  ACP_PROTOCOL_VERSION,
-  AcpAgentCapability,
-  AcpClientCapability,
+  AcpModelInfo,
+  AcpProtocolVersion,
+  AcpClientCapabilities,
+  AcpClientInfo,
   AcpInitializeParams,
   AcpInitializeResult,
-  AcpModelInfo,
+  AcpAgentCapabilities,
+  AcpAuthenticateParams,
   AcpSessionNewParams,
   AcpSessionNewResult,
-  AcpSessionPromptParams,
-  AcpSessionPromptResult,
+  AcpSessionListParams,
+  AcpSessionListResult,
+  AcpSessionResumeParams,
+  AcpSessionResumeResult,
+  AcpSessionLoadParams,
+  AcpSessionDeleteParams,
+  AcpSessionDeleteResult,
+  AcpSessionCloseParams,
+  AcpSessionCloseResult,
+  AcpPromptParams,
+  AcpPromptResult,
   AcpSessionSetModeParams,
-  AcpSessionUpdateParams,
+  AcpSessionSetModeResult,
+  AcpSessionSetConfigOptionParams,
+  AcpSessionSetConfigOptionResult,
+  AcpLogoutResult,
+  AcpSessionNotification,
+  AcpSessionRequestPermissionParams,
+  AcpSessionRequestPermissionResult,
+  AcpTerminalOutputParams,
+  AcpTerminalOutputResult,
+  AcpFsReadTextFileParams,
+  AcpFsReadTextFileResult,
+  AcpFsWriteTextFileParams,
+  AcpFsWriteTextFileResult,
+  AcpTerminalCreateParams,
+  AcpTerminalCreateResult,
+  AcpTerminalKillParams,
+  AcpTerminalKillResult,
+  AcpTerminalWaitForExitParams,
+  AcpTerminalWaitForExitResult,
+  AcpTerminalReleaseParams,
+  AcpTerminalReleaseResult,
   JsonRpcNotification,
   JsonRpcRequest,
   JsonRpcResponse,
@@ -31,16 +62,16 @@ export class AcpError extends Error {
 }
 
 /**
- * ACP JSON-RPC 2.0 client over stdio.
+ * ACP (Agent Client Protocol) v1 JSON-RPC 2.0 client over stdio.
  *
  * Usage:
  * ```ts
  * const client = new AcpClient();
  * await client.connect('claude', ['--acp']);
- * const models = client.discoveredModels; // populated after init
- * const { sessionId } = await client.sessionNew();
- * // ... stream updates via client.on('session/update', ...)
- * await client.sessionPrompt(sessionId, [{ type: 'text', text: 'hi' }]);
+ * // client.agentCapabilities is now populated
+ * const { sessionId } = await client.sessionNew({ cwd: process.cwd() });
+ * client.on('session/update', (params) => { ... });
+ * await client.sessionPrompt({ sessionId, prompt: [{ type: 'text', text: 'hi' }] });
  * ```
  */
 export class AcpClient extends EventEmitter {
@@ -53,32 +84,46 @@ export class AcpClient extends EventEmitter {
   private _disconnected = false;
   private _stdoutBuffer = "";
 
-  /** Populated by `connect()` after the `initialize` round-trip. */
-  private _agentCapabilities: AcpAgentCapability = {};
-  private _instructions: string | undefined;
-  private _models: AcpModelInfo[] = [];
+  /** Populated after `connect()` resolves. */
+  private _protocolVersion: AcpProtocolVersion = 0;
+  private _agentCapabilities: AcpAgentCapabilities = {};
 
-  get agentCapabilities(): AcpAgentCapability {
+  /**
+   * Models advertised by the agent during `initialize`.
+   * This is a custom extension not in the ACP v1 core spec — some agents
+   * (e.g. Claude Code) include a `models` array in the init response.
+   */
+  private _discoveredModels: AcpModelInfo[] = [];
+
+  get discoveredModels(): AcpModelInfo[] {
+    return this._discoveredModels;
+  }
+
+  get protocolVersion(): AcpProtocolVersion {
+    return this._protocolVersion;
+  }
+
+  get agentCapabilities(): AcpAgentCapabilities {
     return this._agentCapabilities;
   }
 
-  get instructions(): string | undefined {
-    return this._instructions;
-  }
-
-  get discoveredModels(): AcpModelInfo[] {
-    return this._models;
-  }
-
+  /** Whether the agent process is running and connected. */
   get isConnected(): boolean {
     return this.proc !== null && !this._disconnected;
   }
 
+  // ─── Connection ─────────────────────────────────────────────────────────────
+
   /**
    * Spawn the agent process and run the `initialize` handshake.
-   * Does NOT authenticate — call `authenticate()` separately if needed.
+   * Negotiates the protocol version and populates `agentCapabilities`.
    */
-  connect(cliCommand: string, cliArgs: string[] = ["--acp"]): Promise<void> {
+  connect(
+    cliCommand: string,
+    cliArgs: string[] = ["--acp"],
+    clientInfo?: AcpClientInfo,
+    clientCapabilities?: AcpClientCapabilities
+  ): Promise<void> {
     return new Promise((resolve, reject) => {
       this._disconnected = false;
 
@@ -105,7 +150,6 @@ export class AcpClient extends EventEmitter {
       });
 
       this.proc.stderr.on("data", (chunk: Buffer) => {
-        // Agent diagnostic output — forward to caller
         this.emit("stderr", chunk.toString());
       });
 
@@ -114,23 +158,21 @@ export class AcpClient extends EventEmitter {
         this._drain();
       });
 
-      // ── ACP initialization ────────────────────────────────────────────────
-      const initParams: AcpInitializeParams = {
-        protocolVersion: ACP_PROTOCOL_VERSION,
-        clientCapabilities: {
-          fs: { readTextFile: true, writeTextFile: true },
-          terminal: true,
-        },
+      const params: AcpInitializeParams = {
+        // ACP v1 = integer 1
+        protocolVersion: 1,
+        clientCapabilities: clientCapabilities ?? { fs: { readTextFile: true, writeTextFile: true }, terminal: true },
+        clientInfo,
       };
 
-      this.sendRequest("initialize", initParams as unknown as Record<string, unknown>)
+      this.sendRequest("initialize", params as unknown as Record<string, unknown>)
         .then((result) => {
-          const r = result as AcpInitializeResult;
+          const r = result as AcpInitializeResult & { models?: AcpModelInfo[] };
+          this._protocolVersion = r.protocolVersion;
           this._agentCapabilities = r.agentCapabilities ?? {};
-          this._instructions = r.instructions;
-          // Extract models from init response if the agent advertises them
+          // Custom extension: some agents include model list in init response
           if (r.models && Array.isArray(r.models)) {
-            this._models = r.models;
+            this._discoveredModels = r.models;
           }
           this.emit("ready");
           resolve();
@@ -140,51 +182,8 @@ export class AcpClient extends EventEmitter {
   }
 
   /**
-   * Run the `authenticate` round-trip. Call after `connect()` if the agent
-   * requires it (e.g. when `agentCapabilities.auth` is present).
+   * Terminate the agent process gracefully.
    */
-  async authenticate(params: Record<string, unknown> = {}): Promise<void> {
-    await this.sendRequest("authenticate", params);
-  }
-
-  async sessionNew(params: AcpSessionNewParams = {}): Promise<AcpSessionNewResult> {
-    return (await this.sendRequest(
-      "session/new",
-      params as unknown as Record<string, unknown>
-    )) as AcpSessionNewResult;
-  }
-
-  async sessionPrompt(
-    params: AcpSessionPromptParams
-  ): Promise<AcpSessionPromptResult> {
-    return (await this.sendRequest(
-      "session/prompt",
-      params as unknown as Record<string, unknown>
-    )) as AcpSessionPromptResult;
-  }
-
-  async sessionSetMode(params: AcpSessionSetModeParams): Promise<void> {
-    await this.sendRequest(
-      "session/set_mode",
-      params as unknown as Record<string, unknown>
-    );
-  }
-
-  async sessionLoad(params: {
-    sessionId: string;
-  }): Promise<AcpSessionNewResult> {
-    return (await this.sendRequest(
-      "session/load",
-      params as unknown as Record<string, unknown>
-    )) as AcpSessionNewResult;
-  }
-
-  /** Cancel an ongoing prompt (fire-and-forget notification). */
-  sessionCancel(sessionId: string): void {
-    this.sendNotification("session/cancel", { sessionId });
-  }
-
-  /** Terminate the agent process gracefully. */
   disconnect(): void {
     if (this.proc && !this._disconnected) {
       this._disconnected = true;
@@ -197,7 +196,157 @@ export class AcpClient extends EventEmitter {
     this.proc = null;
   }
 
-  // ─── Private JSON-RPC machinery ────────────────────────────────────────────
+  // ─── Authentication ─────────────────────────────────────────────────────────
+
+  async authenticate(params: AcpAuthenticateParams = {}): Promise<void> {
+    await this.sendRequest("authenticate", params as unknown as Record<string, unknown>);
+  }
+
+  async logout(): Promise<AcpLogoutResult> {
+    return (await this.sendRequest("logout", {})) as AcpLogoutResult;
+  }
+
+  // ─── Session lifecycle ──────────────────────────────────────────────────────
+
+  async sessionNew(params: AcpSessionNewParams): Promise<AcpSessionNewResult> {
+    return (await this.sendRequest(
+      "session/new",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionNewResult;
+  }
+
+  async sessionList(params?: AcpSessionListParams): Promise<AcpSessionListResult> {
+    return (await this.sendRequest(
+      "session/list",
+      (params ?? {}) as unknown as Record<string, unknown>
+    )) as AcpSessionListResult;
+  }
+
+  async sessionResume(params: AcpSessionResumeParams): Promise<AcpSessionResumeResult> {
+    return (await this.sendRequest(
+      "session/resume",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionResumeResult;
+  }
+
+  async sessionLoad(params: AcpSessionLoadParams): Promise<AcpSessionNewResult> {
+    return (await this.sendRequest(
+      "session/load",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionNewResult;
+  }
+
+  async sessionDelete(params: AcpSessionDeleteParams): Promise<AcpSessionDeleteResult> {
+    return (await this.sendRequest(
+      "session/delete",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionDeleteResult;
+  }
+
+  async sessionClose(params: AcpSessionCloseParams): Promise<AcpSessionCloseResult> {
+    return (await this.sendRequest(
+      "session/close",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionCloseResult;
+  }
+
+  // ─── Prompt ────────────────────────────────────────────────────────────────
+
+  async sessionPrompt(params: AcpPromptParams): Promise<AcpPromptResult> {
+    return (await this.sendRequest(
+      "session/prompt",
+      params as unknown as Record<string, unknown>
+    )) as AcpPromptResult;
+  }
+
+  async sessionSetMode(params: AcpSessionSetModeParams): Promise<AcpSessionSetModeResult> {
+    return (await this.sendRequest(
+      "session/set_mode",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionSetModeResult;
+  }
+
+  async sessionSetConfigOption(
+    params: AcpSessionSetConfigOptionParams
+  ): Promise<AcpSessionSetConfigOptionResult> {
+    return (await this.sendRequest(
+      "session/set_config_option",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionSetConfigOptionResult;
+  }
+
+  /** Cancel an ongoing prompt (fire-and-forget). */
+  sessionCancel(sessionId: string): void {
+    this.sendNotification("session/cancel", { sessionId });
+  }
+
+  // ─── Client → Agent: permission request ────────────────────────────────────
+
+  async sessionRequestPermission(
+    params: AcpSessionRequestPermissionParams
+  ): Promise<AcpSessionRequestPermissionResult> {
+    return (await this.sendRequest(
+      "session/request_permission",
+      params as unknown as Record<string, unknown>
+    )) as AcpSessionRequestPermissionResult;
+  }
+
+  // ─── Client → Agent: terminal ─────────────────────────────────────────────
+
+  async terminalCreate(params: AcpTerminalCreateParams): Promise<AcpTerminalCreateResult> {
+    return (await this.sendRequest(
+      "terminal/create",
+      params as unknown as Record<string, unknown>
+    )) as AcpTerminalCreateResult;
+  }
+
+  async terminalOutput(params: AcpTerminalOutputParams): Promise<AcpTerminalOutputResult> {
+    return (await this.sendRequest(
+      "terminal/output",
+      params as unknown as Record<string, unknown>
+    )) as AcpTerminalOutputResult;
+  }
+
+  async terminalWaitForExit(
+    params: AcpTerminalWaitForExitParams
+  ): Promise<AcpTerminalWaitForExitResult> {
+    return (await this.sendRequest(
+      "terminal/wait_for_exit",
+      params as unknown as Record<string, unknown>
+    )) as AcpTerminalWaitForExitResult;
+  }
+
+  async terminalKill(params: AcpTerminalKillParams): Promise<AcpTerminalKillResult> {
+    return (await this.sendRequest(
+      "terminal/kill",
+      params as unknown as Record<string, unknown>
+    )) as AcpTerminalKillResult;
+  }
+
+  async terminalRelease(params: AcpTerminalReleaseParams): Promise<AcpTerminalReleaseResult> {
+    return (await this.sendRequest(
+      "terminal/release",
+      params as unknown as Record<string, unknown>
+    )) as AcpTerminalReleaseResult;
+  }
+
+  // ─── Client → Agent: fs ───────────────────────────────────────────────────
+
+  async fsReadTextFile(params: AcpFsReadTextFileParams): Promise<AcpFsReadTextFileResult> {
+    return (await this.sendRequest(
+      "fs/read_text_file",
+      params as unknown as Record<string, unknown>
+    )) as AcpFsReadTextFileResult;
+  }
+
+  async fsWriteTextFile(params: AcpFsWriteTextFileParams): Promise<AcpFsWriteTextFileResult> {
+    return (await this.sendRequest(
+      "fs/write_text_file",
+      params as unknown as Record<string, unknown>
+    )) as AcpFsWriteTextFileResult;
+  }
+
+  // ─── JSON-RPC internals ────────────────────────────────────────────────────
 
   private sendRequest<T = unknown>(
     method: string,
@@ -222,19 +371,14 @@ export class AcpClient extends EventEmitter {
     });
   }
 
-  private sendNotification(
-    method: string,
-    params?: Record<string, unknown>
-  ): void {
+  private sendNotification(method: string, params?: Record<string, unknown>): void {
     if (!this.proc?.stdin) return;
     const raw: JsonRpcNotification = { jsonrpc: "2.0", method, params };
     this.proc.stdin.write(JSON.stringify(raw) + "\n");
   }
 
-  /** Drain newline-delimited JSON-RPC messages from the stdout buffer. */
   private _drain(): void {
     const lines = this._stdoutBuffer.split("\n");
-    // Keep the last (potentially incomplete) line in the buffer
     this._stdoutBuffer = lines.pop() ?? "";
 
     for (const line of lines) {
@@ -243,29 +387,24 @@ export class AcpClient extends EventEmitter {
         const msg = JSON.parse(line) as JsonRpcResponse | JsonRpcNotification;
         this._handleMessage(msg);
       } catch {
-        // Not JSON — treat as stderr-like output
         this.emit("output", line);
       }
     }
   }
 
-  private _handleMessage(
-    msg: JsonRpcResponse | JsonRpcNotification
-  ): void {
-    // Check if this is a notification (id is null or missing)
+  private _handleMessage(msg: JsonRpcResponse | JsonRpcNotification): void {
     const hasId = "id" in msg && msg.id !== null && msg.id !== undefined;
 
     if (!hasId) {
       const notif = msg as JsonRpcNotification;
       if (notif.method === "session/update") {
-        this.emit("session/update", notif.params as unknown as AcpSessionUpdateParams);
+        this.emit("session/update", notif.params as unknown as AcpSessionNotification);
       } else {
         this.emit(notif.method, notif.params);
       }
       return;
     }
 
-    // It's a response
     const resp = msg as JsonRpcResponse;
     const entry = this.pending.get(resp.id);
     if (!entry) return;

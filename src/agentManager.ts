@@ -103,7 +103,6 @@ export class AgentManager extends EventEmitter {
     await client.connect(config.cliCommand, config.cliArgs ?? ["--acp"]);
     const { sessionId } = await client.sessionNew({
       cwd: process.cwd(),
-      model: rawModelId,
     });
     return { client, sessionId };
   }

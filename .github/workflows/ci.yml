@@ -14,8 +14,8 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: npm
@@ -27,8 +27,8 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: npm
@@ -43,8 +43,8 @@ jobs:
     needs: [unit-test, e2e]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: npm
@@ -56,7 +56,7 @@ jobs:
           PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
           mv "${EXTENSION_NAME}-${PKG_VERSION}.vsix" "${EXTENSION_NAME}-latest.vsix"
       - name: Upload VSIX
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
           path: "*.vsix"
@@ -69,12 +69,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
       - name: Download VSIX
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
           path: .
@@ -108,14 +108,14 @@ jobs:
     runs-on: ubuntu-latest
     if: false
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
           cache: npm
       - run: npm ci && npm run compile
       - name: Download VSIX
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
           path: .
