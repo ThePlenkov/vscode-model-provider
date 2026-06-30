@@ -22,5 +22,6 @@ export type {
 export { SessionPool } from "./session/sessionPool.js";
 export type { SessionKey, SessionPoolOptions } from "./session/sessionPool.js";
 export { AcpSession, PromptHandle } from "./session/acpSession.js";
+export type { SessionConnectFn } from "./session/acpSession.js";
 export { PermissionStore } from "./session/permissions.js";
 export type { PermissionRule, PermissionDecision } from "./session/permissions.js";

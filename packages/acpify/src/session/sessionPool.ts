@@ -2,20 +2,19 @@
  * `SessionPool` — persistent per-`(adapter.id, cwd)` pool of ACP
  * sessions, keyed by `SessionKey`.
  *
- * The pool owns the lifecycle of `CliAcpClient` instances: it does NOT
- * spawn the CLI itself (that's the responsibility of whoever
- * constructs the pool, typically a future PR that knows the adapter +
- * command). For testability, two factories are injectable:
- *
- *   - `clientFactory: () => CliAcpClient` produces a fresh client.
- *   - `connectFn:     (client, key) => Promise<string>` is responsible
- *     for running the `initialize` + `session/new` handshake on the
- *     client and returning the new session id. The pool treats the
- *     returned id as opaque.
+ * The pool owns the lifecycle of `CliAcpClient` instances but does NOT
+ * run the ACP handshake itself. When a new `(adapter.id, cwd)` tuple
+ * is observed, the pool instantiates a `CliAcpClient` from
+ * `clientFactory`, wraps it in an `AcpSession`, and lets the caller
+ * drive the per-session handshake (`initialize` + `session/new`) via
+ * `session.ensureStarted(connectFn)`. PR 09 (the registry) wires the
+ * real `connectFn`; for this PR the extension supplies one that
+ * throws immediately so the contract that "wiring is `done` before
+ * use" is preserved.
  *
  * Idle sessions are evicted after `SessionPoolOptions.idleEvictMs`
  * (default 30 minutes; tests override to 5 seconds). On eviction, the
- * pool calls `CliAcpClient.disconnect()` and removes the session from
+ * pool calls `AcpSession.disconnect()` and removes the session from
  * its map. `shutdownAll()` force-disconnects every session.
  *
  * Per the architecture decision in `docs/architecture.md`, this module
@@ -50,7 +49,6 @@ const DEFAULT_IDLE_MS = 30 * 60_000;
  */
 export class SessionPool {
   private readonly clientFactory: () => CliAcpClient;
-  private readonly connectFn: (client: CliAcpClient, key: SessionKey) => Promise<string>;
   private readonly idleEvictMs: number;
   private readonly onSessionCreated?: (sessionId: string) => void;
   private readonly onSessionEvicted?: (sessionId: string, reason: "idle" | "error") => void;
@@ -62,11 +60,9 @@ export class SessionPool {
 
   constructor(
     clientFactory: () => CliAcpClient,
-    connectFn: (client: CliAcpClient, key: SessionKey) => Promise<string>,
     options: SessionPoolOptions = {},
   ) {
     this.clientFactory = clientFactory;
-    this.connectFn = connectFn;
     this.idleEvictMs = options.idleEvictMs ?? DEFAULT_IDLE_MS;
     if (options.onSessionCreated !== undefined) {
       this.onSessionCreated = options.onSessionCreated;
@@ -125,10 +121,9 @@ export class SessionPool {
 
   private async createSession(mapKey: string, key: SessionKey): Promise<AcpSession> {
     const client = this.clientFactory();
-    const sessionId = await this.connectFn(client, key);
-    const session = new AcpSession(key, sessionId, client);
+    const session = new AcpSession(key, client);
     this.sessions.set(mapKey, session);
-    this.onSessionCreated?.(sessionId);
+    this.onSessionCreated?.(session.sessionId);
     return session;
   }
 
@@ -143,7 +138,6 @@ export class SessionPool {
     this.idleTimer = setInterval(() => {
       void this.sweepIdle();
     }, period);
-    // `unref` so the timer does not keep the process alive on its own.
     this.idleTimer.unref?.();
   }
 
@@ -157,8 +151,16 @@ export class SessionPool {
     }
     for (const { mapKey, session } of toEvict) {
       this.sessions.delete(mapKey);
+      try {
+        await session.disconnect();
+      } catch (err) {
+        this.onSessionEvicted?.(session.sessionId, "error");
+        if (process.env["ACP_DEBUG"] === "1") {
+          console.error("[SessionPool] disconnect error:", err);
+        }
+        continue;
+      }
       this.onSessionEvicted?.(session.sessionId, "idle");
-      await session.disconnect();
     }
   }
 

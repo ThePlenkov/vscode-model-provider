@@ -10,7 +10,7 @@
  *     `docs/agent-tasks/02-session-pool.md`).
  *
  * Per the architecture decision, this module must NOT import `vscode`.
- * `ContentPart`-shaped inputs come from the caller (the LMCP adapter in
+ * `ContentBlock`-shaped inputs come from the caller (the LMCP adapter in
  * PR 09); we treat them as opaque `acp.ContentBlock[]` because that is
  * what the SDK accepts.
  */
@@ -54,11 +54,22 @@ export class PromptHandle {
 type SettleResolver = (resp: acp.PromptResponse) => void;
 
 /**
+ * Connection function passed to `AcpSession.ensureStarted`. PR 09 (the
+ * registry) wires the real implementation that spawns the CLI and runs
+ * `initialize` + `session/new`; for this PR the extension supplies one
+ * that throws immediately so the handshake contract is preserved at
+ * the type level. The function receives the underlying
+ * `CliAcpClient` plus the session key so the registry can drive the
+ * handshake against the right process for this `(adapter.id, cwd)`.
+ */
+export type SessionConnectFn = () => Promise<{ sessionId: string }>;
+
+/**
  * One process = one `AcpSession`. Created and managed by `SessionPool`.
  */
 export class AcpSession {
   readonly key: SessionKey;
-  readonly sessionId: string;
+  private _sessionId: string | null = null;
   private readonly client: CliAcpClient;
 
   /**
@@ -78,12 +89,65 @@ export class AcpSession {
   /** Whether the whole session has been torn down. */
   private disposed = false;
 
+  /**
+   * The entry currently being awaited by `dispatch` (i.e. the
+   * in-flight prompt). `null` when no dispatch is awaiting. Used to
+   * distinguish queued-but-undispatched entries (cancel → short
+   * circuit in drain) from the genuinely in-flight one (cancel →
+   * RPC + wait for agent's `cancelled` answer).
+   */
+  private dispatchingEntry: typeof this.queue[number] | null = null;
+
+  /** Whether the per-session handshake has completed. */
+  private started = false;
+
   private _lastUsed = Date.now();
 
-  constructor(key: SessionKey, sessionId: string, client: CliAcpClient) {
+  constructor(key: SessionKey, client: CliAcpClient) {
     this.key = key;
-    this.sessionId = sessionId;
     this.client = client;
+  }
+
+  /**
+   * The session id returned by the `session/new` handshake. `null`
+   * until `ensureStarted()` resolves. The pool reads this after the
+   * handshake completes.
+   */
+  get sessionId(): string {
+    if (this._sessionId === null) {
+      throw new Error("AcpSession.ensureStarted() has not resolved");
+    }
+    return this._sessionId;
+  }
+
+  /**
+   * Run the per-session handshake (`initialize` + `session/new`).
+   *
+   * The `connectFn` is supplied by the caller — typically the registry
+   * in PR 09, which knows which CLI to spawn and how to drive the
+   * handshake for the given adapter + key. The session itself stays
+   * agent-agnostic.
+   *
+   * Idempotent across concurrent callers: parallel `ensureStarted`
+   * calls share the same in-flight handshake promise.
+   */
+  private startPromiseInner: Promise<string> | null = null;
+
+  async ensureStarted(connectFn: SessionConnectFn): Promise<string> {
+    if (this._sessionId !== null) return this._sessionId;
+    if (this.startPromiseInner) return this.startPromiseInner;
+    this.startPromiseInner = (async () => {
+      const { sessionId } = await connectFn();
+      this._sessionId = sessionId;
+      this.started = true;
+      return sessionId;
+    })();
+    try {
+      return await this.startPromiseInner;
+    } catch (err) {
+      this.startPromiseInner = null;
+      throw err;
+    }
   }
 
   /**
@@ -97,6 +161,11 @@ export class AcpSession {
     if (this.disposed) {
       throw new Error("AcpSession is disposed");
     }
+    if (!this.started) {
+      throw new Error(
+        "AcpSession.ensureStarted() must resolve before prompt()",
+      );
+    }
 
     let settle!: SettleResolver;
     const done = new Promise<acp.PromptResponse>((resolve) => {
@@ -106,7 +175,6 @@ export class AcpSession {
     const entry = { blocks, settle, cancelled: false };
     this.queue.push(entry);
 
-    // Don't await — the consumer gets the handle synchronously.
     void this.drain();
 
     const handle = new PromptHandle(done, () => this.cancelEntry(entry));
@@ -120,12 +188,17 @@ export class AcpSession {
    *   - wait for the agent to answer `session/prompt` with
    *     `stopReason: "cancelled"`,
    *   - settle the in-flight `PromptHandle` with that response.
+   *
+   * Note: `PromptHandle.cancel()` (per-handle, called by the
+   * caller) is implemented by `cancelEntry`; this method targets
+   * "the currently in-flight prompt" and is a thin convenience over
+   * that path for callers that only have the session, not the
+   * handle.
    */
   cancel(): void {
-    // Cancel the currently-dispatched entry, if any.
-    const inFlight = this.queue[0];
-    if (inFlight) {
-      void this.client.sessionCancel({ sessionId: this.sessionId });
+    const entry = this.dispatchingEntry ?? this.queue[0];
+    if (entry) {
+      this.cancelEntry(entry);
     }
   }
 
@@ -133,11 +206,11 @@ export class AcpSession {
   async disconnect(): Promise<void> {
     if (this.disposed) return;
     this.disposed = true;
-    // Settle any still-pending entries so awaiting callers do not hang.
     while (this.queue.length > 0) {
       const entry = this.queue.shift()!;
       entry.settle({ stopReason: "cancelled" });
     }
+    this.dispatchingEntry = null;
     await this.client.disconnect();
   }
 
@@ -169,7 +242,20 @@ export class AcpSession {
     try {
       while (this.queue.length > 0) {
         const entry = this.queue[0]!;
-        await this.dispatch(entry);
+        // Short-circuit cancelled-but-undispatched entries. Per the
+        // task contract, settlement happens on the first of the
+        // listed events; cancel() before dispatch is one of them.
+        if (entry.cancelled) {
+          entry.settle({ stopReason: "cancelled" });
+          this.queue.shift();
+          continue;
+        }
+        this.dispatchingEntry = entry;
+        try {
+          await this.dispatch(entry);
+        } finally {
+          this.dispatchingEntry = null;
+        }
         this.queue.shift();
       }
     } finally {
@@ -188,15 +274,17 @@ export class AcpSession {
         sessionId: this.sessionId,
         prompt: entry.blocks,
       });
-      // The SDK already filters `agent_message_chunk` updates with no
-      // `stopReason`. Settlement = `sessionPrompt` resolving.
+      // The SDK only resolves `sessionPrompt` once the agent has
+      // answered with a terminal stopReason. Intermediate
+      // `agent_message_chunk` updates flow through `onSessionUpdate`
+      // and do not settle this handle. (This is precisely the bug
+      // the archive `acpProvider.ts:139` got wrong.)
       entry.settle(resp);
     } catch (err) {
-      // Treat every SDK/JSON-RPC error as a cancellation so awaiting
-      // callers do not hang. The error is swallowed because the
-      // contract for `PromptHandle.done` is "resolves exactly once".
+      // Errors on the RPC are surfaced as a `cancelled`-flavoured
+      // settlement so awaiting callers do not hang. Distinct
+      // stopReason preservation is deferred (see MINOR findings).
       entry.settle({ stopReason: "cancelled" });
-      // Surface for diagnostics; tests assert on `cancelled` only.
       if (process.env["ACP_DEBUG"] === "1") {
         console.error("[AcpSession] prompt error:", err);
       }
@@ -211,9 +299,13 @@ export class AcpSession {
   }): void {
     if (entry.cancelled) return;
     entry.cancelled = true;
-    void this.client.sessionCancel({ sessionId: this.sessionId });
-    // The agent's `sessionPrompt` response (with stopReason: "cancelled")
-    // is what settles the handle. We do NOT short-circuit here so the
-    // contract holds: settle only on the first of the listed events.
+    // Only send the JSON-RPC `session/cancel` if THIS entry is the
+    // one currently in-flight. For queued-but-undispatched entries
+    // the drain loop sees the cancelled flag and settles them with
+    // `stopReason: 'cancelled'` directly — no RPC needed because no
+    // prompt was ever sent.
+    if (this.dispatchingEntry === entry) {
+      void this.client.sessionCancel({ sessionId: this.sessionId });
+    }
   }
 }
