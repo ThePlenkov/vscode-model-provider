@@ -5,7 +5,7 @@ on:
     branches: [main]
   release:
     types: [published]
-  workflow_dispatch:
+  workflow_dispatch: true
 
 env:
   EXTENSION_NAME: vscode-model-provider
