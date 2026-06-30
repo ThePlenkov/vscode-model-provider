@@ -1,7 +1,8 @@
 import { execFile } from "child_process";
 import { promisify } from "util";
 import { EventEmitter } from "events";
-import { AcpClient, AcpModelInfo } from "./acp";
+import { AcpClient } from "./acp";
+import type { ModelInfo } from "./acp";
 
 const execFileAsync = promisify(execFile);
 
@@ -13,6 +14,7 @@ export interface AgentConfig {
   cliCommand: string;
   cliArgs?: string[];
   enabled?: boolean;
+  modelMapping?: Record<string, string>; // Maps model IDs to aliases
 }
 
 // ─── Discovered agent state ──────────────────────────────────────────────────
@@ -22,7 +24,7 @@ export interface DiscoveredAgent {
   /** True once `connect()` completes without error. */
   connected: boolean;
   /** Models returned by the agent during the ACP `initialize` handshake. */
-  models: AcpModelInfo[];
+  models: ModelInfo[];
   /** Stderr output from the last discovery attempt (for diagnostics). */
   lastError?: string;
 }
@@ -79,9 +81,9 @@ export class AgentManager extends EventEmitter {
    */
   getAllModels(): Array<{
     agentId: string;
-    model: AcpModelInfo;
+    model: ModelInfo;
   }> {
-    const result: Array<{ agentId: string; model: AcpModelInfo }> = [];
+    const result: Array<{ agentId: string; model: ModelInfo }> = [];
     for (const [agentId, agent] of this._agents) {
       if (!agent.connected) continue;
       for (const model of agent.models) {
@@ -103,6 +105,7 @@ export class AgentManager extends EventEmitter {
     await client.connect(config.cliCommand, config.cliArgs ?? ["--acp"]);
     const { sessionId } = await client.sessionNew({
       cwd: process.cwd(),
+      mcpServers: [],
     });
     return { client, sessionId };
   }

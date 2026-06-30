@@ -1,0 +1,886 @@
+{
+  "apps/extension": {
+    "root": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.inputs.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.inputs.1": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.lint.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.1": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.inputs.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.inputs.1": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.test.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "name": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "tags": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:vscode": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:copilot": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:acp": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:agent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:claude-code": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:gemini-cli": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:language-model": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.0": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.1": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.2": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.3": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.4": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.5": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.6": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.7": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.8": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.description": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageVersion": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageMain": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.prepare.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.compile.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.lint.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.watch.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.install:vsix.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:unit:watch.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:e2e.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.metadata": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.options.script": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.metadata.scriptContent": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.test:smoke.metadata.runCommand": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn.0": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "apps/extension/package.json",
+      "nx/core/package-json"
+    ],
+    "$schema": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "sourceRoot": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "projectType": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.cwd": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.commands.0": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.commands": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.parallel": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.executor": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.options.cwd": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.options.commands.0": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.options.commands": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.options.parallel": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.package.options": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.executor": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.cwd": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.commands.0": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.commands": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.parallel": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options": [
+      "apps/extension/project.json",
+      "nx/core/project-json"
+    ]
+  },
+  "libs/acpr": {
+    "root": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.1": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "name": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "tags": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageVersion": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn.0": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "libs/acpr/package.json",
+      "nx/core/package-json"
+    ],
+    "$schema": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "sourceRoot": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "projectType": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "tags.type:acp": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "tags.scope:acp": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.cwd": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.commands.0": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.commands": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.parallel": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options": [
+      "libs/acpr/project.json",
+      "nx/core/project-json"
+    ]
+  },
+  "packages/claude-config": {
+    "root": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.dependsOn": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.0": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs.1": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.inputs": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "targets.build.cache": [
+      "nx.json",
+      "nx/target-defaults"
+    ],
+    "name": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "tags": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "tags.npm:public": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.0": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.targetGroups.NPM Scripts.1": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.description": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageName": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageVersion": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageExports": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.packageMain": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "metadata.js.isInPackageManagerWorkspaces": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.executor": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options.script": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.options": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.scriptContent": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.build.metadata.runCommand": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.executor": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.metadata": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.options.script": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.options": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.metadata.scriptContent": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.dev.metadata.runCommand": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.executor": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn.0": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.dependsOn": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.nx-release-publish.options": [
+      "packages/claude-config/package.json",
+      "nx/core/package-json"
+    ]
+  },
+  "libs/shared": {
+    "root": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "name": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "$schema": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "sourceRoot": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "projectType": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "tags": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "tags.type:shared": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ],
+    "tags.scope:shared": [
+      "libs/shared/project.json",
+      "nx/core/project-json"
+    ]
+  }
+}

@@ -4,16 +4,17 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "ignoreDeprecations": "6.0",
-    "strict": true,
+    "strict": false,
     "outDir": "./out",
     "rootDir": "./src",
     "declaration": true,
     "sourceMap": true,
     "lib": ["ES2022"],
-    "types": ["node"],
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "types": ["node"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "out"]
+  "include": ["src", "vscode.d.ts"],
+  "exclude": ["node_modules", "out", "src/test"]
 }

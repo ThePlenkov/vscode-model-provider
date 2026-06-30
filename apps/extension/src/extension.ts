@@ -1,16 +1,22 @@
 import * as vscode from "vscode";
 import { AgentManager, AgentConfig } from "./agentManager";
-import { AcpModelProvider } from "./acpProvider";
+import { AcpModelProvider, toLmModel } from "./acpProvider";
+import { AgentManagerUI } from "./agentManagerUI";
+import { AgentTreeDataProvider, AgentTreeItem } from "./agentTreeView";
+import type { ModelInfo } from "./acp";
 
 const CONFIG_NS = "acpModelProvider";
 
 let agentManager: AgentManager;
 let provider: AcpModelProvider;
 let outputChannel: vscode.OutputChannel;
+let agentUI: AgentManagerUI;
+let treeDataProvider: AgentTreeDataProvider;
 
 export async function activate(ctx: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel("ACP Model Provider");
   outputChannel.appendLine("[ACP Model Provider] Activating...");
+  outputChannel.appendLine("[ACP Model Provider] Extension ID: " + ctx.extension.id);
 
   // ── Read configuration ────────────────────────────────────────────────────
   const configuredAgents = vscode.workspace
@@ -32,7 +38,7 @@ export async function activate(ctx: vscode.ExtensionContext) {
   // ── Initialize agent discovery ────────────────────────────────────────────
   agentManager = new AgentManager();
 
-  agentManager.on("disconnect", (err) => {
+  (agentManager as any).on("disconnect", (err: any) => {
     outputChannel.appendLine(`[disconnect] ${err}`);
   });
 
@@ -77,10 +83,47 @@ export async function activate(ctx: vscode.ExtensionContext) {
     provider
   );
 
+  // Fire the event to notify VS Code that models are available
+  const models = agentManager.getAllModels();
+  if (models.length > 0) {
+    (provider as any)._onDidChangeLanguageModelChatInformation.fire(
+      models.map(({ agentId, model }) =>
+        toLmModel(agentId, agentManager.agents.get(agentId)!.config.label, model, displayPrefix)
+      )
+    );
+  }
+
+  // ── Initialize UI ───────────────────────────────────────────────────────────
+  agentUI = new AgentManagerUI(agentManager);
+
+  // ── Register Tree View ─────────────────────────────────────────────────────
+  treeDataProvider = new AgentTreeDataProvider(agentManager);
+  const treeViewRegistration = vscode.window.registerTreeDataProvider('acpModelProvider.agentsView', treeDataProvider);
+  ctx.subscriptions.push(treeViewRegistration);
+
+  outputChannel.appendLine("[ACP Model Provider] Tree view registered.");
+  
+  // Trigger initial refresh after agent manager is initialized
+  setTimeout(() => {
+    treeDataProvider.refresh();
+    outputChannel.appendLine("[ACP Model Provider] Tree view refreshed.");
+  }, 1000);
+
+  // ── Register commands ─────────────────────────────────────────────────────
+  const openUICommand = vscode.commands.registerCommand(
+    `${CONFIG_NS}.openUI`,
+    () => {
+      outputChannel.appendLine("[ACP Model Provider] openUI command called");
+      agentUI.show();
+    }
+  );
+  outputChannel.appendLine("[ACP Model Provider] openUI command registered");
+
   // ── Register "Manage ACP Agents" command ───────────────────────────────────
   const manageCmd = vscode.commands.registerCommand(
     `${CONFIG_NS}.manage`,
     async () => {
+      outputChannel.appendLine("[ACP Model Provider] manage command called");
       const items: vscode.QuickPickItem[] = [
         {
           label: "$(refresh) Refresh agents",
@@ -114,6 +157,7 @@ export async function activate(ctx: vscode.ExtensionContext) {
           { location: vscode.ProgressLocation.Notification, title: "Refreshing ACP agents…" },
           async () => {
             await agentManager.initialize(configuredAgents);
+            treeDataProvider.refresh();
             vscode.window.showInformationMessage("ACP agents refreshed.");
           }
         );
@@ -126,10 +170,35 @@ export async function activate(ctx: vscode.ExtensionContext) {
     }
   );
 
+  // ── Register reload command for development ───────────────────────────────────
+  const reloadCmd = vscode.commands.registerCommand(
+    `${CONFIG_NS}.reload`,
+    () => {
+      vscode.commands.executeCommand("workbench.action.reloadWindow");
+    }
+  );
+
+  // ── Register refresh agents command ─────────────────────────────────────────────
+  const refreshAgentsCmd = vscode.commands.registerCommand(
+    `${CONFIG_NS}.refreshAgents`,
+    async () => {
+      const configuredAgents = vscode.workspace
+        .getConfiguration(CONFIG_NS)
+        .get<AgentConfig[]>("agents", []);
+      
+      outputChannel.appendLine("[ACP Model Provider] Refreshing agents...");
+      await agentManager.initialize(configuredAgents);
+      treeDataProvider.refresh();
+      outputChannel.appendLine("[ACP Model Provider] Agents refreshed.");
+    }
+  );
+
   // ── Wire up disposal ───────────────────────────────────────────────────────
-  ctx.subscriptions.push(registration, manageCmd, outputChannel);
+  ctx.subscriptions.push(registration, manageCmd, openUICommand, reloadCmd, refreshAgentsCmd, outputChannel);
+  ctx.subscriptions.push(agentUI);
 
   outputChannel.appendLine("[ACP Model Provider] Registered as vendor 'acp'.");
+  outputChannel.appendLine("[ACP Model Provider] Activation complete.");
 }
 
 export function deactivate() {

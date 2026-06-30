@@ -1,44 +1,53 @@
 import * as vscode from "vscode";
 import { AgentManager } from "./agentManager";
-import {
-  AcpClient,
-  AcpContentPart,
-  AcpModelInfo,
-  AcpPromptParams,
-  AcpSessionNotification,
-  AcpToolCall,
-  AcpToolCallUpdate,
-  AcpAgentMessageChunk,
+import { AcpClient } from "./acp";
+import type {
+  ModelInfo,
+  PromptRequest,
+  SessionNotification,
+  ToolCall,
+  ToolCallUpdate,
+  AgentMessageChunk,
+  ContentPart,
 } from "./acp";
 
-function makeModelId(agentId: string, model: AcpModelInfo): string {
+function makeModelId(agentId: string, model: ModelInfo): string {
   return `${agentId}:${model.id}`;
 }
 
-function toLmModel(
+export function toLmModel(
   agentId: string,
   agentLabel: string,
-  model: AcpModelInfo,
+  model: ModelInfo,
   prefix: string
 ): vscode.LanguageModelChatInformation {
+  // Use model metadata if available, otherwise use defaults
+  const maxInputTokens = model.maxInputTokens || 200_000;
+  const maxOutputTokens = model.maxOutputTokens || 8_192;
+  
   return {
     id: makeModelId(agentId, model),
     name: `${prefix} / ${agentLabel} / ${model.name}`,
     family: agentId,
     version: "1",
-    maxInputTokens: 128_000,
-    maxOutputTokens: 32_768,
+    maxInputTokens,
+    maxOutputTokens,
     detail: model.description ?? agentLabel,
     tooltip: `${agentLabel} via ACP — ${model.id}`,
     capabilities: {
       toolCalling: true,
       imageInput: false,
     },
+    // Pricing metadata from models.dev
+    ...(model.inputCost && { inputCost: model.inputCost }),
+    ...(model.outputCost && { outputCost: model.outputCost }),
+    ...(model.cacheCost && { cacheCost: model.cacheCost }),
+    ...(model.cacheWriteCost && { cacheWriteCost: model.cacheWriteCost }),
   };
 }
 
-function vscodeMessageToAcp(msg: vscode.LanguageModelChatRequestMessage): AcpContentPart[] {
-  const parts: AcpContentPart[] = [];
+function vscodeMessageToAcp(msg: vscode.LanguageModelChatRequestMessage): ContentPart[] {
+  const parts: ContentPart[] = [];
   for (const part of msg.content) {
     if (typeof part === "string") {
       parts.push({ type: "text", text: part });
@@ -57,23 +66,34 @@ function vscodeMessageToAcp(msg: vscode.LanguageModelChatRequestMessage): AcpCon
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode.LanguageModelChatInformation> {
+  private readonly _onDidChangeLanguageModelChatInformation =
+    new vscode.EventEmitter<vscode.LanguageModelChatInformation[]>();
+
+  readonly onDidChangeLanguageModelChatInformation =
+    this._onDidChangeLanguageModelChatInformation.event;
+
   constructor(
     private readonly _manager: AgentManager,
     private readonly _prefix = "ACP"
   ) {}
 
   provideLanguageModelChatInformation(
-    _options: { silent: boolean },
+    _options: vscode.PrepareLanguageModelChatModelOptions,
     _token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.LanguageModelChatInformation[]> {
+    console.log(`[ACP] provideLanguageModelChatInformation called, silent: ${_options.silent}`);
     const models: vscode.LanguageModelChatInformation[] = [];
 
     for (const agent of this._manager.agents.values()) {
       if (!agent.connected) continue;
       for (const model of agent.models) {
-        models.push(toLmModel(agent.config.id, agent.config.label, model, this._prefix));
+        const lmModel = toLmModel(agent.config.id, agent.config.label, model, this._prefix);
+        console.log(`[ACP] Adding model: ${lmModel.id} - ${lmModel.name}`);
+        models.push(lmModel);
       }
     }
+    console.log(`[ACP] provideLanguageModelChatInformation returning ${models.length} models`);
+    console.log(`[ACP] Model IDs: ${models.map(m => m.id).join(', ')}`);
 
     if (models.length === 0) {
       models.push({
@@ -99,8 +119,9 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
     progress: vscode.Progress<vscode.LanguageModelResponsePart>,
     token: vscode.CancellationToken
   ): Promise<void> {
+    console.log(`[ACP] provideLanguageModelChatResponse called - model: ${model.id}, messages: ${messages.length}`);
     const { agentId, rawModelId, config } = this._parseModelId(model.id);
-    const currentMsg = messages[messages.length - 1];
+    console.log(`[ACP] Parsed - agentId: ${agentId}, rawModelId: ${rawModelId}, config: ${config.cliCommand}`);
 
     const acpClient = new AcpClient();
     const cts = new vscode.CancellationTokenSource();
@@ -110,24 +131,53 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
       cts.cancel();
     });
 
-    const toolCalls = new Map<string, AcpToolCall>();
-
-    acpClient.on("session/update", (params) => {
-      this._handleSessionUpdate(params, progress, toolCalls);
+    const toolCalls = new Map<string, ToolCall>();
+    const responsePromise = new Promise<void>((resolve) => {
+      acpClient.on("session/update", (params) => {
+        console.log(`[ACP] Session update: ${params.update.sessionUpdate}`);
+        this._handleSessionUpdate(params, progress, toolCalls);
+        // Resolve when we get an agent_message_chunk
+        if (params.update.sessionUpdate === "agent_message_chunk") {
+          resolve();
+        }
+      });
     });
 
     try {
+      console.log(`[ACP] Connecting to ${config.cliCommand} ${config.cliArgs?.join(' ')}`);
       await acpClient.connect(config.cliCommand, config.cliArgs ?? ["--acp"]);
 
       const cwd = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? process.cwd();
-      const { sessionId } = await acpClient.sessionNew({ cwd });
+      console.log(`[ACP] Creating session with cwd: ${cwd}`);
+      const { sessionId, configOptions } = await acpClient.sessionNew({ cwd, mcpServers: [] });
+      console.log(`[ACP] Session created: ${sessionId}, configOptions: ${configOptions?.length || 0}`);
 
-      const acpParams: AcpPromptParams = {
-        sessionId,
-        prompt: vscodeMessageToAcp(currentMsg),
-      };
+      // Try to set the model via config option if available
+      if (configOptions) {
+        const modelConfig = configOptions.find(opt => opt.id === 'model');
+        if (modelConfig) {
+          console.log(`[ACP] Setting model to ${rawModelId} via config option`);
+          await acpClient.sessionSetConfigOption({ sessionId, configId: 'model', value: rawModelId });
+        } else {
+          console.log(`[ACP] Available config options: ${configOptions.map(o => o.id).join(', ')}`);
+        }
+      }
 
-      await acpClient.sessionPrompt(acpParams);
+      // Send all messages in the conversation
+      for (const msg of messages) {
+        console.log(`[ACP] Sending message with ${msg.content.length} parts`);
+        const acpParams: PromptRequest = {
+          sessionId,
+          prompt: vscodeMessageToAcp(msg),
+        };
+        await acpClient.sessionPrompt(acpParams);
+      }
+      console.log(`[ACP] All messages sent`);
+
+      // Wait for response notification (with timeout)
+      console.log(`[ACP] Waiting for response notification...`);
+      await Promise.race([responsePromise, new Promise(resolve => setTimeout(resolve, 10000))]);
+      console.log(`[ACP] Response received or timeout`);
     } finally {
       acpClient.disconnect();
       cts.dispose();
@@ -139,8 +189,11 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
     text: string | vscode.LanguageModelChatRequestMessage,
     _token: vscode.CancellationToken
   ): Thenable<number> {
+    console.log(`[ACP] provideTokenCount called`);
     const str = typeof text === "string" ? text : this._messageToString(text);
-    return Promise.resolve(Math.ceil(str.length / 4));
+    const count = Math.ceil(str.length / 4);
+    console.log(`[ACP] provideTokenCount returning: ${count}`);
+    return Promise.resolve(count);
   }
 
   // ─── Private ───────────────────────────────────────────────────────────────
@@ -168,16 +221,17 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
   }
 
   private _handleSessionUpdate(
-    params: AcpSessionNotification,
+    params: SessionNotification,
     progress: vscode.Progress<vscode.LanguageModelResponsePart>,
-    toolCalls: Map<string, AcpToolCall>
+    toolCalls: Map<string, ToolCall>
   ): void {
+    console.log(`[ACP] _handleSessionUpdate called: ${params.update.sessionUpdate}`);
     const update = params.update;
 
     switch (update.sessionUpdate) {
       case "agent_message_chunk":
       case "agent_thought_chunk": {
-        const chunk = update as AcpAgentMessageChunk;
+        const chunk = update as AgentMessageChunk;
         for (const part of chunk.content ?? []) {
           this._reportContentPart(part, progress);
         }
@@ -185,7 +239,7 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
       }
 
       case "tool_call": {
-        const tc = update as AcpToolCall;
+        const tc = update as ToolCall;
         toolCalls.set(tc.toolCallId, tc);
         // Adapt to vscode.LanguageModelToolCallPart expected fields
         const name = (tc as unknown as { name?: string }).name ?? "unknown";
@@ -201,7 +255,7 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
       }
 
       case "tool_call_update": {
-        const upd = update as AcpToolCallUpdate;
+        const upd = update as ToolCallUpdate;
         for (const part of upd.content ?? []) {
           this._reportContentPart(part, progress);
         }
@@ -214,10 +268,12 @@ export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode
   }
 
   private _reportContentPart(
-    part: AcpContentPart,
+    part: ContentPart,
     progress: vscode.Progress<vscode.LanguageModelResponsePart>
   ): void {
+    console.log(`[ACP] _reportContentPart called: type=${part.type}`);
     if (part.type === "text") {
+      console.log(`[ACP] Reporting text part: ${part.text.substring(0, 50)}...`);
       progress.report(new vscode.LanguageModelTextPart(part.text));
     } else if (part.type === "image") {
       try {

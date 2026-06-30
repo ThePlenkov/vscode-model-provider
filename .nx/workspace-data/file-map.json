@@ -1,0 +1,3899 @@
+{
+  "version": "6.0",
+  "nxVersion": "23.0.1",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": "tsdown.config.base.ts",
+        "hash": "17648001232690528749"
+      },
+      {
+        "file": "README.md",
+        "hash": "3998856439435126502"
+      },
+      {
+        "file": "bun.lock",
+        "hash": "11031976734018065848"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "10996103807001440366"
+      },
+      {
+        "file": "package.json",
+        "hash": "4652913201048162651"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "780922683096780599"
+      },
+      {
+        "file": "LICENSE",
+        "hash": "18269896208544835335"
+      },
+      {
+        "file": ".github/workflows/ci.yml",
+        "hash": "16424531273647646387"
+      },
+      {
+        "file": "nx.json",
+        "hash": "16972573485926946008"
+      }
+    ],
+    "projectFileMap": {
+      "claude-config": [
+        {
+          "file": "packages/claude-config/package.json",
+          "hash": "255166992715915063",
+          "deps": [
+            "npm:tsdown@0.22.3",
+            "npm:typescript@6.0.3",
+            "npm:@anthropic-ai/sdk@0.32.1"
+          ]
+        },
+        {
+          "file": "packages/claude-config/src/index.ts",
+          "hash": "5457404622162920733",
+          "deps": [
+            "npm:@anthropic-ai/sdk@0.32.1"
+          ]
+        },
+        {
+          "file": "packages/claude-config/tsconfig.json",
+          "hash": "5078289643627435939"
+        },
+        {
+          "file": "packages/claude-config/tsdown.config.ts",
+          "hash": "11347874471721579711",
+          "deps": [
+            "npm:tsdown@0.22.3"
+          ]
+        }
+      ],
+      "extension": [
+        {
+          "file": "apps/extension/.gitignore",
+          "hash": "10472295905311600389"
+        },
+        {
+          "file": "apps/extension/.vscode-test/extensions/extensions.json",
+          "hash": "9444422325801888874"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/Cache_Data/1b7767e213d04674_0",
+          "hash": "12136407299980588907"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/Cache_Data/5283edf90cf4ab50_0",
+          "hash": "3519591278658011442"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/Cache_Data/9f50bddbd978eddd_0",
+          "hash": "16724469057555910840"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/Cache_Data/index",
+          "hash": "568582872210966574"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/Cache_Data/index-dir/the-real-index",
+          "hash": "16945758745021845716"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/No_Vary_Search/journal.baj",
+          "hash": "4193482934240086961"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Cache/No_Vary_Search/snapshot.baf",
+          "hash": "13704426979198872707"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/CachedProfilesData/__default__profile__/extensions.builtin.cache",
+          "hash": "14395478345772623463"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/CachedProfilesData/__default__profile__/extensions.user.cache",
+          "hash": "1048146821462459028"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/js/22b2c1bc370fea43_0",
+          "hash": "1866735482917378027"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/js/82b1686c3b3dd01a_0",
+          "hash": "11870810503401789252"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/js/index",
+          "hash": "568582872210966574"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/js/index-dir/the-real-index",
+          "hash": "11263066291108407154"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/wasm/index",
+          "hash": "568582872210966574"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Code Cache/wasm/index-dir/the-real-index",
+          "hash": "8726119471908817741"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Crashpad/client_id",
+          "hash": "17484728402821089756"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Crashpad/settings.dat",
+          "hash": "3721297099131711784"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DIPS",
+          "hash": "4069667816151687797"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnGraphiteCache/data_0",
+          "hash": "15683624801344272347"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnGraphiteCache/data_1",
+          "hash": "5899657856632004455"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnGraphiteCache/data_2",
+          "hash": "14443817256787602226"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnGraphiteCache/data_3",
+          "hash": "7157498243645342001"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnGraphiteCache/index",
+          "hash": "16733107333249225216"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnWebGPUCache/data_0",
+          "hash": "15683624801344272347"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnWebGPUCache/data_1",
+          "hash": "5899657856632004455"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnWebGPUCache/data_2",
+          "hash": "14443817256787602226"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnWebGPUCache/data_3",
+          "hash": "7157498243645342001"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/DawnWebGPUCache/index",
+          "hash": "9469418308770808151"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Dictionaries/en-US-10-1.bdic",
+          "hash": "6503465525094385135"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/GPUCache/data_0",
+          "hash": "15683624801344272347"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/GPUCache/data_1",
+          "hash": "5899657856632004455"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/GPUCache/data_2",
+          "hash": "14443817256787602226"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/GPUCache/data_3",
+          "hash": "7157498243645342001"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/GPUCache/index",
+          "hash": "9914530524768202065"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local State",
+          "hash": "15951832670055103231"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local Storage/leveldb/CURRENT",
+          "hash": "16048099769647294723"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local Storage/leveldb/LOCK",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local Storage/leveldb/LOG",
+          "hash": "12449352290160866652"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local Storage/leveldb/LOG.old",
+          "hash": "17517840184708367387"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Local Storage/leveldb/MANIFEST-000001",
+          "hash": "5828192104982326847"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Network Persistent State",
+          "hash": "8422331995080976272"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Preferences",
+          "hash": "4465658676908543269"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Session Storage/CURRENT",
+          "hash": "16048099769647294723"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Session Storage/LOCK",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Session Storage/LOG",
+          "hash": "10765487752947051245"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Session Storage/LOG.old",
+          "hash": "5321012880177984198"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Session Storage/MANIFEST-000001",
+          "hash": "5828192104982326847"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Shared Dictionary/cache/index",
+          "hash": "568582872210966574"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Shared Dictionary/cache/index-dir/the-real-index",
+          "hash": "17285509367121074843"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Shared Dictionary/db",
+          "hash": "15117993345923573153"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Shared Dictionary/db-journal",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Trust Tokens",
+          "hash": "17408515466648877637"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/Trust Tokens-journal",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/chatLanguageModels.json",
+          "hash": "9444422325801888874"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/globalStorage/emptyWindowChatSessions/cf975940-b5c9-49bd-814b-60df4ffc4602.jsonl",
+          "hash": "531757297294666791"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/globalStorage/emptyWindowChatSessions/d67e8ef2-50b8-46ad-98e0-1854e1f016f3.jsonl",
+          "hash": "1920146948647985267"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/globalStorage/storage.json",
+          "hash": "5357851744802069640"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/workspaceStorage/ext-dev/chatEditingSessions/cf975940-b5c9-49bd-814b-60df4ffc4602/state.json",
+          "hash": "950600443080422583"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/User/workspaceStorage/ext-dev/chatEditingSessions/d67e8ef2-50b8-46ad-98e0-1854e1f016f3/state.json",
+          "hash": "15875069205469369397"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/languagepacks.json",
+          "hash": "1389868326933519382"
+        },
+        {
+          "file": "apps/extension/.vscode-test/user-data/machineid",
+          "hash": "4988769710054873965"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/LICENSES.chromium.html",
+          "hash": "1367539752191253127"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/bin/code",
+          "hash": "16236938328760134793"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/bin/code-tunnel",
+          "hash": "3913715209828846802"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/chrome-sandbox",
+          "hash": "10005498861427354791"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/chrome_100_percent.pak",
+          "hash": "12528508506357773099"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/chrome_200_percent.pak",
+          "hash": "10992866542276919025"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/chrome_crashpad_handler",
+          "hash": "10148052547697095792"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/code",
+          "hash": "15530424720431599669"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/icudtl.dat",
+          "hash": "8808367426656595997"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/is-complete",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/libEGL.so",
+          "hash": "17292816578234331466"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/libGLESv2.so",
+          "hash": "10638476881030302616"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/libffmpeg.so",
+          "hash": "5383200277830559949"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/libvk_swiftshader.so",
+          "hash": "3847078354112056163"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/libvulkan.so.1",
+          "hash": "7706411343486364341"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/af.pak",
+          "hash": "1755898154983016258"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/am.pak",
+          "hash": "8529974295358352497"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ar.pak",
+          "hash": "11451183699876258557"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/bg.pak",
+          "hash": "3112608781808161848"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/bn.pak",
+          "hash": "9456656873126530937"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ca.pak",
+          "hash": "11859130135949752154"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/cs.pak",
+          "hash": "2603319364712987588"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/da.pak",
+          "hash": "12174982466022150952"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/de.pak",
+          "hash": "1302343865202670180"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/el.pak",
+          "hash": "5444245164772765790"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/en-GB.pak",
+          "hash": "4306175412428000555"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/en-US.pak",
+          "hash": "155426455658845774"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/es-419.pak",
+          "hash": "15258443735030608588"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/es.pak",
+          "hash": "8757500565706428470"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/et.pak",
+          "hash": "9640303753913096266"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/fa.pak",
+          "hash": "1536081569338576152"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/fi.pak",
+          "hash": "16090067369521699859"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/fil.pak",
+          "hash": "4750349939533292383"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/fr.pak",
+          "hash": "7807691855473806255"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/gu.pak",
+          "hash": "539822343866253808"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/he.pak",
+          "hash": "4378178726650503603"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/hi.pak",
+          "hash": "875636201020194205"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/hr.pak",
+          "hash": "11132325316252182247"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/hu.pak",
+          "hash": "12645585740869774986"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/id.pak",
+          "hash": "17115884356084462316"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/it.pak",
+          "hash": "2787718184445848046"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ja.pak",
+          "hash": "13920926420865482678"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/kn.pak",
+          "hash": "15207690187760378889"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ko.pak",
+          "hash": "1993662230965925866"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/lt.pak",
+          "hash": "604607497876789419"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/lv.pak",
+          "hash": "16139278515971113670"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ml.pak",
+          "hash": "8468936518932426818"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/mr.pak",
+          "hash": "7301413151002332085"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ms.pak",
+          "hash": "857799365442209168"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/nb.pak",
+          "hash": "14539321098395512595"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/nl.pak",
+          "hash": "5023052403804494361"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/pl.pak",
+          "hash": "4492969961296806663"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/pt-BR.pak",
+          "hash": "4523865040534943189"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/pt-PT.pak",
+          "hash": "15454037150427626722"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ro.pak",
+          "hash": "903083957336481618"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ru.pak",
+          "hash": "5990708921349819021"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/sk.pak",
+          "hash": "15662862536054368657"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/sl.pak",
+          "hash": "18388872043185515737"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/sr.pak",
+          "hash": "11528826926095398647"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/sv.pak",
+          "hash": "1823284800872181160"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/sw.pak",
+          "hash": "15287511832290563414"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ta.pak",
+          "hash": "11987937291722336117"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/te.pak",
+          "hash": "16625261453603043505"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/th.pak",
+          "hash": "6065024182993888607"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/tr.pak",
+          "hash": "9740885855450601358"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/uk.pak",
+          "hash": "17224741575706562117"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/ur.pak",
+          "hash": "13080229538286899483"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/vi.pak",
+          "hash": "15304126144705858974"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/zh-CN.pak",
+          "hash": "17558568948165022144"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/locales/zh-TW.pak",
+          "hash": "16859631544213387786"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources.pak",
+          "hash": "16003514279064756989"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/LICENSE.rtf",
+          "hash": "14412928347369210001"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/ThirdPartyNotices.txt",
+          "hash": "2113505292113131868"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/LICENSE.txt",
+          "hash": "9100145143763278033"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/logo.png",
+          "hash": "1692796551266976119"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/package.json",
+          "hash": "15194336531863946070"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/readme.md",
+          "hash": "12094028856362745467"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/skills/typescript-setup/SKILL.md",
+          "hash": "11681725245413645763"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/skills/typescript-update/4to5.md",
+          "hash": "5922656166569278755"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/skills/typescript-update/5to6.md",
+          "hash": "12970371180604185821"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/skills/typescript-update/6to7.md",
+          "hash": "8673489402311739996"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/TypeScriptTeam.jsts-chat-features/skills/typescript-update/SKILL.md",
+          "hash": "7479333563724825394"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/bat/language-configuration.json",
+          "hash": "9321448324572277667"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/bat/package.json",
+          "hash": "15564213377420186530"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/bat/package.nls.json",
+          "hash": "9720785087377255615"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/bat/snippets/batchfile.code-snippets",
+          "hash": "6788052960741947875"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/bat/syntaxes/batchfile.tmLanguage.json",
+          "hash": "13679121051785286315"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/clojure/language-configuration.json",
+          "hash": "10427222547336579788"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/clojure/package.json",
+          "hash": "10348353052790510680"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/clojure/package.nls.json",
+          "hash": "7182125213908985650"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/clojure/syntaxes/clojure.tmLanguage.json",
+          "hash": "15270612368802153739"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/coffeescript/language-configuration.json",
+          "hash": "13455373430790770304"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/coffeescript/package.json",
+          "hash": "2123747719887893626"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/coffeescript/package.nls.json",
+          "hash": "12788360141023932027"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/coffeescript/snippets/coffeescript.code-snippets",
+          "hash": "7532938291035945175"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/coffeescript/syntaxes/coffeescript.tmLanguage.json",
+          "hash": "4244106027617860023"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/configuration-editing/images/icon.png",
+          "hash": "12061521105805404281"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/configuration-editing/package.json",
+          "hash": "16850287890598332306"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/configuration-editing/package.nls.json",
+          "hash": "9329119340157610669"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/configuration-editing/schemas/attachContainer.schema.json",
+          "hash": "16742675483538785668"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/LICENSE.txt",
+          "hash": "18110424710560944937"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/ThirdPartyNotices.txt",
+          "hash": "4463178561695526712"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/copilot.png",
+          "hash": "7357855501465421371"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/copilot.woff",
+          "hash": "4064938003482857600"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/debug-icon.svg",
+          "hash": "16413406624681770269"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-cost-tips.prompt.md",
+          "hash": "12822596089416645969"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-improve.prompt.md",
+          "hash": "16253337473719744178"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-reindex.prompt.md",
+          "hash": "917728015455989683"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-search.prompt.md",
+          "hash": "11416269695096209472"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-standup.prompt.md",
+          "hash": "4000252817661185671"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/chronicle-tips.prompt.md",
+          "hash": "16334058450847047664"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/plan.prompt.md",
+          "hash": "7106905767608610264"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/SKILL.md",
+          "hash": "11995248801638951019"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/agent-instructions.md",
+          "hash": "5291198888210775433"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/agents.md",
+          "hash": "2225260957360264647"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/hooks.md",
+          "hash": "5694928996593215071"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/instructions.md",
+          "hash": "788062376956845440"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/prompts.md",
+          "hash": "10905352208937675023"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/agent-customization/references/skills.md",
+          "hash": "7987926507155702273"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/chronicle/SKILL.md",
+          "hash": "14564221590020609269"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/create-agent/SKILL.md",
+          "hash": "11235983565195981964"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/create-hook/SKILL.md",
+          "hash": "8138443206390070525"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/create-instructions/SKILL.md",
+          "hash": "13394205569351978743"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/create-prompt/SKILL.md",
+          "hash": "1723187263164357270"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/create-skill/SKILL.md",
+          "hash": "10034340383339100954"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/get-search-view-results/SKILL.md",
+          "hash": "6562324395707604287"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/init/SKILL.md",
+          "hash": "10179891502222886129"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/install-vscode-extension/SKILL.md",
+          "hash": "6650305547673351864"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/project-setup-info-context7/SKILL.md",
+          "hash": "11163673397432241860"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/project-setup-info-local/SKILL.md",
+          "hash": "15933196058963523969"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/assets/prompts/skills/troubleshoot/SKILL.md",
+          "hash": "11560482435309448944"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/changelog.md",
+          "hash": "90176251496234024"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.json",
+          "hash": "4349515199699866771"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.cs.json",
+          "hash": "3687260432835822738"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.de.json",
+          "hash": "14478470779155692392"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.es.json",
+          "hash": "3958709916492311153"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.fr.json",
+          "hash": "16833046885128862428"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.it.json",
+          "hash": "793233557461309528"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.ja.json",
+          "hash": "10944782435317451479"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.json",
+          "hash": "15481131770332193076"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.ko.json",
+          "hash": "7379940291660912487"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.pl.json",
+          "hash": "4180347422717000545"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.pt-br.json",
+          "hash": "8897764180165395742"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.qps-ploc.json",
+          "hash": "14359321195607819605"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.ru.json",
+          "hash": "6260755393761459093"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.tr.json",
+          "hash": "10320741877361446749"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.zh-cn.json",
+          "hash": "15084744662048008437"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/package.nls.zh-tw.json",
+          "hash": "4876328911143791689"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/readme.md",
+          "hash": "9296862910582052637"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/copilot/telemetry.json",
+          "hash": "16097249495213308507"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/language-configuration.json",
+          "hash": "1918294057753730502"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/package.json",
+          "hash": "13970369995877614177"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/package.nls.json",
+          "hash": "11292316603831926456"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/snippets/c.code-snippets",
+          "hash": "17538527128363121282"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/snippets/cpp.code-snippets",
+          "hash": "17538527128363121282"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/syntaxes/c.tmLanguage.json",
+          "hash": "10398415601757546844"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/syntaxes/cpp.embedded.macro.tmLanguage.json",
+          "hash": "2047452016641276557"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/syntaxes/cpp.tmLanguage.json",
+          "hash": "12334844608166413755"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/syntaxes/cuda-cpp.tmLanguage.json",
+          "hash": "13826503104158143115"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/cpp/syntaxes/platform.tmLanguage.json",
+          "hash": "12242441151167710829"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/csharp/language-configuration.json",
+          "hash": "16240035835011911387"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/csharp/package.json",
+          "hash": "1478286012858545701"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/csharp/package.nls.json",
+          "hash": "11110026549963980747"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/csharp/snippets/csharp.code-snippets",
+          "hash": "16490042062190141686"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/csharp/syntaxes/csharp.tmLanguage.json",
+          "hash": "2337688125724484378"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/README.md",
+          "hash": "16156873363376845235"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/icons/css.png",
+          "hash": "15307994463657423458"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/package.json",
+          "hash": "2109202591294787938"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/package.nls.json",
+          "hash": "16925085251957854500"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/schemas/package.schema.json",
+          "hash": "349755567233162612"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/server/.npmrc",
+          "hash": "7676702782039192405"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css-language-features/server/package.json",
+          "hash": "12207288399993830325"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css/language-configuration.json",
+          "hash": "12540299581131176966"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css/package.json",
+          "hash": "2002424464424746212"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css/package.nls.json",
+          "hash": "9532292199738881544"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/css/syntaxes/css.tmLanguage.json",
+          "hash": "14563337986832704080"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dart/language-configuration.json",
+          "hash": "2572174903273908668"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dart/package.json",
+          "hash": "517131406236993032"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dart/package.nls.json",
+          "hash": "15139264975982632202"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dart/syntaxes/dart.tmLanguage.json",
+          "hash": "7313557120079333339"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-auto-launch/.vscode/launch.json",
+          "hash": "9363569449687895528"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-auto-launch/media/icon.png",
+          "hash": "16556317417012584621"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-auto-launch/package.json",
+          "hash": "10743318074237087639"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-auto-launch/package.nls.json",
+          "hash": "15886807042327840802"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-server-ready/media/icon.png",
+          "hash": "14150390170345641855"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-server-ready/package.json",
+          "hash": "7669040733060776537"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/debug-server-ready/package.nls.json",
+          "hash": "9893050906986184366"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/diff/language-configuration.json",
+          "hash": "9625635445473886662"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/diff/package.json",
+          "hash": "5495264584970150007"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/diff/package.nls.json",
+          "hash": "13843429211242677104"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/diff/syntaxes/diff.tmLanguage.json",
+          "hash": "5996568914195240386"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/docker/language-configuration.json",
+          "hash": "11457336384937609458"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/docker/package.json",
+          "hash": "12646750659924243222"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/docker/package.nls.json",
+          "hash": "1404162782912451827"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/docker/syntaxes/docker.tmLanguage.json",
+          "hash": "17250171541934119314"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dotenv/language-configuration.json",
+          "hash": "17291433580255051086"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dotenv/package.json",
+          "hash": "2420920273828395605"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dotenv/package.nls.json",
+          "hash": "8336362109806559936"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/dotenv/syntaxes/dotenv.tmLanguage.json",
+          "hash": "2510847968258636423"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/emmet/README.md",
+          "hash": "3702738615674155982"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/emmet/images/icon.png",
+          "hash": "4190855657228708807"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/emmet/package.json",
+          "hash": "7780783370129469957"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/emmet/package.nls.json",
+          "hash": "3418396857680587117"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/extension-editing/images/icon.png",
+          "hash": "17201976486644953115"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/extension-editing/package.json",
+          "hash": "11463589837002207964"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/extension-editing/package.nls.json",
+          "hash": "14640626025846281906"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/fsharp/language-configuration.json",
+          "hash": "5483515037943955450"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/fsharp/package.json",
+          "hash": "9851673202025043278"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/fsharp/package.nls.json",
+          "hash": "9151082720039534231"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/fsharp/snippets/fsharp.code-snippets",
+          "hash": "8405732886006959726"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/fsharp/syntaxes/fsharp.tmLanguage.json",
+          "hash": "8597954664677323132"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/README.md",
+          "hash": "2917405239552063703"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/languages/git-commit.language-configuration.json",
+          "hash": "5535649762270696109"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/languages/git-rebase.language-configuration.json",
+          "hash": "5535649762270696109"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/languages/ignore.language-configuration.json",
+          "hash": "8343306944187434405"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/package.json",
+          "hash": "1249246709176808508"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/package.nls.json",
+          "hash": "4853718343495748782"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/resources/icons/git.png",
+          "hash": "9333077812934133254"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/syntaxes/git-commit.tmLanguage.json",
+          "hash": "8669767133455736704"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/syntaxes/git-rebase.tmLanguage.json",
+          "hash": "11897152452492783011"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git-base/syntaxes/ignore.tmLanguage.json",
+          "hash": "5449406908893457867"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/README.md",
+          "hash": "4851126994022800719"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/package.json",
+          "hash": "11069505906307699073"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/package.nls.json",
+          "hash": "13360205042207997705"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/emojis.json",
+          "hash": "3755863809979135698"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-added.svg",
+          "hash": "7481369014017494277"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-conflict.svg",
+          "hash": "14684012802192273380"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-copied.svg",
+          "hash": "18276414726881012308"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-deleted.svg",
+          "hash": "16684988530508034585"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-ignored.svg",
+          "hash": "3962237376265859141"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-modified.svg",
+          "hash": "14383872138605347918"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-renamed.svg",
+          "hash": "15188059538807594906"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-type-changed.svg",
+          "hash": "3492501612524929280"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/dark/status-untracked.svg",
+          "hash": "11403597913000168224"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/git.png",
+          "hash": "9333077812934133254"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-added.svg",
+          "hash": "13332204332536866203"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-conflict.svg",
+          "hash": "2388569391629859230"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-copied.svg",
+          "hash": "16007214529467937912"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-deleted.svg",
+          "hash": "6630746153804964131"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-ignored.svg",
+          "hash": "3962237376265859141"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-modified.svg",
+          "hash": "17317725481354366818"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-renamed.svg",
+          "hash": "15188059538807594906"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-type-changed.svg",
+          "hash": "3492501612524929280"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/git/resources/icons/light/status-untracked.svg",
+          "hash": "11403597913000168224"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/README.md",
+          "hash": "11382827144308537858"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/images/icon.png",
+          "hash": "13994121605387402615"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/auth.css",
+          "hash": "6600202684891222600"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/code-icon.svg",
+          "hash": "8259461619341046705"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/favicon.ico",
+          "hash": "10406629917217583526"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/icon.png",
+          "hash": "17778710764317396177"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/index.html",
+          "hash": "2605176842347284717"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/media/sessions-icon.svg",
+          "hash": "18271710204319140922"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/package.json",
+          "hash": "8842803015825868537"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github-authentication/package.nls.json",
+          "hash": "4903684020682554668"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github/README.md",
+          "hash": "10983555364447250706"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github/images/icon.png",
+          "hash": "9102984419534924522"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github/markdown.css",
+          "hash": "14770344298946023234"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github/package.json",
+          "hash": "5361905876722033491"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/github/package.nls.json",
+          "hash": "17016426923541623785"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/go/language-configuration.json",
+          "hash": "4178250133850548841"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/go/package.json",
+          "hash": "16365794073416707822"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/go/package.nls.json",
+          "hash": "2670917467398649877"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/go/syntaxes/go.tmLanguage.json",
+          "hash": "9083122326029752952"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/groovy/language-configuration.json",
+          "hash": "17813137184852212465"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/groovy/package.json",
+          "hash": "4340576501055133737"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/groovy/package.nls.json",
+          "hash": "8079804503610003346"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/groovy/snippets/groovy.code-snippets",
+          "hash": "945472687421095937"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/groovy/syntaxes/groovy.tmLanguage.json",
+          "hash": "8429672370590392078"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/grunt/README.md",
+          "hash": "9093249526247500824"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/grunt/images/grunt.png",
+          "hash": "9198293665025736153"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/grunt/package.json",
+          "hash": "5829228297891758348"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/grunt/package.nls.json",
+          "hash": "6711658422781450728"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/gulp/README.md",
+          "hash": "15366766910459872837"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/gulp/images/gulp.png",
+          "hash": "17263313664493338037"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/gulp/package.json",
+          "hash": "1058504654328423127"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/gulp/package.nls.json",
+          "hash": "119731950079614791"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/handlebars/language-configuration.json",
+          "hash": "10271352709843451019"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/handlebars/package.json",
+          "hash": "2713618213276817354"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/handlebars/package.nls.json",
+          "hash": "7181762955450720500"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/handlebars/syntaxes/Handlebars.tmLanguage.json",
+          "hash": "9378814143692292868"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/hlsl/language-configuration.json",
+          "hash": "9068573962630527465"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/hlsl/package.json",
+          "hash": "8154828302547865428"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/hlsl/package.nls.json",
+          "hash": "14295334065717206168"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/hlsl/syntaxes/hlsl.tmLanguage.json",
+          "hash": "15098300058981147093"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/README.md",
+          "hash": "7123884869904670856"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/icons/html.png",
+          "hash": "14320195191765686777"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/package.json",
+          "hash": "10621505092252770368"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/package.nls.json",
+          "hash": "245133046451717962"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/schemas/package.schema.json",
+          "hash": "1358896924894979286"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/server/.npmrc",
+          "hash": "7676702782039192405"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/server/lib/jquery.d.ts",
+          "hash": "12600576933541439153"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html-language-features/server/package.json",
+          "hash": "8984905307068087494"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/language-configuration.json",
+          "hash": "5314539973410447872"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/package.json",
+          "hash": "4589156463995112013"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/package.nls.json",
+          "hash": "16501597669803327332"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/snippets/html.code-snippets",
+          "hash": "9398309932228428689"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/syntaxes/html-derivative.tmLanguage.json",
+          "hash": "13037642695375275945"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/html/syntaxes/html.tmLanguage.json",
+          "hash": "16530463481410900458"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ini/ini.language-configuration.json",
+          "hash": "4324427073137522236"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ini/package.json",
+          "hash": "14744275904657179890"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ini/package.nls.json",
+          "hash": "6049553952785445522"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ini/properties.language-configuration.json",
+          "hash": "8869080919553223824"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ini/syntaxes/ini.tmLanguage.json",
+          "hash": "452935294150643954"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ipynb/README.md",
+          "hash": "10991180290409900616"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ipynb/media/icon.png",
+          "hash": "14267013589793623206"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ipynb/notebook-out/cellAttachmentRenderer.js",
+          "hash": "6987828796482121190"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ipynb/package.json",
+          "hash": "4661169638073575528"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ipynb/package.nls.json",
+          "hash": "7080813784452516677"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/jake/README.md",
+          "hash": "2163393037150128840"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/jake/images/cowboy_hat.png",
+          "hash": "10663781299923357194"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/jake/package.json",
+          "hash": "2890519469140289088"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/jake/package.nls.json",
+          "hash": "1874355400603231720"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/java/language-configuration.json",
+          "hash": "633686294321443717"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/java/package.json",
+          "hash": "18158956892603337354"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/java/package.nls.json",
+          "hash": "1857514187504412252"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/java/snippets/java.code-snippets",
+          "hash": "10179427119293959461"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/java/syntaxes/java.tmLanguage.json",
+          "hash": "6011117231435191479"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/javascript-language-configuration.json",
+          "hash": "6990676293935436343"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/package.json",
+          "hash": "16920725964032649969"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/package.nls.json",
+          "hash": "12595229900450941350"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/snippets/javascript.code-snippets",
+          "hash": "15695224810586524816"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/syntaxes/JavaScript.tmLanguage.json",
+          "hash": "5768470059087658022"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/syntaxes/JavaScriptReact.tmLanguage.json",
+          "hash": "9344399735759593010"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/syntaxes/Regular Expressions (JavaScript).tmLanguage",
+          "hash": "11788058293173702402"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/javascript/tags-language-configuration.json",
+          "hash": "2889797613427454997"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/README.md",
+          "hash": "3441369566712326666"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/icons/json.png",
+          "hash": "14982457361165115653"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/package.json",
+          "hash": "15202829887753667847"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/package.nls.json",
+          "hash": "16252049311718698775"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/server/.npmrc",
+          "hash": "7676702782039192405"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json-language-features/server/package.json",
+          "hash": "8656064396675789486"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/language-configuration.json",
+          "hash": "7305360882306889842"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/package.json",
+          "hash": "3195800538636188305"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/package.nls.json",
+          "hash": "13067620778404786261"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/syntaxes/JSON.tmLanguage.json",
+          "hash": "15741071939315250678"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/syntaxes/JSONC.tmLanguage.json",
+          "hash": "14891540574186993350"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/syntaxes/JSONL.tmLanguage.json",
+          "hash": "2472680178062509416"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/json/syntaxes/snippets.tmLanguage.json",
+          "hash": "17670688560029422701"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/julia/language-configuration.json",
+          "hash": "15615411184832628996"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/julia/package.json",
+          "hash": "9530699096135506256"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/julia/package.nls.json",
+          "hash": "14265075166725125059"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/julia/syntaxes/julia.tmLanguage.json",
+          "hash": "10171126095258999533"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/cpp-bailout-license.txt",
+          "hash": "16324668810257872301"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/latex-cpp-embedded-language-configuration.json",
+          "hash": "4835513720946067989"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/latex-language-configuration.json",
+          "hash": "14249917301033489618"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/markdown-latex-combined-language-configuration.json",
+          "hash": "17512740193539231211"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/markdown-latex-combined-license.txt",
+          "hash": "15572855181055783720"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/package.json",
+          "hash": "10233866410260859703"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/package.nls.json",
+          "hash": "7871630913960500979"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/syntaxes/Bibtex.tmLanguage.json",
+          "hash": "5232857133559449037"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/syntaxes/LaTeX.tmLanguage.json",
+          "hash": "13287186826800771953"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/syntaxes/TeX.tmLanguage.json",
+          "hash": "14461805413903152143"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/syntaxes/cpp-grammar-bailout.tmLanguage.json",
+          "hash": "3213346769582678953"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/latex/syntaxes/markdown-latex-combined.tmLanguage.json",
+          "hash": "10197176753885257090"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/less/language-configuration.json",
+          "hash": "4087773335146311179"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/less/package.json",
+          "hash": "10402010646866766534"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/less/package.nls.json",
+          "hash": "8919300265053059600"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/less/syntaxes/less.tmLanguage.json",
+          "hash": "15175534848553986343"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/log/package.json",
+          "hash": "5402302134736462442"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/log/package.nls.json",
+          "hash": "10289786389229419927"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/log/syntaxes/log.tmLanguage.json",
+          "hash": "11832499657255550755"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/lua/language-configuration.json",
+          "hash": "3820605914185880812"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/lua/package.json",
+          "hash": "9008787867021815538"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/lua/package.nls.json",
+          "hash": "17873553335601142990"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/lua/syntaxes/lua.tmLanguage.json",
+          "hash": "16383546015631555746"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/make/language-configuration.json",
+          "hash": "16648885071474823548"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/make/package.json",
+          "hash": "16784408443215028975"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/make/package.nls.json",
+          "hash": "3888019791272566465"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/make/syntaxes/make.tmLanguage.json",
+          "hash": "268693975667734937"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-basics/language-configuration.json",
+          "hash": "18233307155458366087"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-basics/package.json",
+          "hash": "1783520091182619350"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-basics/package.nls.json",
+          "hash": "15976674084072282202"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-basics/snippets/markdown.code-snippets",
+          "hash": "6114978112005964064"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-basics/syntaxes/markdown.tmLanguage.json",
+          "hash": "6736535724674181858"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/README.md",
+          "hash": "16403852338660471998"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/icon.png",
+          "hash": "10444891957812565041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_AMS-Regular-CYEKBG2K.woff",
+          "hash": "1277800741298674636"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_AMS-Regular-JKX5W2C4.ttf",
+          "hash": "14622021838352450257"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_AMS-Regular-U6PRYMIZ.woff2",
+          "hash": "400070926396392784"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Bold-5QL5CMTE.woff2",
+          "hash": "17773998729490398442"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Bold-WZ3QSGD3.woff",
+          "hash": "1439588089800526148"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Bold-ZTS3R3HK.ttf",
+          "hash": "5410650203063340288"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Regular-3LKEU76G.woff",
+          "hash": "4786128265507980435"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Regular-A7XRTZ5Q.ttf",
+          "hash": "5368343561724911408"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Caligraphic-Regular-KX5MEWCF.woff2",
+          "hash": "6972383420055087842"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Bold-2QVFK6NQ.woff2",
+          "hash": "2853409548802189963"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Bold-T4SWXBMT.woff",
+          "hash": "158849985897434220"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Bold-WGHVTYOR.ttf",
+          "hash": "4142865484389588061"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Regular-2PEIFJSJ.woff2",
+          "hash": "7924663624690393747"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Regular-5U4OPH2X.ttf",
+          "hash": "2148996003343892353"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Fraktur-Regular-PQMHCIK6.woff",
+          "hash": "7486345181022549489"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Bold-2GA4IZIN.woff",
+          "hash": "14918630935010253577"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Bold-W5FBVCZM.ttf",
+          "hash": "6275446520502512176"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Bold-YP5VVQRP.woff2",
+          "hash": "13388762392327813041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-BoldItalic-4P4C7HJH.woff",
+          "hash": "17688694731864974610"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-BoldItalic-N4V3DX7S.woff2",
+          "hash": "12168495543757901041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-BoldItalic-ODMLBJJQ.ttf",
+          "hash": "11647334597346444531"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Italic-I43T2HSR.ttf",
+          "hash": "6222531716790704439"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Italic-RELBIK7M.woff2",
+          "hash": "7832154381612898317"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Italic-SASNQFN2.woff",
+          "hash": "3660672195146820684"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Regular-ARRPAO67.woff2",
+          "hash": "12794056538857396342"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Regular-P5I74A2A.woff",
+          "hash": "9860930478578792427"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Main-Regular-W74P5G27.ttf",
+          "hash": "94239326971186"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-BoldItalic-6EBV3DK5.woff",
+          "hash": "17293715683219956514"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-BoldItalic-K4WTGH3J.woff2",
+          "hash": "15042472496155827865"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-BoldItalic-VB447A4D.ttf",
+          "hash": "8460438217918274935"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-Italic-6KGCHLFN.woff2",
+          "hash": "8122469853361661741"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-Italic-KKK3USB2.woff",
+          "hash": "7268422078187951040"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Math-Italic-SON4MRCA.ttf",
+          "hash": "960463891222664223"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Bold-RRNVJFFW.woff2",
+          "hash": "8504833597625381365"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Bold-STQ6RXC7.ttf",
+          "hash": "13447096195208589701"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Bold-X5M5EMOD.woff",
+          "hash": "14837426218220004059"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Italic-HMPFTM52.woff2",
+          "hash": "17845822591085125559"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Italic-PSN4QKYX.woff",
+          "hash": "7406634087846786819"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Italic-WTBAZBGY.ttf",
+          "hash": "2949340768385524248"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Regular-2TL3USAE.ttf",
+          "hash": "144899282971435853"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Regular-OQCII6EP.woff",
+          "hash": "2760027797446125970"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_SansSerif-Regular-XIQ62X4E.woff2",
+          "hash": "11899842994954110147"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Script-Regular-72OLXYNA.ttf",
+          "hash": "5657331075135907513"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Script-Regular-A5IFOEBS.woff",
+          "hash": "6587177092818258425"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Script-Regular-APUWIHLP.woff2",
+          "hash": "8890579655401521399"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size1-Regular-4HRHTS65.woff",
+          "hash": "17379255633636489141"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size1-Regular-5LRUTBFT.woff2",
+          "hash": "13141996307402917926"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size1-Regular-7K6AASVL.ttf",
+          "hash": "8222318362290270939"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size2-Regular-222HN3GT.ttf",
+          "hash": "2172471716568465531"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size2-Regular-K5ZHAIS6.woff",
+          "hash": "11616558039420309288"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size2-Regular-LELKET5D.woff2",
+          "hash": "3146167665028817394"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size3-Regular-TLFPAHDE.woff",
+          "hash": "3675572402052639635"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size3-Regular-UFCO6WCA.ttf",
+          "hash": "9517864763967383008"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size3-Regular-WQRQ47UD.woff2",
+          "hash": "16236180148932597536"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size4-Regular-7PGNVPQK.ttf",
+          "hash": "811900156212090070"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size4-Regular-CDMV7U5C.woff2",
+          "hash": "10381738071138559717"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Size4-Regular-PKMWZHNC.woff",
+          "hash": "16675321320309324613"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Typewriter-Regular-3F5K6SQ6.ttf",
+          "hash": "572795109381120503"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Typewriter-Regular-MJMFSK64.woff",
+          "hash": "14375522155816273332"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/KaTeX_Typewriter-Regular-VBYJ4NRC.woff2",
+          "hash": "14776693690915023502"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/editor.css",
+          "hash": "10384612711687816710"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-out/editor.js",
+          "hash": "6778220503730061244"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-src/editor.ts",
+          "hash": "8846319846589607169"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-src/markdownEditor.css",
+          "hash": "11926382577746645014"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-src/syntaxHighlighter.ts",
+          "hash": "8100071053196947074"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/markdown-editor-src/tsconfig.json",
+          "hash": "4395438726717307025"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/highlight.css",
+          "hash": "2259392231388521012"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/index.js",
+          "hash": "11248579123545452428"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/markdown.css",
+          "hash": "12113774379022233607"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/pre.js",
+          "hash": "7748783511252467365"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/preview-dark.svg",
+          "hash": "2259731765894788909"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/media/preview-light.svg",
+          "hash": "2584267727796020989"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/notebook-out/index.js",
+          "hash": "4086266008974728615"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/package.json",
+          "hash": "11092809370092073297"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/package.nls.json",
+          "hash": "8720513754177415325"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-language-features/schemas/package.schema.json",
+          "hash": "17087980394566806527"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/README.md",
+          "hash": "13777581641523731060"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/icon.png",
+          "hash": "10444891957812565041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_AMS-Regular.woff2",
+          "hash": "400070926396392784"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Caligraphic-Bold.woff2",
+          "hash": "17773998729490398442"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Caligraphic-Regular.woff2",
+          "hash": "6972383420055087842"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Fraktur-Bold.woff2",
+          "hash": "2853409548802189963"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Fraktur-Regular.woff2",
+          "hash": "7924663624690393747"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Main-Bold.woff2",
+          "hash": "13388762392327813041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Main-BoldItalic.woff2",
+          "hash": "12168495543757901041"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Main-Italic.woff2",
+          "hash": "7832154381612898317"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Main-Regular.woff2",
+          "hash": "12794056538857396342"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Math-BoldItalic.woff2",
+          "hash": "15042472496155827865"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Math-Italic.woff2",
+          "hash": "8122469853361661741"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_SansSerif-Bold.woff2",
+          "hash": "8504833597625381365"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_SansSerif-Italic.woff2",
+          "hash": "17845822591085125559"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_SansSerif-Regular.woff2",
+          "hash": "11899842994954110147"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Script-Regular.woff2",
+          "hash": "8890579655401521399"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Size1-Regular.woff2",
+          "hash": "13141996307402917926"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Size2-Regular.woff2",
+          "hash": "3146167665028817394"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Size3-Regular.woff2",
+          "hash": "16236180148932597536"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Size4-Regular.woff2",
+          "hash": "10381738071138559717"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/fonts/KaTeX_Typewriter-Regular.woff2",
+          "hash": "14776693690915023502"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/katex.js",
+          "hash": "4134910390707748547"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/notebook-out/katex.min.css",
+          "hash": "16369462048638994108"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/package.json",
+          "hash": "16579270429211468931"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/package.nls.json",
+          "hash": "10205387465693912868"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/preview-styles/index.css",
+          "hash": "15788088525745734907"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/syntaxes/md-math-block.tmLanguage.json",
+          "hash": "16292456272626629625"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/syntaxes/md-math-fence.tmLanguage.json",
+          "hash": "7105286358564372696"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/syntaxes/md-math-inline.tmLanguage.json",
+          "hash": "4518269322317305461"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/markdown-math/syntaxes/md-math.tmLanguage.json",
+          "hash": "6902075487312778551"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/README.md",
+          "hash": "16248467722888117688"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/icon.png",
+          "hash": "8749968895543510677"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/audioPreview.css",
+          "hash": "16412536029973178131"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/audioPreview.js",
+          "hash": "13360801975070999973"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/imagePreview.css",
+          "hash": "4679318719305732413"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/imagePreview.js",
+          "hash": "523579357337203908"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/loading-dark.svg",
+          "hash": "2549512642354537258"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/loading-hc.svg",
+          "hash": "10100909316061366"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/loading.svg",
+          "hash": "2514656240357191794"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/videoPreview.css",
+          "hash": "6935685579564001750"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/media/videoPreview.js",
+          "hash": "10461001392013593461"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/package.json",
+          "hash": "11089052323769122143"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/media-preview/package.nls.json",
+          "hash": "1595767478659643467"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/merge-conflict/README.md",
+          "hash": "14241625131112224319"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/merge-conflict/media/icon.png",
+          "hash": "11843453934461267884"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/merge-conflict/package.json",
+          "hash": "9757383377385692803"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/merge-conflict/package.nls.json",
+          "hash": "11520888043532734256"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/README.md",
+          "hash": "13734993296747321872"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/ThirdPartyNotices.txt",
+          "hash": "14918909193967586629"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/chat-webview-out/codicon.css",
+          "hash": "11139107858758841758"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/chat-webview-out/index-editor.js",
+          "hash": "1956942050052265532"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/chat-webview-out/index.js",
+          "hash": "11276495399293685551"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/markdown-preview-out/index.js",
+          "hash": "17218653474134262274"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/notebook-out/index.js",
+          "hash": "18098090245209907507"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/package.json",
+          "hash": "6388838911146027917"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/mermaid-markdown-features/package.nls.json",
+          "hash": "15483539085561126806"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/README.md",
+          "hash": "2890054827357761482"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/media/auth.css",
+          "hash": "11474018096223565542"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/media/favicon.ico",
+          "hash": "10406629917217583526"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/media/icon.png",
+          "hash": "17778710764317396177"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/media/index.html",
+          "hash": "3583576863643892136"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/package.json",
+          "hash": "8292289412527365580"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/microsoft-authentication/package.nls.json",
+          "hash": "5712749579703926712"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/LICENSE.txt",
+          "hash": "11929769968810875751"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/README.md",
+          "hash": "3051933602869315610"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/SECURITY.md",
+          "hash": "3143885973536810901"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/ThirdPartyNotices.txt",
+          "hash": "9485417807979590781"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/ci.yml",
+          "hash": "9264780453232077160"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/eslint.config.mjs",
+          "hash": "14648945928314109827"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/package.json",
+          "hash": "14838453206068066004"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug-companion/resources/logo.png",
+          "hash": "9251014269952632594"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/LICENSE.txt",
+          "hash": "289516533623072537"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/ThirdPartyNotices.txt",
+          "hash": "12399596569958227413"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/package.json",
+          "hash": "11130279127816656427"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/package.nls.json",
+          "hash": "10909963428922750742"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/readme.md",
+          "hash": "2392006245657646367"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/configure.svg",
+          "hash": "17119373486640233831"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/connect.svg",
+          "hash": "14230198318162335002"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/disconnect.svg",
+          "hash": "16277305399439910302"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/node.svg",
+          "hash": "13685777234343538584"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/open-file.svg",
+          "hash": "3707116270858636046"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/page.svg",
+          "hash": "14151653386299220979"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/pause.svg",
+          "hash": "3037964502453664507"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/restart.svg",
+          "hash": "2553997179073693524"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/resume.svg",
+          "hash": "3242577980690509222"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/service-worker.svg",
+          "hash": "13455406541468265950"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/stop-profiling.svg",
+          "hash": "12833425633717880894"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/stop.svg",
+          "hash": "9405773469027480233"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/dark/worker.svg",
+          "hash": "10455373112729569190"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/configure.svg",
+          "hash": "9423199221578633737"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/connect.svg",
+          "hash": "12329431804519144617"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/disconnect.svg",
+          "hash": "16480379307124614224"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/node.svg",
+          "hash": "13685777234343538584"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/open-file.svg",
+          "hash": "7099107889726207320"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/page.svg",
+          "hash": "12122332501868492438"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/pause.svg",
+          "hash": "10715917026269000468"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/restart.svg",
+          "hash": "9382981421744326202"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/resume.svg",
+          "hash": "6827489324622755062"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/service-worker.svg",
+          "hash": "6181493615276582810"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/stop.svg",
+          "hash": "6223002553210609511"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/light/worker.svg",
+          "hash": "12875952865905290738"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/logo.png",
+          "hash": "13227950263804846958"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/logo.svg",
+          "hash": "14708591486112698591"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/auto-attach.png",
+          "hash": "13518410539654814984"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/conditional-exception-breakpoints.png",
+          "hash": "16248883492979201219"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/exclude-caller.png",
+          "hash": "1147240335592885666"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/flame-chart.png",
+          "hash": "1377472842061772229"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/instrumentation-breakpoints.png",
+          "hash": "1195235349823091401"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/instrumentation-breakpoints2.png",
+          "hash": "7007608764587002209"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/logo-with-text.png",
+          "hash": "15506764182419102084"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/network-view.png",
+          "hash": "3215751386709159538"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/pretty-print.png",
+          "hash": "9264987269783766007"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/returnvalue.png",
+          "hash": "7331488049874968073"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/top-level-await.png",
+          "hash": "9128714258675810739"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/wasm-dwarf.png",
+          "hash": "13740314396754592151"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/web-worker.png",
+          "hash": "18415775480161819344"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/resources/readme/webview2.png",
+          "hash": "3017973145866750136"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/bootloader.js",
+          "hash": "13329555534618462327"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/chromehash_bg.wasm",
+          "hash": "12447017691440452679"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/diagnosticTool.css",
+          "hash": "11023452998458791042"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/diagnosticTool.js",
+          "hash": "3766808221596939546"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/extension.js",
+          "hash": "3320529786647022813"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/hash.js",
+          "hash": "17431416503828531728"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/renameWorker.js",
+          "hash": "4763609126245948599"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/targets/node/terminateProcess.sh",
+          "hash": "12906311780009215113"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/ui/basic-wat.configuration.json",
+          "hash": "185764270481027419"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/ui/basic-wat.tmLanguage.json",
+          "hash": "15345871093308876599"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/vendor/acorn-loose.js",
+          "hash": "13650853079235046361"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/vendor/acorn.js",
+          "hash": "14936887612099872915"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/watchdog.js",
+          "hash": "9101694882341839003"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/win32-app-container-tokens.win32-arm64-msvc-4ZJZ3U55.node",
+          "hash": "1859117648948049583"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/src/win32-app-container-tokens.win32-x64-msvc-VCQE7GJP.node",
+          "hash": "8864262338482228340"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.js-debug/telemetry.json",
+          "hash": "14405623462277591480"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/README.md",
+          "hash": "12821062940656586526"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/ThirdPartyNotices.txt",
+          "hash": "18112701822095842927"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/ci.yml",
+          "hash": "1637538661722181973"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/package.json",
+          "hash": "11621033570544086549"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/resources/icon.png",
+          "hash": "7814060228495902483"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ms-vscode.vscode-js-profile-table/tsconfig.browser.json",
+          "hash": "4457522429270077409"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/notebook-renderers/README.md",
+          "hash": "556067731140490983"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/notebook-renderers/media/icon.png",
+          "hash": "17813454216719218444"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/notebook-renderers/package.json",
+          "hash": "3976160087186825741"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/notebook-renderers/package.nls.json",
+          "hash": "10265976519608229702"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/notebook-renderers/renderer-out/index.js",
+          "hash": "5739041959421897603"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/npm/README.md",
+          "hash": "12271462354986162887"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/npm/images/code.svg",
+          "hash": "12725417803747729553"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/npm/images/npm_icon.png",
+          "hash": "1762659329498991188"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/npm/package.json",
+          "hash": "869288627253258417"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/npm/package.nls.json",
+          "hash": "7785399733478160578"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/objective-c/language-configuration.json",
+          "hash": "17813137184852212465"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/objective-c/package.json",
+          "hash": "8495147659773542851"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/objective-c/package.nls.json",
+          "hash": "17825464636533200107"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/objective-c/syntaxes/objective-c++.tmLanguage.json",
+          "hash": "13841048524923362225"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/objective-c/syntaxes/objective-c.tmLanguage.json",
+          "hash": "3045097082774219436"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/package.json",
+          "hash": "4432892690912204281"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/package.nls.json",
+          "hash": "13472893361509685151"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/perl.language-configuration.json",
+          "hash": "1945229802822252093"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/perl6.language-configuration.json",
+          "hash": "9725710870657209604"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/syntaxes/perl.tmLanguage.json",
+          "hash": "9760651438796080959"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/perl/syntaxes/perl6.tmLanguage.json",
+          "hash": "9168198087931065210"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php-language-features/README.md",
+          "hash": "11261303969056932246"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php-language-features/icons/logo.png",
+          "hash": "1021717183257106834"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php-language-features/package.json",
+          "hash": "3029664643963630448"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php-language-features/package.nls.json",
+          "hash": "8353489920332531791"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/language-configuration.json",
+          "hash": "12078938790952891682"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/package.json",
+          "hash": "6053559700621734154"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/package.nls.json",
+          "hash": "18045615237741599705"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/snippets/php.code-snippets",
+          "hash": "17331297611720879281"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/syntaxes/html.tmLanguage.json",
+          "hash": "6971053259689315701"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/php/syntaxes/php.tmLanguage.json",
+          "hash": "504469036708910727"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/powershell/language-configuration.json",
+          "hash": "9294215136748442590"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/powershell/package.json",
+          "hash": "15256010534973495470"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/powershell/package.nls.json",
+          "hash": "4703995217868403781"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/powershell/syntaxes/powershell.tmLanguage.json",
+          "hash": "1562018853312549082"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/prompt-basics/language-configuration.json",
+          "hash": "18233307155458366087"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/prompt-basics/package.json",
+          "hash": "5140806829261262829"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/prompt-basics/package.nls.json",
+          "hash": "10772077555721293982"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/prompt-basics/syntaxes/prompt.tmLanguage.json",
+          "hash": "14504526120999310454"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/pug/language-configuration.json",
+          "hash": "9670437499876799183"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/pug/package.json",
+          "hash": "7937781491130933524"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/pug/package.nls.json",
+          "hash": "662836296712714966"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/pug/syntaxes/pug.tmLanguage.json",
+          "hash": "3312898088891926418"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/python/language-configuration.json",
+          "hash": "8675396969034522307"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/python/package.json",
+          "hash": "17175047323229817906"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/python/package.nls.json",
+          "hash": "12133899322406220037"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/python/syntaxes/MagicPython.tmLanguage.json",
+          "hash": "3693352170497813970"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/python/syntaxes/MagicRegExp.tmLanguage.json",
+          "hash": "1303479040499263767"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/r/language-configuration.json",
+          "hash": "8852764076650819157"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/r/package.json",
+          "hash": "9549608559894018414"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/r/package.nls.json",
+          "hash": "16932762381452404016"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/r/syntaxes/r.tmLanguage.json",
+          "hash": "9320577156588052477"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/razor/language-configuration.json",
+          "hash": "11044259175243356462"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/razor/package.json",
+          "hash": "7009808534831048181"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/razor/package.nls.json",
+          "hash": "12437507486717548019"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/razor/syntaxes/cshtml.tmLanguage.json",
+          "hash": "16826378917939132345"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/references-view/README.md",
+          "hash": "12447683559050238718"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/references-view/media/demo.png",
+          "hash": "148070636689664029"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/references-view/media/icon.png",
+          "hash": "12693274584425165958"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/references-view/package.json",
+          "hash": "11317367407057973385"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/references-view/package.nls.json",
+          "hash": "3178389575523498515"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/restructuredtext/language-configuration.json",
+          "hash": "17242414849847244350"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/restructuredtext/package.json",
+          "hash": "13110545100772533895"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/restructuredtext/package.nls.json",
+          "hash": "10900302529034423259"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/restructuredtext/syntaxes/rst.tmLanguage.json",
+          "hash": "12044265615212314024"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ruby/language-configuration.json",
+          "hash": "5298976474031424142"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ruby/package.json",
+          "hash": "14013936659365915127"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ruby/package.nls.json",
+          "hash": "11034321563347306265"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/ruby/syntaxes/ruby.tmLanguage.json",
+          "hash": "3071273245616432311"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/rust/language-configuration.json",
+          "hash": "15497109832477050158"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/rust/package.json",
+          "hash": "14411431496297442062"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/rust/package.nls.json",
+          "hash": "10844891298570251079"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/rust/syntaxes/rust.tmLanguage.json",
+          "hash": "11631131425287699229"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/scss/language-configuration.json",
+          "hash": "11703384930901664535"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/scss/package.json",
+          "hash": "7719918322725313976"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/scss/package.nls.json",
+          "hash": "14553861760430471529"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/scss/syntaxes/sassdoc.tmLanguage.json",
+          "hash": "11686747634399115471"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/scss/syntaxes/scss.tmLanguage.json",
+          "hash": "18029002283758193943"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/search-result/README.md",
+          "hash": "140663271820855894"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/search-result/images/icon.png",
+          "hash": "8988010224144952203"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/search-result/package.json",
+          "hash": "13627382140419066733"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/search-result/package.nls.json",
+          "hash": "765468550807016832"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/search-result/syntaxes/searchResult.tmLanguage.json",
+          "hash": "17419228539017568436"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shaderlab/language-configuration.json",
+          "hash": "8666638994498600224"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shaderlab/package.json",
+          "hash": "8956632614875464440"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shaderlab/package.nls.json",
+          "hash": "13913931609473204485"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shaderlab/syntaxes/shaderlab.tmLanguage.json",
+          "hash": "7013679872659025307"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shellscript/language-configuration.json",
+          "hash": "7149005998122884116"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shellscript/package.json",
+          "hash": "11692043340806887502"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shellscript/package.nls.json",
+          "hash": "847209900285449152"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/shellscript/syntaxes/shell-unix-bash.tmLanguage.json",
+          "hash": "7850605031727515861"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/README.md",
+          "hash": "10878005373760652183"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/codicon.css",
+          "hash": "11139107858758841758"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/icon.png",
+          "hash": "16454950430179922267"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/index.js",
+          "hash": "6657311058663354958"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/main.css",
+          "hash": "4488396025093608622"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/preview-dark.svg",
+          "hash": "2259731765894788909"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/media/preview-light.svg",
+          "hash": "2584267727796020989"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/package.json",
+          "hash": "10562098120704029983"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/simple-browser/package.nls.json",
+          "hash": "10028434789117239905"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/sql/language-configuration.json",
+          "hash": "16784861796869220819"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/sql/package.json",
+          "hash": "16972754105302953869"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/sql/package.nls.json",
+          "hash": "17949601858921054842"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/sql/syntaxes/sql.tmLanguage.json",
+          "hash": "8183742196964611240"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/swift/language-configuration.json",
+          "hash": "17252409776727171599"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/swift/package.json",
+          "hash": "17917626834409352386"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/swift/package.nls.json",
+          "hash": "2723539599910058229"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/swift/snippets/swift.code-snippets",
+          "hash": "12794702726997678725"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/swift/syntaxes/swift.tmLanguage.json",
+          "hash": "12242776788739520639"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/.gitignore",
+          "hash": "17716867698315867387"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/README.md",
+          "hash": "9063178739172998140"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/ThirdPartyNotices.txt",
+          "hash": "6833513771965439866"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/media/icon.png",
+          "hash": "12885948764089817334"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/package.json",
+          "hash": "3910252101459800408"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/terminal-suggest/package.nls.json",
+          "hash": "12059592466283158641"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-abyss/package.json",
+          "hash": "3116358634080084015"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-abyss/package.nls.json",
+          "hash": "594599368209446649"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-abyss/themes/abyss-color-theme.json",
+          "hash": "4068095217542355523"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/document-dark.svg",
+          "hash": "5872998166205305246"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/document-light.svg",
+          "hash": "15444187427806754136"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/folder-dark.svg",
+          "hash": "2699970015457264096"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/folder-light.svg",
+          "hash": "4480843978606807996"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/folder-open-dark.svg",
+          "hash": "18429225595346473129"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/folder-open-light.svg",
+          "hash": "13566093381957197063"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/root-folder-dark.svg",
+          "hash": "9687045347409563984"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/root-folder-light.svg",
+          "hash": "4297451954881412487"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/root-folder-open-dark.svg",
+          "hash": "15572214445378284956"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/images/root-folder-open-light.svg",
+          "hash": "3948112682063889033"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/fileicons/vs_minimal-icon-theme.json",
+          "hash": "6929412381409666262"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/package.json",
+          "hash": "11823031394834567734"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/package.nls.json",
+          "hash": "2074176694979014135"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/2026-dark.json",
+          "hash": "1441432945234857755"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/2026-light.json",
+          "hash": "17087398523157471098"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/dark_modern.json",
+          "hash": "15995764313194730972"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/dark_plus.json",
+          "hash": "17853133938219631128"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/dark_vs.json",
+          "hash": "10917986815805299135"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/hc_black.json",
+          "hash": "11028430122750637143"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/hc_light.json",
+          "hash": "2183872779153919042"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/light_modern.json",
+          "hash": "15523855915034812994"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/light_plus.json",
+          "hash": "12101828464736923281"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-defaults/themes/light_vs.json",
+          "hash": "1933971614029453586"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-kimbie-dark/package.json",
+          "hash": "8145001390499833566"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-kimbie-dark/package.nls.json",
+          "hash": "2299977688478224072"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-kimbie-dark/themes/kimbie-dark-color-theme.json",
+          "hash": "11525170431633771734"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai-dimmed/package.json",
+          "hash": "6633118583601402183"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai-dimmed/package.nls.json",
+          "hash": "11820669485615696538"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai-dimmed/themes/dimmed-monokai-color-theme.json",
+          "hash": "15371696581185616996"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai/package.json",
+          "hash": "2940473688264039615"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai/package.nls.json",
+          "hash": "9914273708971041606"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-monokai/themes/monokai-color-theme.json",
+          "hash": "3984993608020900111"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-quietlight/package.json",
+          "hash": "2092854961720592870"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-quietlight/package.nls.json",
+          "hash": "9611174835145315497"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-quietlight/themes/quietlight-color-theme.json",
+          "hash": "10342830932085357313"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-red/package.json",
+          "hash": "10644904547622905100"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-red/package.nls.json",
+          "hash": "15380332746210217006"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-red/themes/Red-color-theme.json",
+          "hash": "7790402803138421631"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/README.md",
+          "hash": "6927984183403715588"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/ThirdPartyNotices.txt",
+          "hash": "9361992954908815483"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/icons/seti-circular-128x128.png",
+          "hash": "14543535322365999256"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/icons/seti.woff",
+          "hash": "11060897331915832920"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/icons/vs-seti-icon-theme.json",
+          "hash": "5496412372068455982"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/package.json",
+          "hash": "16903338076889005016"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-seti/package.nls.json",
+          "hash": "9356748887909598111"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-dark/package.json",
+          "hash": "18264041581186205565"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-dark/package.nls.json",
+          "hash": "7431835001544444228"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-dark/themes/solarized-dark-color-theme.json",
+          "hash": "7928249031452358195"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-light/package.json",
+          "hash": "12445417649804398840"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-light/package.nls.json",
+          "hash": "17437330430798745906"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-solarized-light/themes/solarized-light-color-theme.json",
+          "hash": "13266291518466308102"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-tomorrow-night-blue/package.json",
+          "hash": "10786030383274461631"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-tomorrow-night-blue/package.nls.json",
+          "hash": "12107206217122255019"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/theme-tomorrow-night-blue/themes/tomorrow-night-blue-color-theme.json",
+          "hash": "4234329247121807074"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/tunnel-forwarding/.vscode/launch.json",
+          "hash": "9885815596990280861"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/tunnel-forwarding/media/icon.png",
+          "hash": "16556317417012584621"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/tunnel-forwarding/package.json",
+          "hash": "9594685291124353597"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/tunnel-forwarding/package.nls.json",
+          "hash": "3014134672717457141"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/language-configuration.json",
+          "hash": "12204436369074813285"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/package.json",
+          "hash": "12570327838249267267"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/package.nls.json",
+          "hash": "6847307992729854957"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/snippets/typescript.code-snippets",
+          "hash": "12720243020750261600"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/syntaxes/TypeScript.tmLanguage.json",
+          "hash": "5369188168595564924"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/syntaxes/TypeScriptReact.tmLanguage.json",
+          "hash": "12134920813641501448"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/syntaxes/jsdoc.js.injection.tmLanguage.json",
+          "hash": "7969817219967624467"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-basics/syntaxes/jsdoc.ts.injection.tmLanguage.json",
+          "hash": "6955483130543010477"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/README.md",
+          "hash": "8895122504070480445"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/media/icon.png",
+          "hash": "379735197355276058"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/package.json",
+          "hash": "9510960162864259538"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/package.nls.json",
+          "hash": "15336926615696252432"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/resources/walkthroughs/create-a-js-file.svg",
+          "hash": "2231495263414828933"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/resources/walkthroughs/debug-and-run.svg",
+          "hash": "3592940909282475354"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/resources/walkthroughs/install-node-js.svg",
+          "hash": "8540565315446290364"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/resources/walkthroughs/learn-more.svg",
+          "hash": "16267630737513053846"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/schemas/jsconfig.schema.json",
+          "hash": "16175577476313871123"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/schemas/package.schema.json",
+          "hash": "2317372467282080655"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/typescript-language-features/schemas/tsconfig.schema.json",
+          "hash": "7867389372943870160"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/vb/language-configuration.json",
+          "hash": "17738358874088942594"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/vb/package.json",
+          "hash": "10005832965143702065"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/vb/package.nls.json",
+          "hash": "2430735155315332900"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/vb/snippets/vb.code-snippets",
+          "hash": "12053887845673069923"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/vb/syntaxes/asp-vb-net.tmLanguage.json",
+          "hash": "8926094090363234070"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/package.json",
+          "hash": "5075683588430132728"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/package.nls.json",
+          "hash": "9054752677326749563"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/syntaxes/xml.tmLanguage.json",
+          "hash": "6817335690774777593"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/syntaxes/xsl.tmLanguage.json",
+          "hash": "16291451648436867589"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/xml.language-configuration.json",
+          "hash": "12150312814128091775"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/xml/xsl.language-configuration.json",
+          "hash": "9514409703032478249"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/language-configuration.json",
+          "hash": "5339240951178309368"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/package.json",
+          "hash": "4429494730668213039"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/package.nls.json",
+          "hash": "18231216447863363543"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml-1.0.tmLanguage.json",
+          "hash": "15483872297342008963"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml-1.1.tmLanguage.json",
+          "hash": "4281845025176045688"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml-1.2.tmLanguage.json",
+          "hash": "14333946137924515120"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml-1.3.tmLanguage.json",
+          "hash": "3245468535194442751"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml-embedded.tmLanguage.json",
+          "hash": "4283396050526142279"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/extensions/yaml/syntaxes/yaml.tmLanguage.json",
+          "hash": "4751115659328824675"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-bul.rtf",
+          "hash": "8272460799541566137"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-chs.rtf",
+          "hash": "2550114195647964153"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-cht.rtf",
+          "hash": "16472288596169777617"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-deu.rtf",
+          "hash": "6718757967856980674"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-esp.rtf",
+          "hash": "10867636055108477454"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-fra.rtf",
+          "hash": "9916085262239084135"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-hun.rtf",
+          "hash": "7414097079422434557"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-ita.rtf",
+          "hash": "14299732823171882093"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-jpn.rtf",
+          "hash": "11963714943503504151"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-kor.rtf",
+          "hash": "10861498453189204070"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-ptb.rtf",
+          "hash": "9449464261085690498"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-rus.rtf",
+          "hash": "16335808602257534526"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/licenses/LICENSE-trk.rtf",
+          "hash": "12227443209059165034"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/node_modules.asar",
+          "hash": "14116378550207744764"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/node_modules.asar.unpacked/vsda/build/Release/vsda.node",
+          "hash": "9769293988895621594"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/node_modules.asar.unpacked/vsda/rust/web/vsda_bg.wasm",
+          "hash": "3940823435512895459"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/package.json",
+          "hash": "14665564335740327100"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/policies/policy.json",
+          "hash": "9918120723334503711"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/product.json",
+          "hash": "17146004184717313720"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/resources/linux/code.png",
+          "hash": "1740527434784806149"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/telemetry-core.json",
+          "hash": "8850298055453097250"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/app/telemetry-extensions.json",
+          "hash": "10748462616767578327"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/completions/bash/code",
+          "hash": "8504876171497792556"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/resources/completions/zsh/_code",
+          "hash": "2447742104154510840"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/snapshot_blob.bin",
+          "hash": "3310373930156207962"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/v8_context_snapshot.bin",
+          "hash": "7244304587369172293"
+        },
+        {
+          "file": "apps/extension/.vscode-test/vscode-linux-x64-1.126.0/vk_swiftshader_icd.json",
+          "hash": "9517209623533114357"
+        },
+        {
+          "file": "apps/extension/.vscode/launch.json",
+          "hash": "17623858325615560485"
+        },
+        {
+          "file": "apps/extension/.vscode/tasks.json",
+          "hash": "10617121237335196857"
+        },
+        {
+          "file": "apps/extension/.vscodeignore",
+          "hash": "7517630930420396365"
+        },
+        {
+          "file": "apps/extension/package-lock.json",
+          "hash": "2040689281850111896"
+        },
+        {
+          "file": "apps/extension/package.json",
+          "hash": "12524027443125162270",
+          "deps": [
+            "npm:@nx/js@23.0.1",
+            "npm:@playwright/test@1.61.1",
+            "npm:@types/glob@9.0.0",
+            "npm:@types/mocha@10.0.10",
+            "npm:@types/node@26.0.1",
+            "npm:@types/vscode@1.125.0",
+            "npm:@vscode/test-electron@3.0.0",
+            "npm:brace-expansion@1.1.15",
+            "npm:es-module-lexer@2.1.0",
+            "npm:glob@13.0.6",
+            "npm:mocha@11.7.6",
+            "npm:nx@23.0.1",
+            "npm:playwright@1.61.1",
+            "npm:ts-node@10.9.2",
+            "npm:typescript@6.0.3",
+            "npm:vitest@4.1.9",
+            "npm:@agentclientprotocol/sdk@1.0.0",
+            "acpr"
+          ]
+        },
+        {
+          "file": "apps/extension/project.json",
+          "hash": "10063305173511233525"
+        },
+        {
+          "file": "apps/extension/resources/icon.svg",
+          "hash": "6662889109110018512"
+        },
+        {
+          "file": "apps/extension/scripts/install-from-github.sh",
+          "hash": "14520971305310007026"
+        },
+        {
+          "file": "apps/extension/scripts/self-install.js",
+          "hash": "677904399609849719"
+        },
+        {
+          "file": "apps/extension/src/acp/client.ts",
+          "hash": "7130414308438454357",
+          "deps": [
+            "npm:@agentclientprotocol/sdk@1.0.0"
+          ]
+        },
+        {
+          "file": "apps/extension/src/acp/index.ts",
+          "hash": "597096003879889857",
+          "deps": [
+            "npm:@agentclientprotocol/sdk@1.0.0"
+          ]
+        },
+        {
+          "file": "apps/extension/src/acpProvider.ts",
+          "hash": "1383338535433620811"
+        },
+        {
+          "file": "apps/extension/src/agentManager.ts",
+          "hash": "16262932572062803423"
+        },
+        {
+          "file": "apps/extension/src/agentManagerUI.ts",
+          "hash": "15165310187139367164"
+        },
+        {
+          "file": "apps/extension/src/agentTreeView.ts",
+          "hash": "459452922745552664"
+        },
+        {
+          "file": "apps/extension/src/extension.ts",
+          "hash": "17806234288420411005"
+        },
+        {
+          "file": "apps/extension/src/test/playwright/playwright.config.ts",
+          "hash": "5773855703705454272",
+          "deps": [
+            "npm:@playwright/test@1.61.1"
+          ]
+        },
+        {
+          "file": "apps/extension/src/test/playwright/smoke.test.ts",
+          "hash": "16199420936589022088",
+          "deps": [
+            "npm:@playwright/test@1.61.1",
+            [
+              "npm:@vscode/test-electron@3.0.0",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "apps/extension/src/test/runTest.ts",
+          "hash": "14488084386472228149",
+          "deps": [
+            "npm:@vscode/test-electron@3.0.0"
+          ]
+        },
+        {
+          "file": "apps/extension/src/test/suite/extension.test.ts",
+          "hash": "7705442107361359957"
+        },
+        {
+          "file": "apps/extension/src/test/suite/index.ts",
+          "hash": "9833893121496293774",
+          "deps": [
+            "npm:glob@13.0.6",
+            "npm:mocha@11.7.6"
+          ]
+        },
+        {
+          "file": "apps/extension/src/test/unit/agentManager.unit.test.ts",
+          "hash": "7739942443199485594",
+          "deps": [
+            "npm:vitest@4.1.9"
+          ]
+        },
+        {
+          "file": "apps/extension/test-fixtures/mock-agents/mock-acp-agent.js",
+          "hash": "12572188922110398203"
+        },
+        {
+          "file": "apps/extension/test/runTest.ts",
+          "hash": "15409620750486348763",
+          "deps": [
+            "npm:@vscode/test-electron@3.0.0"
+          ]
+        },
+        {
+          "file": "apps/extension/test/suite/index.cjs",
+          "hash": "15267179679185860169"
+        },
+        {
+          "file": "apps/extension/test/suite/index.ts",
+          "hash": "9490108076672033313"
+        },
+        {
+          "file": "apps/extension/tsconfig.json",
+          "hash": "4079412060060220903"
+        },
+        {
+          "file": "apps/extension/tsdown.config.ts",
+          "hash": "8476797734885183421",
+          "deps": [
+            "npm:tsdown@0.22.3"
+          ]
+        },
+        {
+          "file": "apps/extension/vitest.config.ts",
+          "hash": "3543920402326574699",
+          "deps": [
+            "npm:vitest@4.1.9"
+          ]
+        },
+        {
+          "file": "apps/extension/vscode.d.ts",
+          "hash": "9937629499513244443"
+        }
+      ],
+      "shared": [
+        {
+          "file": "libs/shared/project.json",
+          "hash": "14957791478957168317"
+        },
+        {
+          "file": "libs/shared/tsconfig.json",
+          "hash": "4400337479067572279"
+        }
+      ],
+      "acpr": [
+        {
+          "file": "libs/acpr/.gitignore",
+          "hash": "13377058428818518023"
+        },
+        {
+          "file": "libs/acpr/package.json",
+          "hash": "16496417782710959234",
+          "deps": [
+            "npm:@anthropic-ai/sdk@0.106.0",
+            "claude-config",
+            "npm:@agentclientprotocol/sdk@1.0.0"
+          ]
+        },
+        {
+          "file": "libs/acpr/project.json",
+          "hash": "16819310519925555310"
+        },
+        {
+          "file": "libs/acpr/src/adapters/claude-acp.ts",
+          "hash": "3657130862032766035",
+          "deps": [
+            "npm:@agentclientprotocol/sdk@1.0.0",
+            "npm:@anthropic-ai/sdk@0.106.0"
+          ]
+        },
+        {
+          "file": "libs/acpr/src/cli.ts",
+          "hash": "12839710928954704004"
+        },
+        {
+          "file": "libs/acpr/test/e2e-chat.mjs",
+          "hash": "11347395717379020457"
+        },
+        {
+          "file": "libs/acpr/tsconfig.json",
+          "hash": "8406129075381316262"
+        },
+        {
+          "file": "libs/acpr/tsdown.config.ts",
+          "hash": "15305990143126285930",
+          "deps": [
+            "npm:tsdown@0.22.3"
+          ]
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "10903096568017136473"
+}

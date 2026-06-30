@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx run extension:package",
+    "startTime": "2026-06-30T13:17:01.760Z",
+    "endTime": "2026-06-30T13:17:06.035Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "extension:package",
+      "target": "package",
+      "projectName": "extension",
+      "hash": "11155999435685243889",
+      "startTime": "2026-06-30T13:17:01.783Z",
+      "endTime": "2026-06-30T13:17:06.030Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 0
+    }
+  ]
+}
