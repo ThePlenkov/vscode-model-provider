@@ -1,0 +1,140 @@
+{
+  "name": "vscode-model-provider",
+  "displayName": "ACP Model Provider",
+  "description": "Expose ACP-compatible agent models (Claude Code, Gemini CLI, Codex, OpenCode, and more) to VS Code Copilot Chat via the LanguageModelChatProvider API",
+  "version": "0.1.0",
+  "publisher": "theplenkov",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThePlenkov/vscode-model-provider"
+  },
+  "engines": {
+    "vscode": "^1.104.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "activationEvents": [
+    "onLanguageModelChatContext"
+  ],
+  "contributes": {
+    "languageModelChatProviders": [
+      {
+        "vendor": "acp",
+        "displayName": "ACP Agents"
+      }
+    ],
+    "configuration": {
+      "title": "ACP Model Provider",
+      "properties": {
+        "acpModelProvider.agents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for this agent config (e.g. 'claude-code')"
+              },
+              "label": {
+                "type": "string",
+                "description": "Display name in VS Code model picker (e.g. 'Claude Code')"
+              },
+              "cliCommand": {
+                "type": "string",
+                "description": "CLI command to spawn the agent (e.g. 'claude', 'gemini', 'opencode')"
+              },
+              "cliArgs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": ["--acp"],
+                "description": "Arguments passed to the CLI (default: ['--acp'])"
+              },
+              "enabled": {
+                "type": "boolean",
+                "default": true,
+                "description": "Enable or disable this agent"
+              }
+            },
+            "required": ["id", "label", "cliCommand"]
+          },
+          "default": [
+            {
+              "id": "copilot",
+              "label": "GitHub Copilot CLI",
+              "cliCommand": "copilot",
+              "cliArgs": ["--acp", "--stdio"],
+              "enabled": true
+            },
+            {
+              "id": "claude-code",
+              "label": "Claude Code",
+              "cliCommand": "claude",
+              "cliArgs": ["--acp"],
+              "enabled": true
+            },
+            {
+              "id": "gemini",
+              "label": "Gemini CLI",
+              "cliCommand": "gemini",
+              "cliArgs": ["--experimental-acp"],
+              "enabled": true
+            },
+            {
+              "id": "qwen-code",
+              "label": "Qwen Code",
+              "cliCommand": "qwen-code",
+              "cliArgs": ["--acp"],
+              "enabled": true
+            },
+            {
+              "id": "opencode",
+              "label": "OpenCode",
+              "cliCommand": "opencode",
+              "cliArgs": ["acp"],
+              "enabled": true
+            },
+            {
+              "id": "codex",
+              "label": "Codex CLI",
+              "cliCommand": "codex",
+              "cliArgs": ["--acp"],
+              "enabled": true
+            }
+          ],
+          "description": "List of ACP-compatible agent configurations to expose as models"
+        },
+        "acpModelProvider.autoDiscover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically discover available ACP agents on the system PATH"
+        },
+        "acpModelProvider.modelDisplayPrefix": {
+          "type": "string",
+          "default": "ACP",
+          "description": "Prefix shown in the VS Code model picker for models from this provider"
+        }
+      }
+    }
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "download-api": "dts dev",
+    "postdownload-api": "dts main",
+    "postinstall": "npm run download-api",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.104.0",
+    "@vscode/dts": "^0.4.1",
+    "typescript": "^5.8.3"
+  }
+}
