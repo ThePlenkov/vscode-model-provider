@@ -15,17 +15,16 @@ Expose any [ACP (Agent Client Protocol)](https://agentclientprotocol.com)-compat
 │                  ACP / Codex CLI / o4-mini                    │
 │                                                               │
 │   Chat request → LanguageModelChatProvider API                │
-│                     │                                         │
-│                     ▼                                         │
-│            ┌─────────────────┐                               │
-│            │ ACP Model Provider │  ← this extension           │
-│            │  (acpProvider.ts)  │                             │
-│            └────────┬──────────┘                              │
-│                     │ spawn + JSON-RPC/stdio                   │
-│          ┌──────────┼──────────────────┐                       │
-│          ▼          ▼                  ▼                       │
-│    Claude Code   Gemini CLI        Codex CLI                   │
-│    `--acp`       `--exp-acp`       `--acp`                     │
+│                                                               │
+│            ┌─────────────────────────┐                       │
+│            │   ACP Model Provider    │  ← this extension     │
+│            │     (acpProvider.ts)    │                       │
+│            └────────────┬────────────┘                       │
+│                          │ spawn + JSON-RPC/stdio             │
+│               ┌──────────┼──────────────────┐                │
+│               ▼          ▼                  ▼                │
+│         Claude Code   Gemini CLI        Codex CLI              │
+│         `--acp`       `--exp-acp`       `--acp`               │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -45,20 +44,52 @@ Any agent implementing ACP works, including:
 | Codex CLI | `npm i -g @zed-industries/codex-acp` | `codex --acp` |
 | Kiro CLI | `brew install kiro-dev/tap/kiro` | `kiro-cli acp` |
 
-## Setup
+## Install
 
-### 1. Install the extension
+### Option A: Global npm install (recommended)
 
 ```bash
-# Inside the repo
-npm install
-npm run compile
-# Then install from the .vsix via: Extensions → … → Install from VSIX
+npm install -g vscode-model-provider
 ```
 
-Or publish to the Marketplace (TODO).
+That's it. The `postinstall` script:
+1. Compiles TypeScript
+2. Packages a `.vsix`
+3. Installs it into your VS Code automatically
 
-### 2. Configure agents
+Restart VS Code, then open Copilot Chat → model picker → `ACP / <Agent> / <Model>`.
+
+> **Prerequisites:** `code` CLI must be on your PATH. Install from
+> [code.visualstudio.com/docs/editor/command-line](https://code.visualstudio.com/docs/editor/command-line).
+
+### Option B: Manual / local development
+
+```bash
+git clone https://github.com/ThePlenkov/vscode-model-provider.git
+cd vscode-model-provider
+npm install
+npm run install:vsix     # compile + package + install
+
+# or step by step:
+npm run compile          # TypeScript → out/
+npx vsce package         # → vscode-model-provider.vsix
+code --install-extension vscode-model-provider.vsix
+```
+
+### Update
+
+```bash
+npm update -g vscode-model-provider
+```
+
+### Uninstall
+
+```bash
+code --uninstall-extension theplenkov.vscode-model-provider
+npm uninstall -g vscode-model-provider
+```
+
+## Configure agents
 
 Open **Settings → ACP Model Provider → Agents** and ensure your agents are listed. The default config already includes the most common agents.
 
@@ -76,7 +107,7 @@ Open **Settings → ACP Model Provider → Agents** and ensure your agents are l
 }
 ```
 
-### 3. Pick your model
+## Pick your model
 
 Open Copilot Chat, click the model picker (top right of the chat panel), and select an ACP agent model — e.g. `ACP / Claude Code / Claude 3.5 Sonnet`.
 
@@ -85,12 +116,14 @@ Open Copilot Chat, click the model picker (top right of the chat panel), and sel
 ```
 src/
 ├── acp/
-│   ├── types.ts        # All ACP protocol types (JSON-RPC 2.0, init, session/*)
-│   ├── client.ts       # AcpClient: spawn stdio process, JSON-RPC send/recv, events
+│   ├── types.ts        All ACP protocol types (JSON-RPC 2.0, init, session/*)
+│   ├── client.ts       AcpClient: spawn stdio process, JSON-RPC send/recv, events
 │   └── index.ts
-├── agentManager.ts     # AgentManager: PATH discovery, connect-to-discover, session pool
-├── acpProvider.ts      # AcpModelProvider: implements LanguageModelChatProvider
-└── extension.ts       # activate(), register provider, manage command
+├── agentManager.ts     AgentManager: PATH discovery, connect-to-discover
+├── acpProvider.ts      AcpModelProvider: implements LanguageModelChatProvider
+└── extension.ts        Entry point + register provider + manage command
+scripts/
+└── self-install.js     postinstall: compile → vsce package → code --install-extension
 ```
 
 ### Key design decisions
@@ -102,18 +135,18 @@ src/
 ## Known Limitations
 
 - Model metadata (max tokens, vision support) is estimated — ACP doesn't expose this in `initialize` yet.
-- Tool call execution: the provider reports tool calls to VS Code via `LanguageModelToolCallPart`, but the agent must also handle the permission flow via `session/request_permission`.
+- Tool call execution: the provider reports tool calls to VS Code via `LanguageModelToolCallPart`.
 - Persistent sessions (multi-turn memory) are not yet implemented — each turn starts a fresh session.
 - `authenticate`: if your agent requires auth (e.g. API key), implement the `authenticate` round-trip in `agentManager.ts`.
 
 ## Contributing
 
-PRs welcome. The main areas to extend:
+PRs welcome. Main areas to extend:
 
 1. **Auth flow** — implement `authenticate()` in `AgentManager` for agents requiring API keys
 2. **Persistent sessions** — replace ephemeral sessions with a long-lived process pool in `AgentManager`
-3. **Tool result streaming** — the `tool_call_update` handler in `acpProvider.ts` can accumulate partial results
-4. **Better model metadata** — some agents advertise model capabilities; parse those in `AcpClient.discoveredModels`
+3. **Tool result streaming** — the `tool_call_update` handler can accumulate partial results
+4. **Better model metadata** — parse capabilities from the `initialize` response
 
 ## References
 

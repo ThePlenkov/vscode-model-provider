@@ -8,8 +8,18 @@
     "type": "git",
     "url": "https://github.com/ThePlenkov/vscode-model-provider"
   },
+  "keywords": [
+    "vscode",
+    "copilot",
+    "acp",
+    "agent",
+    "claude-code",
+    "gemini-cli",
+    "language-model"
+  ],
   "engines": {
-    "vscode": "^1.104.0"
+    "vscode": "^1.104.0",
+    "node": ">=18"
   },
   "categories": [
     "AI",
@@ -121,20 +131,20 @@
     }
   },
   "main": "./out/extension.js",
+  "bin": {
+    "vscode-model-provider": "./scripts/self-install.js"
+  },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "download-api": "dts dev",
-    "postdownload-api": "dts main",
-    "postinstall": "npm run download-api",
+    "prepare": "npm run compile",
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "install:vsix": "node scripts/self-install.js"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.104.0",
-    "@vscode/dts": "^0.4.1",
     "typescript": "^5.8.3"
   }
 }
