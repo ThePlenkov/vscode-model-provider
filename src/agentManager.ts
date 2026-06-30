@@ -98,10 +98,12 @@ export class AgentManager extends EventEmitter {
   async createSession(
     modelId: string
   ): Promise<{ client: AcpClient; sessionId: string }> {
-    const { agentId, client } = this._resolveClientForModel(modelId);
+    const { agentId, rawModelId, config } = this.resolveModelConfig(modelId);
+    const client = new AcpClient();
+    await client.connect(config.cliCommand, config.cliArgs ?? ["--acp"]);
     const { sessionId } = await client.sessionNew({
       cwd: process.cwd(),
-      model: modelId,
+      model: rawModelId,
     });
     return { client, sessionId };
   }
@@ -158,34 +160,35 @@ export class AgentManager extends EventEmitter {
   }
 
   /** Parse `<agent-id>:<model-id>` → { agentId, modelId }. */
-  private _resolveClientForModel(
+  /**
+   * Return the config for a given model ID.
+   * Throws if the model ID format is wrong or the agent is unknown.
+   */
+  resolveModelConfig(
     modelId: string
-  ): { agentId: string; client: AcpClient; modelId: string } {
+  ): { agentId: string; rawModelId: string; config: { cliCommand: string; cliArgs?: string[] } } {
     const colonIdx = modelId.indexOf(":");
     if (colonIdx === -1) {
       throw new Error(
-        `Model ID '${modelId}' does not match the '<agent-id>:<model-id>' convention used by this provider`
+        `Model ID '${modelId}' does not match the '<agent-id>:<model-id>' convention`
       );
     }
     const agentId = modelId.slice(0, colonIdx);
     const rawModelId = modelId.slice(colonIdx + 1);
 
     const agent = this._agents.get(agentId);
-    if (!agent?.connected) {
-      throw new Error(`Agent '${agentId}' is not connected`);
+    if (!agent) {
+      throw new Error(`Agent '${agentId}' is not configured`);
+    }
+    if (!agent.connected) {
+      throw new Error(`Agent '${agentId}' is not connected: ${agent.lastError ?? "unknown"}`);
     }
 
-    // Use or create a persistent client for this agent
-    let session = this._sessions.get(agentId);
-    if (!session) {
-      const client = new AcpClient();
-      // Re-connect (persistent connection)
-      throw new Error(
-        "Persistent sessions not yet implemented — open an issue at https://github.com/ThePlenkov/vscode-model-provider"
-      );
-    }
-
-    return { agentId, client: session.client, modelId: rawModelId };
+    return {
+      agentId,
+      rawModelId,
+      config: { cliCommand: agent.config.cliCommand, cliArgs: agent.config.cliArgs },
+    };
   }
 
   private _withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {

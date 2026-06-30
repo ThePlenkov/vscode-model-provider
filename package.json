@@ -60,7 +60,9 @@
                 "items": {
                   "type": "string"
                 },
-                "default": ["--acp"],
+                "default": [
+                  "--acp"
+                ],
                 "description": "Arguments passed to the CLI (default: ['--acp'])"
               },
               "enabled": {
@@ -69,49 +71,66 @@
                 "description": "Enable or disable this agent"
               }
             },
-            "required": ["id", "label", "cliCommand"]
+            "required": [
+              "id",
+              "label",
+              "cliCommand"
+            ]
           },
           "default": [
             {
               "id": "copilot",
               "label": "GitHub Copilot CLI",
               "cliCommand": "copilot",
-              "cliArgs": ["--acp", "--stdio"],
+              "cliArgs": [
+                "--acp",
+                "--stdio"
+              ],
               "enabled": true
             },
             {
               "id": "claude-code",
               "label": "Claude Code",
               "cliCommand": "claude",
-              "cliArgs": ["--acp"],
+              "cliArgs": [
+                "--acp"
+              ],
               "enabled": true
             },
             {
               "id": "gemini",
               "label": "Gemini CLI",
               "cliCommand": "gemini",
-              "cliArgs": ["--experimental-acp"],
+              "cliArgs": [
+                "--experimental-acp"
+              ],
               "enabled": true
             },
             {
               "id": "qwen-code",
               "label": "Qwen Code",
               "cliCommand": "qwen-code",
-              "cliArgs": ["--acp"],
+              "cliArgs": [
+                "--acp"
+              ],
               "enabled": true
             },
             {
               "id": "opencode",
               "label": "OpenCode",
               "cliCommand": "opencode",
-              "cliArgs": ["acp"],
+              "cliArgs": [
+                "acp"
+              ],
               "enabled": true
             },
             {
               "id": "codex",
               "label": "Codex CLI",
               "cliCommand": "codex",
-              "cliArgs": ["--acp"],
+              "cliArgs": [
+                "--acp"
+              ],
               "enabled": true
             }
           ],
@@ -139,12 +158,24 @@
     "compile": "tsc -p ./",
     "lint": "eslint src --ext ts",
     "watch": "tsc -watch -p ./",
-    "install:vsix": "node scripts/self-install.js"
+    "install:vsix": "node scripts/self-install.js",
+    "test": "npm run test:unit",
+    "test:unit": "npx vitest run --config vitest.config.ts",
+    "test:unit:watch": "npx vitest --config vitest.config.ts",
+    "test:e2e": "npm run compile && node src/test/runTest.js",
+    "test:smoke": "npx playwright test --config src/test/playwright/playwright.config.ts"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.104.0",
-    "typescript": "^5.8.3"
+    "@vscode/test-electron": "^3.0.0",
+    "glob": "^13.0.6",
+    "mocha": "^11.7.6",
+    "playwright": "^1.61.1",
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.9"
   }
 }

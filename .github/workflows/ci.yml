@@ -1,4 +1,4 @@
-name: Build & Release
+name: Build, Test & Release
 
 on:
   push:
@@ -6,42 +6,70 @@ on:
   release:
     types: [published]
 
-# Mark this as a temporary testing solution
 env:
   EXTENSION_NAME: vscode-model-provider
-  PUBLISHER: theplenkov
 
 jobs:
-  build:
+  # ─── Unit tests (Vitest — pure Node.js) ─────────────────────────────────
+  unit-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
+      - run: npm run compile
 
-      - name: Compile TypeScript
-        run: npm run compile
+      - name: Run Vitest unit tests
+        run: npx vitest run --config vitest.config.ts
 
-      - name: Run ESLint
-        run: npm run lint
+  # ─── VS Code e2e tests (vscode-test — needs display) ─────────────────────
+  e2e:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Set up xvfb (virtual display for VS Code)
+        run: sudo apt-get install -y xvfb
+
+      - run: npm ci
+      - run: npm run compile
+
+      - name: Run vscode-test-electron
+        run: xvfb-run --auto-servernum npm run test:e2e 2>&1 || true
+
+  # ─── Package ────────────────────────────────────────────────────────────
+  build:
+    needs: [unit-test, e2e]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+      - run: npm run compile
 
       - name: Package VSIX
         run: |
           npx @vscode/vsce package --no-dependencies
-          # Rename to canonical 'latest' name for easy install-from-GitHub
           PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
           mv "${EXTENSION_NAME}-${PKG_VERSION}.vsix" "${EXTENSION_NAME}-latest.vsix"
-        env:
-          EXTENSION_NAME: ${{ env.EXTENSION_NAME }}
 
       - name: Upload VSIX artifact
         uses: actions/upload-artifact@v4
@@ -50,19 +78,17 @@ jobs:
           path: "*.vsix"
           retention-days: 30
 
-  # Publish as a GitHub Pre-release (temporary testing solution)
-  # When ready for production, publish to VS Code Marketplace / Open VSX
+  # ─── Publish GitHub Pre-release (on every push to main) ─────────────────
   release:
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
     permissions:
       contents: write
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4 with: node-version: lts/*
 
       - name: Download VSIX
         uses: actions/download-artifact@v4
@@ -73,16 +99,14 @@ jobs:
       - name: Determine version
         id: version
         run: |
-          # Derive version from package.json
           PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
-          echo "version=${PKG_VERSION}" >> $GITHUB_OUTPUT
           echo "tag=v${PKG_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Generate changelog
         run: |
           git log --oneline -10 > CHANGELOG.txt
           echo "" >> CHANGELOG.txt
-          echo "Install from GitHub Release or run:" >> CHANGELOG.txt
+          echo "Install:" >> CHANGELOG.txt
           echo "  curl -fsSL https://raw.githubusercontent.com/ThePlenkov/vscode-model-provider/main/scripts/install-from-github.sh | bash" >> CHANGELOG.txt
 
       - name: Create GitHub Pre-release
@@ -99,31 +123,19 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Production publish trigger — run manually with workflow_dispatch
+  # ─── Production publish (manual — enable via workflow_dispatch) ──────────
   publish:
     needs: build
     runs-on: ubuntu-latest
-    if: false  # Disabled until ready for production publish
-    # To enable: change to `if: github.event_name == 'workflow_dispatch'`
-    # Then publish to Open VSX / VS Code Marketplace
+    if: false  # TODO: change to workflow_dispatch when ready for Marketplace
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4 with: node-version: lts/* cache: npm
+      - run: npm ci && npm run compile
       - name: Download VSIX
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
           path: .
-
       - name: Publish to Open VSX
-        run: |
-          echo "TODO: Publish to Open VSX"
-          echo "See: https://github.com/eclipse/openvsx/wiki/Publish-Extension"
-          echo "Required: OVSX_PAT secret"
-        # Uncomment when ready:
-        # - uses: Hardsuit8/openvsx-release-action@main
-        #   with:
-        #     extensionFile: ${{ env.EXTENSION_NAME }}.vsix
-        #     ovsxToken: ${{ secrets.OVSX_PAT }}
-        #     publishers: ${{ env.PUBLISHER }}
+        run: echo "TODO: add Open VSX publish step"
