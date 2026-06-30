@@ -24,7 +24,7 @@ ACP-compatible coding agents as native chat models.
 src/
 ├── client/                  # stdio JSON-RPC client over @agentclientprotocol/sdk
 │   ├── cliClient.ts         # (PR 01)
-│   └── streamBridge.ts      # (PR 01)
+│   └── cliClient.test.ts    # (PR 01)
 ├── session/                 # persistent per-(agent,cwd) session pool
 │   ├── sessionPool.ts       # (PR 02)
 │   ├── acpSession.ts        # (PR 02)
