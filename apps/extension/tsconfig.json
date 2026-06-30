@@ -9,7 +9,6 @@
     "src",
     "../../packages/acpify/src/provider/barebone.ts",
     "../../packages/acpify/src/client/cliClient.ts",
-    "../../packages/acpify/src/client/streamBridge.ts",
     "vscode.d.ts"
   ],
   "exclude": ["dist", "out", "node_modules", "test"]
