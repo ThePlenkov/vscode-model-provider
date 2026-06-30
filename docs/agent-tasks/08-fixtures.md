@@ -10,12 +10,12 @@
 
 - create: `tests/fixtures/fakeAcpAgent.ts`
 - create: `tests/fixtures/fakeAcpAgent.test.ts` (a Vitest that drives the fixture end-to-end against a real `CliAcpClient` from PR 01)
-- edit:   `packages/acp-core/vitest.config.ts` (add a `test.fakeAgent` project so this test runs separately from the default unit tests — it spawns child processes)
+- edit:   `packages/acpify/vitest.config.ts` (add a `test.fakeAgent` project so this test runs separately from the default unit tests — it spawns child processes)
 
 **Forbidden scope**
 
 - `apps/extension/src/`
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/claude-config/`, `packages/claude-acp/`
 - `docs/`
 
 **Reference**

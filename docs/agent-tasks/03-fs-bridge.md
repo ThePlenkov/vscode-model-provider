@@ -7,16 +7,16 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/capabilities/vscodeFsBridge.ts`
-- create: `packages/acp-core/src/capabilities/vscodeFsBridge.test.ts`
-- edit:   `packages/acp-core/src/client/cliClient.ts` (only to thread the `onReadTextFile` / `onWriteTextFile` handlers into the `ClientSideConnection` constructor — they already exist as a stub in PR 01)
-- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
+- create: `packages/acpify/src/capabilities/vscodeFsBridge.ts`
+- create: `packages/acpify/src/capabilities/vscodeFsBridge.test.ts`
+- edit:   `packages/acpify/src/client/cliClient.ts` (only to thread the `onReadTextFile` / `onWriteTextFile` handlers into the `ClientSideConnection` constructor — they already exist as a stub in PR 01)
+- edit:   `packages/acpify/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/session/`, `packages/acp-core/src/discovery/`
-- `packages/acp-core/src/provider/` (PR 09)
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/session/`, `packages/acpify/src/discovery/`
+- `packages/acpify/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/`
 - `docs/`
 

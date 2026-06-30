@@ -8,16 +8,16 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/capabilities/vscodePermissionBridge.ts`
-- create: `packages/acp-core/src/capabilities/vscodePermissionBridge.test.ts`
-- edit:   `packages/acp-core/src/session/permissions.ts` (the in-memory store; PR 02 already created the type)
-- edit:   `packages/acp-core/src/client/cliClient.ts` (only the constructor parameter list)
-- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
+- create: `packages/acpify/src/capabilities/vscodePermissionBridge.ts`
+- create: `packages/acpify/src/capabilities/vscodePermissionBridge.test.ts`
+- edit:   `packages/acpify/src/session/permissions.ts` (the in-memory store; PR 02 already created the type)
+- edit:   `packages/acpify/src/client/cliClient.ts` (only the constructor parameter list)
+- edit:   `packages/acpify/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/discovery/`, `packages/acp-core/src/provider/` (PR 09)
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/discovery/`, `packages/acpify/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/`
 - `docs/`
 

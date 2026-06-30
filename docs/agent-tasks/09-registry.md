@@ -8,16 +8,16 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/provider/{acpProvider.ts,modelInfo.ts,acpProvider.test.ts}`
-- delete: `packages/acp-core/src/provider/barebone.ts`, `packages/acp-core/src/provider/barebone.test.ts` (this PR's barebone)
+- create: `packages/acpify/src/provider/{acpProvider.ts,modelInfo.ts,acpProvider.test.ts}`
+- delete: `packages/acpify/src/provider/barebone.ts`, `packages/acpify/src/provider/barebone.test.ts` (this PR's barebone)
 - edit:   `apps/extension/src/extension.ts` (only the construction wiring; do not change activation events)
-- edit:   `packages/acp-core/src/index.ts` (export `AcpModelProvider` instead of `AcpBareboneProvider`)
-- edit:   `packages/acp-core/src/provider/barebone.ts` — DELETE; superseded by `acpProvider.ts`
+- edit:   `packages/acpify/src/index.ts` (export `AcpModelProvider` instead of `AcpBareboneProvider`)
+- edit:   `packages/acpify/src/provider/barebone.ts` — DELETE; superseded by `acpProvider.ts`
 
 **Forbidden scope**
 
-- `packages/acp-core/src/session/` (read-only), `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/session/` (read-only), `packages/acpify/src/capabilities/`, `packages/acpify/src/discovery/`
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/`
 - `docs/`
 

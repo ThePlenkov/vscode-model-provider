@@ -3,7 +3,7 @@
  *
  * This file is the *only* place in `apps/extension/src/` that knows about
  * `vscode`. Everything else (the provider, the session pool, the bridges,
- * the discovery layer) lives in `@theplenkov/acp-core`. Per-agent adapters
+ * the discovery layer) lives in `@theplenkov/acpify`. Per-agent adapters
  * (Claude Code, Gemini CLI, Codex, OpenCode, …) live in their own packages.
  *
  * PR 09 will replace `AcpBareboneProvider` with `AcpModelProvider` (the
@@ -12,12 +12,12 @@
  */
 
 import * as vscode from "vscode";
-// Relative import (not `@theplenkov/acp-core`) so tsdown treats this as a
+// Relative import (not `@theplenkov/acpify`) so tsdown treats this as a
 // local file and bundles `AcpBareboneProvider` directly into `dist/extension.mjs`.
 // The npm workspace dependency in package.json is preserved for the typecheck
 // path, but at bundle time we use the relative path so the resulting `.vsix`
 // is self-contained.
-import { AcpBareboneProvider } from "../../../packages/acp-core/src/provider/barebone.js";
+import { AcpBareboneProvider } from "../../../packages/acpify/src/provider/barebone.js";
 
 const OUTPUT_CHANNEL_NAME = "ACP Model Provider";
 

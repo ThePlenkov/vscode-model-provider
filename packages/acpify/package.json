@@ -1,5 +1,5 @@
 {
-  "name": "@theplenkov/acp-core",
+  "name": "@theplenkov/acpify",
   "version": "0.1.0",
   "description": "Agent-agnostic ACP (Agent Client Protocol) core for editor extensions: stdio client, persistent session pool, capability bridges, discovery. No runtime dependency on `vscode` — only type-only access via `@types/vscode` as a devDependency.",
   "type": "module",

@@ -1,7 +1,7 @@
 {
   "name": "vscode-model-provider",
   "displayName": "ACP Model Provider",
-  "description": "ACP Model Provider: expose any Agent Client Protocol (ACP) coding agent (Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Kilo, …) as a native chat model in VS Code's Copilot Chat. Thin VS Code shell over @theplenkov/acp-core and per-agent adapter packages.",
+  "description": "ACP Model Provider: expose any Agent Client Protocol (ACP) coding agent (Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Kilo, …) as a native chat model in VS Code's Copilot Chat. Thin VS Code shell over @theplenkov/acpify and per-agent adapter packages.",
   "version": "0.2.0",
   "type": "module",
   "publisher": "theplenkov",
@@ -43,9 +43,9 @@
     ]
   },
   "scripts": {
-    "prepare": "npm run build -w @theplenkov/acp-core -w @theplenkov/claude-config -w @theplenkov/adapter-claude && npm run build",
-    "build": "npm run build -w @theplenkov/acp-core && npm run build -w @theplenkov/claude-config && npm run build -w @theplenkov/adapter-claude && tsdown",
-    "watch": "npm run build -w @theplenkov/acp-core && tsdown --watch",
+    "prepare": "npm run build -w @theplenkov/acpify -w @theplenkov/claude-config -w @theplenkov/claude-acp && npm run build",
+    "build": "npm run build -w @theplenkov/acpify && npm run build -w @theplenkov/claude-config && npm run build -w @theplenkov/claude-acp && tsdown",
+    "watch": "npm run build -w @theplenkov/acpify && tsdown --watch",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "package": "npx @vscode/vsce package --no-dependencies",
     "test": "vitest run --config vitest.config.ts --passWithNoTests",
@@ -54,7 +54,7 @@
     "lint": "eslint src --max-warnings 0"
   },
   "dependencies": {
-    "@theplenkov/acp-core": "*"
+    "@theplenkov/acpify": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

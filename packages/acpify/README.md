@@ -1,4 +1,4 @@
-# `@theplenkov/acp-core`
+# `@theplenkov/acpify`
 
 Agent-agnostic core for the [Agent Client Protocol](https://agentclientprotocol.com).
 Used by editor extensions (VS Code today, Cursor / Kilo / others later) to expose

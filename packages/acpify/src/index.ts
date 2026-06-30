@@ -1,5 +1,5 @@
 /**
- * Public exports of `@theplenkov/acp-core`.
+ * Public exports of `@theplenkov/acpify`.
  *
  * Each export is added by its owning subagent PR:
  *   - `provider/barebone` ships in this PR (the barebone)

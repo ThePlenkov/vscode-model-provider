@@ -1,5 +1,5 @@
 /**
- * Barebone smoke test for `@theplenkov/acp-core`.
+ * Barebone smoke test for `@theplenkov/acpify`.
  *
  * Purpose: give the build CI a single Vitest that fails if the package does
  * not compile, the provider class is missing, or the import paths in

@@ -11,17 +11,17 @@ typecheck and run vitest against. You do not run the tests yourself.
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/client/{cliClient.ts,streamBridge.ts,cliClient.test.ts}`
+- create: `packages/acpify/src/client/{cliClient.ts,streamBridge.ts,cliClient.test.ts}`
 - create: `apps/extension/test/fixtures/fakeAcpAgent.ts` is **out of scope** (PR 08) but `cliClient.test.ts` may inline a tiny fake if needed
-- delete: `packages/acp-core/src/provider/barebone.ts` (this PR), `packages/acp-core/src/provider/barebone.test.ts` (the barebone)
+- delete: `packages/acpify/src/provider/barebone.ts` (this PR), `packages/acpify/src/provider/barebone.test.ts` (the barebone)
 - edit:   `apps/extension/src/extension.ts` (only the import + the new provider wiring)
-- edit:   `packages/acp-core/package.json` (add `@agentclientprotocol/sdk` to dependencies)
-- edit:   `apps/extension/package.json` (only `dependencies` to confirm the workspace dep on `@theplenkov/acp-core` is correct)
+- edit:   `packages/acpify/package.json` (add `@agentclientprotocol/sdk` to dependencies)
+- edit:   `apps/extension/package.json` (only `dependencies` to confirm the workspace dep on `@theplenkov/acpify` is correct)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/session/`, `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/session/`, `packages/acpify/src/capabilities/`, `packages/acpify/src/discovery/`
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/` (PR 08)
 - `nx.json`, root `package.json`, `.github/workflows/*`
 - `docs/`

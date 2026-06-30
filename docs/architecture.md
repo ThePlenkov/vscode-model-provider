@@ -19,7 +19,7 @@ vscode-model-provider/                        ← THIS REPO (monorepo)
 │       └── src/**.test.ts                    ← shell-level tests (added later)
 │
 ├── packages/
-│   ├── acp-core/                             ← agent-agnostic ACP core
+│   ├── acpify/                             ← agent-agnostic ACP core
 │   │   └── src/
 │   │       ├── client/                       ← stdio JSON-RPC (PR 01)
 │   │       │   ├── cliClient.ts              ← over @agentclientprotocol/sdk
@@ -44,7 +44,7 @@ vscode-model-provider/                        ← THIS REPO (monorepo)
 │   ├── claude-config/                        ← Claude Code config resolver
 │   │   └── src/index.ts                      ← env vars, settings.json, CLAUDE.md (PRs 07, 10)
 │   │
-│   └── adapter-claude/                       ← Claude Code adapter (one per agent)
+│   └── claude-acp/                       ← Claude Code adapter (one per agent)
 │       └── src/index.ts                      ← BuiltinAdapter + model mapping (PRs 07, 10)
 │
 └── docs/
@@ -58,25 +58,25 @@ vscode-model-provider/                        ← THIS REPO (monorepo)
 | Package | Allowed to `import "vscode"`? | Why |
 |---|---|---|
 | `apps/extension` | yes | it IS the VS Code shell |
-| `packages/acp-core/src/capabilities/` | yes (type-only) | bridges must implement `vscode.*` contracts |
-| `packages/acp-core/src/provider/` | yes (type-only) | implements `vscode.LanguageModelChatProvider` |
-| `packages/acp-core/src/client/` | **no** | agent-agnostic transport |
-| `packages/acp-core/src/session/` | **no** | agent-agnostic session state |
-| `packages/acp-core/src/discovery/` | **no** | agent-agnostic PATH / spawn helpers |
+| `packages/acpify/src/capabilities/` | yes (type-only) | bridges must implement `vscode.*` contracts |
+| `packages/acpify/src/provider/` | yes (type-only) | implements `vscode.LanguageModelChatProvider` |
+| `packages/acpify/src/client/` | **no** | agent-agnostic transport |
+| `packages/acpify/src/session/` | **no** | agent-agnostic session state |
+| `packages/acpify/src/discovery/` | **no** | agent-agnostic PATH / spawn helpers |
 | `packages/claude-config/` | **no** | pure config resolver |
-| `packages/adapter-claude/` | **no** | pure adapter config |
+| `packages/claude-acp/` | **no** | pure adapter config |
 
-Enforced by ESLint (`no-restricted-imports`) once `acp-core` ships its
+Enforced by ESLint (`no-restricted-imports`) once `acpify` ships its
 client and session modules (PR #01 onward).
 
 ## Why split, not lump
 
 1. **Reuse.** Other editor extensions (Cursor, Kilo, even a future JetBrains
-   integration) can depend on `@theplenkov/acp-core` without dragging in
+   integration) can depend on `@theplenkov/acpify` without dragging in
    our VS Code-specific code.
 2. **Replaceability.** Anthropic changes `~/.claude/`, we update
    `@theplenkov/claude-config`. We change session settlement, we update
-   `@theplenkov/acp-core`. The blast radius of every change is small.
+   `@theplenkov/acpify`. The blast radius of every change is small.
 3. **Independent publishing.** Today every package is `private: true`. The
    day someone wants to reuse `claude-config` from a CLI tool or another
    extension, they can `npm install @theplenkov/claude-config` without
@@ -92,7 +92,7 @@ User picks  "ACP / Claude Code / Sonnet"   in Copilot Chat
         │
         ▼
    apps/extension/src/extension.ts
-        │ new AcpBareboneProvider()  ← from @theplenkov/acp-core
+        │ new AcpBareboneProvider()  ← from @theplenkov/acpify
         ▼
    AcpBareboneProvider (this PR)
         │  returns [] for now
@@ -100,7 +100,7 @@ User picks  "ACP / Claude Code / Sonnet"   in Copilot Chat
         ▼
    AcpModelProvider (PR 09)
         │
-        │  list via @theplenkov/acp-core's SessionPool
+        │  list via @theplenkov/acpify's SessionPool
         ▼
    SessionPool (PR 02)  → keyed by (adapter.id, cwd) → AcpSession
         │
@@ -178,10 +178,10 @@ future addition.
 
 - `apps/extension/src/extension.ts` — registers an empty LMCP for vendor
   `"acp"`.
-- `@theplenkov/acp-core/src/provider/barebone.ts` — the minimum
+- `@theplenkov/acpify/src/provider/barebone.ts` — the minimum
   compileable provider that returns 0 models.
-- `@theplenkov/acp-core/src/provider/barebone.test.ts` — 4 passing tests.
-- Three package skeletons (`acp-core`, `claude-config`, `adapter-claude`).
+- `@theplenkov/acpify/src/provider/barebone.test.ts` — 4 passing tests.
+- Three package skeletons (`acpify`, `claude-config`, `claude-acp`).
 - Architecture docs + 11 per-PR task contracts.
 - A working `.github/workflows/ci.yml` that runs lint + typecheck + vitest
   + build + package on every PR and main push.

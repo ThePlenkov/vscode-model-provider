@@ -8,15 +8,15 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/discovery/{pathScout.ts,builtinAdapters.ts,discovery.ts,discovery.test.ts}`
-- create: `packages/adapter-claude/src/index.ts` (Claude adapter: `cliCommand: "claude"`, `cliArgs: ["--acp"]`, model map; exports `adapter` and `mapModelId`)
+- create: `packages/acpify/src/discovery/{pathScout.ts,builtinAdapters.ts,discovery.ts,discovery.test.ts}`
+- create: `packages/claude-acp/src/index.ts` (Claude adapter: `cliCommand: "claude"`, `cliArgs: ["--acp"]`, model map; exports `adapter` and `mapModelId`)
 - edit:   `apps/extension/package.json` (add `configuration` schema for the new settings; see §Settings below)
-- edit:   `packages/acp-core/src/index.ts` (re-export the discovery layer)
+- edit:   `packages/acpify/src/index.ts` (re-export the discovery layer)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/session/`, `packages/acp-core/src/capabilities/`
-- `packages/acp-core/src/provider/` (PR 09)
+- `packages/acpify/src/session/`, `packages/acpify/src/capabilities/`
+- `packages/acpify/src/provider/` (PR 09)
 - `packages/claude-config/` (PR 10)
 - `tests/fixtures/`
 - `docs/`

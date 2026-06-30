@@ -1,7 +1,7 @@
 {
-  "name": "@theplenkov/adapter-claude",
+  "name": "@theplenkov/claude-acp",
   "version": "0.1.0",
-  "description": "Claude Code ACP adapter: exports a BuiltinAdapter entry (cliCommand='claude', cliArgs=['--acp']) plus the model-mapping table. Consumed by @theplenkov/acp-core's discovery layer. Agent-specific — Claude Code only.",
+  "description": "Claude Code ACP adapter: exports a BuiltinAdapter entry (cliCommand='claude', cliArgs=['--acp']) plus the model-mapping table. Consumed by @theplenkov/acpify's discovery layer. Agent-specific — Claude Code only.",
   "type": "module",
   "private": true,
   "main": "./dist/index.mjs",

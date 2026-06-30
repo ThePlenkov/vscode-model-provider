@@ -1,6 +1,6 @@
-# `@theplenkov/adapter-claude`
+# `@theplenkov/claude-acp`
 
-Claude Code adapter for `@theplenkov/acp-core`. One package per agent.
+Claude Code adapter for `@theplenkov/acpify`. One package per agent.
 
 ## What this package owns
 

@@ -8,16 +8,16 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/capabilities/vscodeTerminalBridge.ts`
-- create: `packages/acp-core/src/capabilities/vscodeTerminalBridge.test.ts`
-- edit:   `packages/acp-core/src/client/cliClient.ts` (only the constructor parameter list, no behaviour change)
-- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
+- create: `packages/acpify/src/capabilities/vscodeTerminalBridge.ts`
+- create: `packages/acpify/src/capabilities/vscodeTerminalBridge.test.ts`
+- edit:   `packages/acpify/src/client/cliClient.ts` (only the constructor parameter list, no behaviour change)
+- edit:   `packages/acpify/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/session/`, `packages/acp-core/src/discovery/`
-- `packages/acp-core/src/provider/` (PR 09)
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/session/`, `packages/acpify/src/discovery/`
+- `packages/acpify/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/`
 - `docs/`
 

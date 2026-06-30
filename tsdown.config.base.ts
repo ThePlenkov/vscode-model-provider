@@ -4,7 +4,7 @@ export default defineConfig({
   format: "esm",
   // Inverse of `external`: list packages to NEVER bundle (they stay
   // external). Everything else — including workspace deps like
-  // `@theplenkov/acp-core` — gets bundled into the output so the
+  // `@theplenkov/acpify` — gets bundled into the output so the
   // resulting `.vsix` is self-contained.
   deps: {
     neverBundle: ["vscode"],

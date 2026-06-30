@@ -9,16 +9,16 @@
 
 **Allowed scope**
 
-- create: `packages/acp-core/src/session/{sessionPool.ts,acpSession.ts,permissions.ts,session.test.ts}`
-- edit:   `packages/acp-core/src/client/cliClient.ts` (only if a typed `getStatus()` accessor is needed; do not re-shape its public API)
-- edit:   `packages/acp-core/src/index.ts` (re-export the new session API)
+- create: `packages/acpify/src/session/{sessionPool.ts,acpSession.ts,permissions.ts,session.test.ts}`
+- edit:   `packages/acpify/src/client/cliClient.ts` (only if a typed `getStatus()` accessor is needed; do not re-shape its public API)
+- edit:   `packages/acpify/src/index.ts` (re-export the new session API)
 - edit:   `apps/extension/src/extension.ts` (only to construct the `SessionPool` and hand it to the provider stub)
 
 **Forbidden scope**
 
-- `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
-- `packages/acp-core/src/provider/` (PR 09)
-- `packages/claude-config/`, `packages/adapter-claude/`
+- `packages/acpify/src/capabilities/`, `packages/acpify/src/discovery/`
+- `packages/acpify/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/claude-acp/`
 - `tests/fixtures/`
 - `docs/` (except reading)
 

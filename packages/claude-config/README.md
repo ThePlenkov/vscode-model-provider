@@ -30,8 +30,8 @@ Three reasons:
    third-party extensions) want the same config resolution without dragging in
    our ACP client and session pool.
 2. **Replaceability.** If Anthropic changes the env var names or the config
-   layout, only this package needs to change. `acp-core` and
-   `adapter-claude` consume a stable interface.
+   layout, only this package needs to change. `acpify` and
+   `claude-acp` consume a stable interface.
 3. **Single source of truth.** Today, every Claude Code tool re-derives the
    env vars from first principles. This package is the one place that gets
    it right.
