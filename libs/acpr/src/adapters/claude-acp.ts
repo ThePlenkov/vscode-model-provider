@@ -10,6 +10,9 @@
  */
 
 import { spawn } from 'child_process';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as os from 'os';
 import { Readable, Writable } from 'node:stream';
 import * as acp from '@agentclientprotocol/sdk';
 import Anthropic from '@anthropic-ai/sdk';
@@ -41,6 +44,7 @@ class ClaudeACPAdapter {
   private claudePath: string;
   private anthropic: Anthropic | null = null;
   private sessions: Map<string, AgentSession> = new Map();
+  private cachedModels: ModelInfo[] | null = null;
 
   constructor() {
     this.claudePath = this.findClaudePath();
@@ -73,20 +77,30 @@ class ClaudeACPAdapter {
   }
 
   async initialize(params: InitializeRequest): Promise<InitializeResponse> {
-    console.error('claude-acp: Initialize request');
-    console.error(`claude-acp: Using claude path: ${this.claudePath}`);
-    
-    const models = await this.getModels();
-    
-    return {
-      protocolVersion: acp.PROTOCOL_VERSION,
-      agentCapabilities: {
-        prompts: true,
-        streaming: false,
-        tools: false,
-      },
-      models,
-    };
+    try {
+      const models = await this.getModels();
+      return {
+        protocolVersion: acp.PROTOCOL_VERSION,
+        agentCapabilities: {
+          prompts: true,
+          streaming: false,
+          tools: false,
+        },
+        models,
+      };
+    } catch (error) {
+      console.error('claude-acp: Error in initialize:', error);
+      // Return fallback on error
+      return {
+        protocolVersion: acp.PROTOCOL_VERSION,
+        agentCapabilities: {
+          prompts: true,
+          streaming: false,
+          tools: false,
+        },
+        models: this.getFallbackModels(),
+      };
+    }
   }
 
   async newSession(params: NewSessionRequest): Promise<NewSessionResponse> {
@@ -175,105 +189,44 @@ class ClaudeACPAdapter {
   }
 
   async getModels(): Promise<ModelInfo[]> {
-    const config = await claudeConfig.resolveConfig();
-    
-    if (config.raw.availableModels && config.raw.availableModels.length > 0) {
-      console.error('claude-acp: Using availableModels from config:', config.raw.availableModels.length, 'model(s)');
-      return this.resolveModelMetadata(config.raw.availableModels, config.raw.modelOverrides);
+    if (this.cachedModels) {
+      return this.cachedModels;
     }
     
     try {
-      let apiKey = config.sdk().apiKey;
-      if (config.raw.apiKeyHelper) {
-        console.error('claude-acp: Resolving API key helper...');
-        apiKey = await resolveApiKeyHelper(config.raw.apiKeyHelper);
-        console.error('claude-acp: API key resolved successfully');
-      }
+      const settingsPath = path.join(os.homedir(), '.claude', 'settings.json');
+      const settingsContent = fs.readFileSync(settingsPath, 'utf-8');
+      const settings = JSON.parse(settingsContent);
       
-      const baseUrl = config.baseUrl || 'https://api.anthropic.com';
-      const openaiBaseUrl = baseUrl.replace('/anthropic/', '/openai/');
-      const modelsUrl = `${openaiBaseUrl}models`;
-      
-      console.error('claude-acp: Fetching models from OpenAI compatibility endpoint:', modelsUrl);
-      
-      const response = await fetch(modelsUrl, {
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      const modelIds = data.data.map((m: any) => m.id);
-      return this.resolveModelMetadata(modelIds, config.raw.modelOverrides);
-    } catch (error) {
-      console.error('claude-acp: Failed to fetch models from API, using fallback from config:', error);
-      return this.getFallbackModels();
-    }
-  }
-
-  async resolveModelMetadata(modelIds: string[], modelOverrides?: Record<string, string>): Promise<ModelInfo[]> {
-    try {
-      console.error('claude-acp: Resolving model metadata from models.dev for', modelIds.length, 'model(s)');
-      
-      const response = await fetch('https://models.dev/api.json');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch models.dev: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      const modelsMap = new Map<string, any>();
-      for (const provider of Object.values(data) as any[]) {
-        if (provider.models) {
-          for (const [id, metadata] of Object.entries(provider.models)) {
-            modelsMap.set(id, metadata);
-          }
-        }
-      }
-      
-      return modelIds.map((modelId: string) => {
-        const canonicalId = modelOverrides?.[modelId] || modelId;
-        const metadata = modelsMap.get(canonicalId);
-        
-        const name = metadata?.name || modelId.split('/').pop()?.replace(/-/g, ' ').replace(/_/g, ' ') || modelId;
-        const description = metadata?.description || modelId;
-        const maxInputTokens = metadata?.limit?.context || 200000;
-        const maxOutputTokens = metadata?.limit?.output || 8192;
-        
-        const cost = metadata?.cost;
-        const pricing: any = {};
-        if (cost) {
-          if (cost.input) pricing.inputCost = cost.input;
-          if (cost.output) pricing.outputCost = cost.output;
-          if (cost.cache_read) pricing.cacheCost = cost.cache_read;
-          if (cost.cache_write) pricing.cacheWriteCost = cost.cache_write;
-        }
-        
-        return {
+      if (settings.availableModels && settings.availableModels.length > 0) {
+        this.cachedModels = settings.availableModels.map((modelId: string) => ({
           id: modelId,
-          name,
-          description,
+          name: modelId.split('/').pop()?.replace(/-/g, ' ').replace(/_/g, ' ') || modelId,
+          description: modelId,
           capabilities: {
             text: true,
             images: false,
             tools: true,
           },
-          maxInputTokens,
-          maxOutputTokens,
-          ...pricing,
-        };
-      });
+          maxInputTokens: 200000,
+          maxOutputTokens: 8192,
+        }));
+        return this.cachedModels;
+      }
     } catch (error) {
-      console.error('claude-acp: Failed to resolve model metadata, using fallback:', error);
-      
-      return modelIds.map((modelId: string) => ({
-        id: modelId,
-        name: modelId.split('/').pop()?.replace(/-/g, ' ').replace(/_/g, ' ') || modelId,
-        description: modelId,
+      // Fallback to default models
+    }
+    
+    this.cachedModels = this.getFallbackModels();
+    return this.cachedModels;
+  }
+
+  async getFallbackModels(): Promise<ModelInfo[]> {
+    return [
+      {
+        id: 'claude-3-5-sonnet-20241022',
+        name: 'Claude 3.5 Sonnet',
+        description: 'claude-3-5-sonnet-20241022',
         capabilities: {
           text: true,
           images: false,
@@ -281,31 +234,20 @@ class ClaudeACPAdapter {
         },
         maxInputTokens: 200000,
         maxOutputTokens: 8192,
-      }));
-    }
-  }
-
-  async getFallbackModels(): Promise<ModelInfo[]> {
-    const config = await claudeConfig.resolveConfig();
-    
-    if (config.raw.fallbackModel && config.raw.fallbackModel.length > 0) {
-      return this.resolveModelMetadata(config.raw.fallbackModel, config.raw.modelOverrides);
-    }
-    
-    const sonnetModel = config.raw.env?.ANTHROPIC_DEFAULT_SONNET_MODEL;
-    const opusModel = config.raw.env?.ANTHROPIC_DEFAULT_OPUS_MODEL;
-    const haikuModel = config.raw.env?.ANTHROPIC_DEFAULT_HAIKU_MODEL;
-    
-    const modelIds = [];
-    if (sonnetModel) modelIds.push(sonnetModel);
-    if (opusModel) modelIds.push(opusModel);
-    if (haikuModel) modelIds.push(haikuModel);
-    
-    if (modelIds.length > 0) {
-      return this.resolveModelMetadata(modelIds, config.raw.modelOverrides);
-    }
-    
-    return [];
+      },
+      {
+        id: 'claude-3-5-haiku-20241022',
+        name: 'Claude 3.5 Haiku',
+        description: 'claude-3-5-haiku-20241022',
+        capabilities: {
+          text: true,
+          images: false,
+          tools: true,
+        },
+        maxInputTokens: 200000,
+        maxOutputTokens: 8192,
+      }
+    ];
   }
 
   private async callClaude(prompt: string, signal?: AbortSignal): Promise<string> {
@@ -349,7 +291,7 @@ class ClaudeACPAdapter {
 
 // Main entry point using SDK
 const input = Writable.toWeb(process.stdout);
-const output = Readable.toWeb(process.stdin) as ReadableStream<Uint8Array>;
+const output = Readable.toWeb(process.stdin);
 
 const stream = acp.ndJsonStream(input, output);
 const adapter = new ClaudeACPAdapter();

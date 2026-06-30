@@ -66,12 +66,6 @@ function vscodeMessageToAcp(msg: vscode.LanguageModelChatRequestMessage): Conten
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export class AcpModelProvider implements vscode.LanguageModelChatProvider<vscode.LanguageModelChatInformation> {
-  private readonly _onDidChangeLanguageModelChatInformation =
-    new vscode.EventEmitter<vscode.LanguageModelChatInformation[]>();
-
-  readonly onDidChangeLanguageModelChatInformation =
-    this._onDidChangeLanguageModelChatInformation.event;
-
   constructor(
     private readonly _manager: AgentManager,
     private readonly _prefix = "ACP"

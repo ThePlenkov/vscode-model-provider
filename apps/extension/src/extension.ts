@@ -83,16 +83,6 @@ export async function activate(ctx: vscode.ExtensionContext) {
     provider
   );
 
-  // Fire the event to notify VS Code that models are available
-  const models = agentManager.getAllModels();
-  if (models.length > 0) {
-    (provider as any)._onDidChangeLanguageModelChatInformation.fire(
-      models.map(({ agentId, model }) =>
-        toLmModel(agentId, agentManager.agents.get(agentId)!.config.label, model, displayPrefix)
-      )
-    );
-  }
-
   // ── Initialize UI ───────────────────────────────────────────────────────────
   agentUI = new AgentManagerUI(agentManager);
 
