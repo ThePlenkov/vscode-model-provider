@@ -5,13 +5,13 @@ on:
     branches: [main]
   release:
     types: [published]
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 env:
   EXTENSION_NAME: vscode-model-provider
 
 jobs:
-  # ─── Unit tests (Vitest — pure Node.js) ─────────────────────────────────
+  # Unit tests (Vitest - pure Node.js)
   unit-test:
     runs-on: ubuntu-latest
 
@@ -29,7 +29,7 @@ jobs:
       - name: Run Vitest unit tests
         run: npx vitest run --config vitest.config.ts
 
-  # ─── VS Code e2e tests (vscode-test — needs display) ─────────────────────
+  # VS Code e2e tests (vscode-test - needs display)
   e2e:
     runs-on: ubuntu-latest
 
@@ -50,7 +50,7 @@ jobs:
       - name: Run vscode-test-electron
         run: xvfb-run --auto-servernum npm run test:e2e 2>&1 || true
 
-  # ─── Package ────────────────────────────────────────────────────────────
+  # Package
   build:
     needs: [unit-test, e2e]
     runs-on: ubuntu-latest
@@ -79,7 +79,7 @@ jobs:
           path: "*.vsix"
           retention-days: 30
 
-  # ─── Publish GitHub Pre-release (on every push to main) ─────────────────
+  # Publish GitHub Pre-release (on every push to main)
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -89,6 +89,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -126,22 +127,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # ─── Production publish (manual — enable via workflow_dispatch) ──────────
+  # Production publish (manual - enable via workflow_dispatch)
   publish:
     needs: build
     runs-on: ubuntu-latest
     if: false  # TODO: change to workflow_dispatch when ready for Marketplace
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
+
       - run: npm ci && npm run compile
+
       - name: Download VSIX
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
           path: .
+
       - name: Publish to Open VSX
         run: echo "TODO: add Open VSX publish step"
