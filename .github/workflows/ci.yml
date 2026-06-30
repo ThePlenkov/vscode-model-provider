@@ -1,0 +1,129 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+
+# Mark this as a temporary testing solution
+env:
+  EXTENSION_NAME: vscode-model-provider
+  PUBLISHER: theplenkov
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile TypeScript
+        run: npm run compile
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Package VSIX
+        run: |
+          npx @vscode/vsce package --no-dependencies
+          # Rename to canonical 'latest' name for easy install-from-GitHub
+          PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
+          mv "${EXTENSION_NAME}-${PKG_VERSION}.vsix" "${EXTENSION_NAME}-latest.vsix"
+        env:
+          EXTENSION_NAME: ${{ env.EXTENSION_NAME }}
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
+          path: "*.vsix"
+          retention-days: 30
+
+  # Publish as a GitHub Pre-release (temporary testing solution)
+  # When ready for production, publish to VS Code Marketplace / Open VSX
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download VSIX
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
+          path: .
+
+      - name: Determine version
+        id: version
+        run: |
+          # Derive version from package.json
+          PKG_VERSION=$(node -e "console.log(require('./package.json').version)")
+          echo "version=${PKG_VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=v${PKG_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        run: |
+          git log --oneline -10 > CHANGELOG.txt
+          echo "" >> CHANGELOG.txt
+          echo "Install from GitHub Release or run:" >> CHANGELOG.txt
+          echo "  curl -fsSL https://raw.githubusercontent.com/ThePlenkov/vscode-model-provider/main/scripts/install-from-github.sh | bash" >> CHANGELOG.txt
+
+      - name: Create GitHub Pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "ACP Model Provider ${{ steps.version.outputs.tag }} (Pre-release)"
+          body_path: CHANGELOG.txt
+          draft: false
+          prerelease: true
+          files: |
+            ${{ env.EXTENSION_NAME }}-latest.vsix
+            CHANGELOG.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Production publish trigger — run manually with workflow_dispatch
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    if: false  # Disabled until ready for production publish
+    # To enable: change to `if: github.event_name == 'workflow_dispatch'`
+    # Then publish to Open VSX / VS Code Marketplace
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download VSIX
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.EXTENSION_NAME }}-${{ github.sha }}
+          path: .
+
+      - name: Publish to Open VSX
+        run: |
+          echo "TODO: Publish to Open VSX"
+          echo "See: https://github.com/eclipse/openvsx/wiki/Publish-Extension"
+          echo "Required: OVSX_PAT secret"
+        # Uncomment when ready:
+        # - uses: Hardsuit8/openvsx-release-action@main
+        #   with:
+        #     extensionFile: ${{ env.EXTENSION_NAME }}.vsix
+        #     ovsxToken: ${{ secrets.OVSX_PAT }}
+        #     publishers: ${{ env.PUBLISHER }}
