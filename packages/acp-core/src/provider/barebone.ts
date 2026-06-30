@@ -1,15 +1,11 @@
 /**
- * AcpProvider — barebone.
+ * AcpBareboneProvider — the minimum compileable `vscode.LanguageModelChatProvider`
+ * that ships with the barebone foundation. Returns 0 models; the full registry
+ * lands in subagent PR 09 (`docs/agent-tasks/09-registry.md`).
  *
- * Implements `vscode.LanguageModelChatProvider` for vendor `"acp"`. The
- * barebone returns no models; the full registry that advertises models
- * from connected ACP agents lands in subagent PR 09
- * (docs/agent-tasks/09-registry.md).
- *
- * The split here is deliberate: PR 01 (this PR) only proves the
- * packaging + activation path works. The actual model discovery,
- * session lifecycle, and per-call streaming land in later PRs that
- * each own their own module.
+ * Naming: `AcpBareboneProvider` is the barebone implementation. PR 09 will
+ * add `AcpModelProvider` (the real registry) and `extension.ts` will switch
+ * to it. Keeping the two names distinct avoids accidental import drift.
  */
 
 import type * as vscode from "vscode";
@@ -25,7 +21,7 @@ function isTextPartLike(p: unknown): p is TextPartLike {
   return typeof p === "object" && p !== null && "value" in p && typeof (p as { value: unknown }).value === "string";
 }
 
-export class AcpProvider implements vscode.LanguageModelChatProvider<vscode.LanguageModelChatInformation> {
+export class AcpBareboneProvider implements vscode.LanguageModelChatProvider<vscode.LanguageModelChatInformation> {
   provideLanguageModelChatInformation(
     _options: vscode.PrepareLanguageModelChatModelOptions,
     _token: vscode.CancellationToken,
@@ -43,7 +39,7 @@ export class AcpProvider implements vscode.LanguageModelChatProvider<vscode.Lang
     _token: vscode.CancellationToken,
   ): Promise<void> {
     throw new Error(
-      "AcpProvider is in barebone mode: no model was registered, so the model " +
+      "AcpBareboneProvider is in barebone mode: no model was registered, so the model " +
         "picker should not have offered this entry. If you see this error, " +
         "the picker is showing stale data — reload the window.",
     );

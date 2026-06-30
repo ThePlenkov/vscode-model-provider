@@ -1,17 +1,20 @@
 # Task 11 — CI, docs polish, Tier-3 host test plan
 
+> **Do not rewrite.** The CI workflow shipped in PR #1 (this barebone's PR)
+> is already the right shape. This PR *extends* it — it does not replace it.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- edit: `.github/workflows/ci.yml` (Vitest unit on every push; `@vscode/test-electron` nightly on a self-hosted runner with `claude --acp` installed)
+- edit: `.github/workflows/ci.yml` (add the nightly Tier-3 host test job; do not touch the lint / typecheck / unit-test / build / release jobs)
 - edit: `README.md` (replace the "Temporary testing solution" wording, the absolute-path default, the manual install instructions; document the new architecture at a high level)
 - edit: `docs/architecture.md` (only to add a §Verified at the bottom that links to the most recent green CI run)
 - create: `apps/extension/test/host/runHostTests.ts` (skeleton — full Tier-3 tests land in a future PR, but the file must compile and the runner must succeed in `--listTests` mode)
 
 **Forbidden scope**
 
-- `apps/extension/src/`
+- `packages/`
 - `tests/fixtures/`
 - `nx.json`, root `package.json` (unless a workflow change requires a script)
 

@@ -1,17 +1,23 @@
 # Task 06 — `unstable_createElicitation` bridge
 
+> **Do not rewrite.** Use `vscode.window.showQuickPick` and
+> `vscode.window.showInputBox` directly. Do not build a custom multi-step
+> form framework.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/capabilities/vscodeElicitationBridge.ts`
-- create: `apps/extension/src/capabilities/vscodeElicitationBridge.test.ts`
-- edit:   `apps/extension/src/client/cliClient.ts` (only the constructor parameter list)
+- create: `packages/acp-core/src/capabilities/vscodeElicitationBridge.ts`
+- create: `packages/acp-core/src/capabilities/vscodeElicitationBridge.test.ts`
+- edit:   `packages/acp-core/src/client/cliClient.ts` (only the constructor parameter list)
+- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `apps/extension/src/session/`, `apps/extension/src/discovery/`
-- `apps/extension/src/provider/`
+- `packages/acp-core/src/session/`, `packages/acp-core/src/discovery/`
+- `packages/acp-core/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `tests/fixtures/`
 - `docs/`
 

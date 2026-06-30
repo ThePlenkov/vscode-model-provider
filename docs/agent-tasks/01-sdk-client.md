@@ -1,21 +1,28 @@
 # Task 01 — Switch to official `@agentclientprotocol/sdk` client
 
+> **Do not rewrite.** Use the SDK's `ClientSideConnection`, `ndJsonStream`,
+> and typed notifications directly. Do not reimplement JSON-RPC framing
+> (NDJSON line splitter, request/response correlation, notification dispatch).
+> The previous `acp/client.ts` in `archive/pre-refactor-2026-06-30` does all
+> of that wrong and is the file this PR deletes.
+
 **Role:** patcher subagent. Produce a diff that the verifier subagent will
 typecheck and run vitest against. You do not run the tests yourself.
 
 **Allowed scope**
 
-- create: `apps/extension/src/client/{cliClient.ts,streamBridge.ts,cliClient.test.ts}`
+- create: `packages/acp-core/src/client/{cliClient.ts,streamBridge.ts,cliClient.test.ts}`
 - create: `apps/extension/test/fixtures/fakeAcpAgent.ts` is **out of scope** (PR 08) but `cliClient.test.ts` may inline a tiny fake if needed
-- delete: `apps/extension/src/provider.ts` (the barebone), `apps/extension/src/provider.test.ts`
+- delete: `packages/acp-core/src/provider/barebone.ts` (this PR), `packages/acp-core/src/provider/barebone.test.ts` (the barebone)
 - edit:   `apps/extension/src/extension.ts` (only the import + the new provider wiring)
-- edit:   `apps/extension/package.json` (only `dependencies` to confirm `@agentclientprotocol/sdk` is `^1.1.0`)
+- edit:   `packages/acp-core/package.json` (add `@agentclientprotocol/sdk` to dependencies)
+- edit:   `apps/extension/package.json` (only `dependencies` to confirm the workspace dep on `@theplenkov/acp-core` is correct)
 
 **Forbidden scope**
 
-- `apps/extension/src/session/`, `apps/extension/src/capabilities/`, `apps/extension/src/discovery/`
-- `apps/extension/src/provider/` (PR 09)
-- `tests/fixtures/`
+- `packages/acp-core/src/session/`, `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
+- `packages/claude-config/`, `packages/adapter-claude/`
+- `tests/fixtures/` (PR 08)
 - `nx.json`, root `package.json`, `.github/workflows/*`
 - `docs/`
 

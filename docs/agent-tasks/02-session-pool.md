@@ -1,17 +1,24 @@
 # Task 02 — Persistent session pool + FIFO queue
 
+> **Do not rewrite.** Use the SDK client from PR 01 as-is. Do not
+> reimplement JSON-RPC, FIFO queue logic, or session bookkeeping from
+> scratch — adapt the `runConsumer` pattern from
+> `github.com/agentclientprotocol/claude-agent-acp/blob/main/src/acp-agent.ts`.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/session/{sessionPool.ts,acpSession.ts,permissions.ts,session.test.ts}`
-- edit:   `apps/extension/src/client/cliClient.ts` (only if a typed `getStatus()` accessor is needed; do not re-shape its public API)
+- create: `packages/acp-core/src/session/{sessionPool.ts,acpSession.ts,permissions.ts,session.test.ts}`
+- edit:   `packages/acp-core/src/client/cliClient.ts` (only if a typed `getStatus()` accessor is needed; do not re-shape its public API)
+- edit:   `packages/acp-core/src/index.ts` (re-export the new session API)
 - edit:   `apps/extension/src/extension.ts` (only to construct the `SessionPool` and hand it to the provider stub)
 
 **Forbidden scope**
 
-- `apps/extension/src/capabilities/`, `apps/extension/src/discovery/`
-- `apps/extension/src/provider/`
+- `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
+- `packages/acp-core/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `tests/fixtures/`
 - `docs/` (except reading)
 

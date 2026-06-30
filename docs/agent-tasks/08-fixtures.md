@@ -1,16 +1,21 @@
 # Task 08 — `fakeAcpAgent` stdio fixture + Tier-2 test driver
 
+> **Do not rewrite.** Use `@agentclientprotocol/sdk`'s own types to drive the
+> fixture. The fixture speaks ACP exactly the way a real CLI does — no test
+> harness layer in between.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
 - create: `tests/fixtures/fakeAcpAgent.ts`
 - create: `tests/fixtures/fakeAcpAgent.test.ts` (a Vitest that drives the fixture end-to-end against a real `CliAcpClient` from PR 01)
-- edit:   `vitest.config.ts` (add a `test.fakeAgent` project so this test runs separately from the default unit tests — it spawns child processes)
+- edit:   `packages/acp-core/vitest.config.ts` (add a `test.fakeAgent` project so this test runs separately from the default unit tests — it spawns child processes)
 
 **Forbidden scope**
 
 - `apps/extension/src/`
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `docs/`
 
 **Reference**

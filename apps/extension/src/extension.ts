@@ -1,27 +1,38 @@
 /**
- * Barebone entry point.
+ * Thin VS Code shell for the ACP Model Provider.
  *
- * This file is the *minimum* needed to register the ACP vendor with the
- * VS Code `LanguageModelChatProvider` API so the extension packages, loads,
- * and shows up in the model picker. It exposes 0 models until a subagent
- * PR wires real agents in. See `docs/architecture.md` §3.6 and
- * `docs/agent-tasks/09-registry.md` for the full wiring plan.
+ * This file is the *only* place in `apps/extension/src/` that knows about
+ * `vscode`. Everything else (the provider, the session pool, the bridges,
+ * the discovery layer) lives in `@theplenkov/acp-core`. Per-agent adapters
+ * (Claude Code, Gemini CLI, Codex, OpenCode, …) live in their own packages.
+ *
+ * PR 09 will replace `AcpBareboneProvider` with `AcpModelProvider` (the
+ * real registry). For the barebone, we register an empty provider that
+ * proves the activation path works.
  */
 
 import * as vscode from "vscode";
-import { AcpProvider } from "./provider.js";
+// Relative import (not `@theplenkov/acp-core`) so tsdown treats this as a
+// local file and bundles `AcpBareboneProvider` directly into `dist/extension.mjs`.
+// The npm workspace dependency in package.json is preserved for the typecheck
+// path, but at bundle time we use the relative path so the resulting `.vsix`
+// is self-contained.
+import { AcpBareboneProvider } from "../../../packages/acp-core/src/provider/barebone.js";
 
 const OUTPUT_CHANNEL_NAME = "ACP Model Provider";
 
 export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   const output = vscode.window.createOutputChannel(OUTPUT_CHANNEL_NAME);
-  output.appendLine("[ACP Model Provider] Activating barebone…");
+  output.appendLine("[ACP Model Provider] Activating barebone shell…");
 
-  const provider = new AcpProvider();
+  const provider = new AcpBareboneProvider();
   const registration = vscode.lm.registerLanguageModelChatProvider("acp", provider);
 
   ctx.subscriptions.push(registration, output);
-  output.appendLine("[ACP Model Provider] Registered as vendor 'acp' (0 models).");
+  output.appendLine(
+    "[ACP Model Provider] Registered as vendor 'acp'. " +
+    "PR 09 will wire the model registry.",
+  );
 }
 
 export function deactivate(): void {

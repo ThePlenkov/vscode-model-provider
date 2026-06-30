@@ -1,0 +1,39 @@
+{
+  "name": "@theplenkov/acp-core",
+  "version": "0.1.0",
+  "description": "Agent-agnostic ACP (Agent Client Protocol) core for editor extensions: stdio client, persistent session pool, capability bridges, discovery. No runtime dependency on `vscode` — only type-only access via `@types/vscode` as a devDependency.",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./provider/barebone": "./dist/provider/barebone.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsdown",
+    "watch": "tsdown --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src --max-warnings 0"
+  },
+  "dependencies": {
+    "@agentclientprotocol/sdk": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.104.0",
+    "eslint": "^9.0.0",
+    "tsdown": "^0.22.3",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

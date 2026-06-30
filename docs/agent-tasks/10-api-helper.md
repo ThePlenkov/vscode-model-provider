@@ -1,18 +1,24 @@
 # Task 10 — API helper + environment injection
 
+> **Do not rewrite.** The Claude-specific env var resolution lives in
+> `@theplenkov/claude-config` — this PR calls into it, does not reimplement
+> env var logic.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/discovery/cliWrapper.ts`
-- create: `apps/extension/src/discovery/cliWrapper.test.ts`
+- create: `packages/claude-config/src/{env.ts,settings.ts,paths.ts,index.ts,env.test.ts}` (the actual env var resolution, settings.json lookups, CLAUDE.md discovery, session-log path)
+- create: `packages/acp-core/src/discovery/cliWrapper.ts`
+- create: `packages/adapter-claude/src/index.ts` (finalise the Claude adapter: `cliCommand`, `cliArgs`, `resolveEnv`, `mapModelId`; uses `@theplenkov/claude-config`)
+- create: `packages/acp-core/src/discovery/cliWrapper.test.ts`
 - edit:   `apps/extension/src/extension.ts` (only to pass a `cliWrapper` into the `SessionPool`)
 - edit:   `apps/extension/package.json` (add the new settings to `contributes.configuration`)
 
 **Forbidden scope**
 
-- `apps/extension/src/capabilities/`
-- `apps/extension/src/provider/` (read-only — must not change PR 09's API)
+- `packages/acp-core/src/capabilities/`
+- `packages/acp-core/src/provider/` (read-only — must not change PR 09's API)
 - `tests/fixtures/`
 - `docs/`
 

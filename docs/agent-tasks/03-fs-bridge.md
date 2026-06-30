@@ -1,17 +1,22 @@
 # Task 03 — `fs` reverse-call bridge
 
+> **Do not rewrite.** Use VS Code's `vscode.workspace.openTextDocument` and
+> `vscode.workspace.applyEdit` directly. Do not roll a custom file-IO layer.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/capabilities/vscodeFsBridge.ts`
-- create: `apps/extension/src/capabilities/vscodeFsBridge.test.ts`
-- edit:   `apps/extension/src/client/cliClient.ts` (only to thread the `onReadTextFile` / `onWriteTextFile` handlers into the `ClientSideConnection` constructor — they already exist as a stub in PR 01)
+- create: `packages/acp-core/src/capabilities/vscodeFsBridge.ts`
+- create: `packages/acp-core/src/capabilities/vscodeFsBridge.test.ts`
+- edit:   `packages/acp-core/src/client/cliClient.ts` (only to thread the `onReadTextFile` / `onWriteTextFile` handlers into the `ClientSideConnection` constructor — they already exist as a stub in PR 01)
+- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `apps/extension/src/session/`, `apps/extension/src/discovery/`
-- `apps/extension/src/provider/`
+- `packages/acp-core/src/session/`, `packages/acp-core/src/discovery/`
+- `packages/acp-core/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `tests/fixtures/`
 - `docs/`
 

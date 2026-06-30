@@ -1,17 +1,23 @@
 # Task 05 — `request_permission` bridge + persistent rule store
 
+> **Do not rewrite.** Use `vscode.window.showInformationMessage` and
+> `vscode.window.showQuickPick` directly. Do not build a custom permission
+> UI framework.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/capabilities/vscodePermissionBridge.ts`
-- create: `apps/extension/src/capabilities/vscodePermissionBridge.test.ts`
-- edit:   `apps/extension/src/session/permissions.ts` (the in-memory store; PR 02 already created the type)
-- edit:   `apps/extension/src/client/cliClient.ts` (only the constructor parameter list)
+- create: `packages/acp-core/src/capabilities/vscodePermissionBridge.ts`
+- create: `packages/acp-core/src/capabilities/vscodePermissionBridge.test.ts`
+- edit:   `packages/acp-core/src/session/permissions.ts` (the in-memory store; PR 02 already created the type)
+- edit:   `packages/acp-core/src/client/cliClient.ts` (only the constructor parameter list)
+- edit:   `packages/acp-core/src/index.ts` (re-export the bridge factory)
 
 **Forbidden scope**
 
-- `apps/extension/src/discovery/`, `apps/extension/src/provider/`
+- `packages/acp-core/src/discovery/`, `packages/acp-core/src/provider/` (PR 09)
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `tests/fixtures/`
 - `docs/`
 

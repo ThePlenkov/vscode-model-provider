@@ -1,16 +1,23 @@
 # Task 09 — Registry: real `AcpModelProvider` over `SessionPool`
 
+> **Do not rewrite.** The provider is a thin wrapper over the `SessionPool`
+> from PR 02 and the discovery layer from PR 07. No new business logic —
+> just mapping ACP types to `vscode.LanguageModel*`.
+
 **Role:** patcher subagent.
 
 **Allowed scope**
 
-- create: `apps/extension/src/provider/{acpProvider.ts,modelInfo.ts,acpProvider.test.ts}`
-- delete: `apps/extension/src/provider.ts` (the barebone), `apps/extension/src/provider.test.ts`
+- create: `packages/acp-core/src/provider/{acpProvider.ts,modelInfo.ts,acpProvider.test.ts}`
+- delete: `packages/acp-core/src/provider/barebone.ts`, `packages/acp-core/src/provider/barebone.test.ts` (this PR's barebone)
 - edit:   `apps/extension/src/extension.ts` (only the construction wiring; do not change activation events)
+- edit:   `packages/acp-core/src/index.ts` (export `AcpModelProvider` instead of `AcpBareboneProvider`)
+- edit:   `packages/acp-core/src/provider/barebone.ts` — DELETE; superseded by `acpProvider.ts`
 
 **Forbidden scope**
 
-- `apps/extension/src/session/` (read-only), `apps/extension/src/capabilities/`, `apps/extension/src/discovery/`
+- `packages/acp-core/src/session/` (read-only), `packages/acp-core/src/capabilities/`, `packages/acp-core/src/discovery/`
+- `packages/claude-config/`, `packages/adapter-claude/`
 - `tests/fixtures/`
 - `docs/`
 

@@ -1,7 +1,7 @@
 {
   "name": "vscode-model-provider",
   "displayName": "ACP Model Provider",
-  "description": "Expose ACP-compatible agent models (Claude Code, Gemini CLI, Codex, OpenCode, and more) to VS Code Copilot Chat via the LanguageModelChatProvider API",
+  "description": "ACP Model Provider: expose any Agent Client Protocol (ACP) coding agent (Claude Code, Gemini CLI, Codex, OpenCode, Cursor, Kilo, …) as a native chat model in VS Code's Copilot Chat. Thin VS Code shell over @theplenkov/acp-core and per-agent adapter packages.",
   "version": "0.2.0",
   "type": "module",
   "publisher": "theplenkov",
@@ -13,10 +13,15 @@
     "vscode",
     "copilot",
     "acp",
-    "agent",
+    "agent-client-protocol",
     "claude-code",
     "gemini-cli",
-    "language-model"
+    "codex",
+    "opencode",
+    "cursor",
+    "kilo",
+    "language-model",
+    "agent"
   ],
   "engines": {
     "vscode": "^1.104.0",
@@ -33,28 +38,29 @@
     "languageModelChatProviders": [
       {
         "vendor": "acp",
-        "displayName": "ACP Agents"
+        "displayName": "ACP Model Provider"
       }
     ]
   },
   "scripts": {
-    "prepare": "npm run build",
-    "build": "tsdown",
-    "watch": "tsdown --watch",
+    "prepare": "npm run build -w @theplenkov/acp-core -w @theplenkov/claude-config -w @theplenkov/adapter-claude && npm run build",
+    "build": "npm run build -w @theplenkov/acp-core && npm run build -w @theplenkov/claude-config && npm run build -w @theplenkov/adapter-claude && tsdown",
+    "watch": "npm run build -w @theplenkov/acp-core && tsdown --watch",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "package": "npx @vscode/vsce package --no-dependencies",
-    "test": "npm run typecheck && npm run test:unit",
-    "test:unit": "npx vitest run --config vitest.config.ts",
-    "test:unit:watch": "npx vitest --config vitest.config.ts",
-    "test:host": "node test/runTest.ts"
+    "test": "vitest run --config vitest.config.ts --passWithNoTests",
+    "test:watch": "vitest --config vitest.config.ts",
+    "test:host": "node test/runTest.ts",
+    "lint": "eslint src --max-warnings 0"
   },
   "dependencies": {
-    "@agentclientprotocol/sdk": "^1.1.0"
+    "@theplenkov/acp-core": "*"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "@types/vscode": "^1.104.0",
     "@vscode/test-electron": "^3.0.0",
+    "eslint": "^9.0.0",
     "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9"
