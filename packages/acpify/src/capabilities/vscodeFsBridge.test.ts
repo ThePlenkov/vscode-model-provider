@@ -191,19 +191,9 @@ describe("vscodeFsBridge", () => {
 
   it("write_text_file: creates new file (createFile + Create prompt) when target does not exist", async () => {
     // Simulate "file does not exist": stat rejects with EntryNotFound.
-    // Codacy's "no-unbound-methods" wants the captured reference
-    // off the global; capture locally and annotate `this: void` so
-    // the rule is satisfied while the vitest harness still observes
-    // the underlying mock.
-    type StatVoid = (
-      this: void,
-      uri: Parameters<typeof vscode.workspace.fs.stat>[0],
-    ) => ReturnType<typeof vscode.workspace.fs.stat>;
-    const stat = vscode.workspace.fs.stat as unknown as StatVoid;
     vi.mocked(vscode.workspace.fs.stat).mockRejectedValue(
       new Error("EntryNotFound (FileSystemError): no such file"),
     );
-    void stat;
     vi.mocked(
       vscode.window.showInformationMessage as (
         message: string,
