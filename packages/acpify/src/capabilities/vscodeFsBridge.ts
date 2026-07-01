@@ -7,11 +7,13 @@
  *
  *  - `req.path` is treated as a workspace path:
  *      • workspace-relative paths are resolved against the first open
- *        workspace folder
- *      • absolute paths are validated against `workspace.getWorkspaceFolder`
- *        and rejected with `RequestError(-32000)` if they fall outside
- *        every trusted workspace folder (path-traversal protection —
- *        `openTextDocument` itself does NOT enforce workspace boundaries)
+ *        workspace folder and post-validated to refuse path-traversal
+ *        escapes (`../../etc/passwd` style — `Uri.joinPath` does NOT
+ *        clamp `..` segments)
+ *      • absolute paths must be inside `workspace.getWorkspaceFolder`
+ *        (POSIX, Windows drive, and UNC shapes are all recognised) and
+ *        are rejected with `RequestError(-32000)` if they fall outside
+ *        every trusted workspace folder
  *  - `req.line` and `req.limit` (the ACP SDK field names; the contract
  *    doc uses the aliases `lineStart`/`lineCount`) are honoured when
  *    present, returning the requested slice of the document via
@@ -19,9 +21,7 @@
  *  - Write requests prompt the user via
  *    `vscode.window.showInformationMessage("Overwrite <path>?" | "Create <path>?",
  *    "Apply", "Cancel")`. Existing files use "Overwrite"; missing files
- *    use "Create" and additionally call `WorkspaceEdit.createFile` (a
- *    plain `replace` cannot create a new resource). Anything other
- *    than the literal "Apply" rejects with `RequestError(-32000)`.
+ *    use "Create" and additionally call `WorkspaceEdit.createFile`.
  *
  * Every async call is wrapped so any failure becomes a
  * protocol-compliant `RequestError`, never a bare `Error`.
@@ -29,6 +29,13 @@
  * "Do not rewrite" — no custom file-IO layer. Every read and write
  * goes through the VS Code APIs above; the ACP protocol envelope is
  * handled by `@agentclientprotocol/sdk` upstream.
+ *
+ * ARCHITECTURE — this file is intentionally reachable only via the
+ * sub-entrypoint `@theplenkov/acpify/capabilities/vscodeFsBridge`. It
+ * imports the `vscode` runtime module, so a re-export from the
+ * package's main `index.ts` would break Node consumers
+ * (`ERR_MODULE_NOT_FOUND` at import time, since `vscode` is a
+ * devDependency only).
  */
 
 import * as acp from "@agentclientprotocol/sdk";
@@ -47,19 +54,52 @@ function fsError(path: string, op: string, cause: unknown): acp.RequestError {
 }
 
 /**
- * Resolve an ACP `req.path` to a workspace-validated `vscode.uri`.
- * Workspace-relative paths are resolved against the first open
- * workspace folder and post-validated to refuse path-traversal escapes
- * (`../../etc/passwd` style); absolute paths must be inside a workspace
- * folder, otherwise a `RequestError(-32000)` is thrown. This enforces
- * the contract's "absolute paths must be inside a trusted workspace
- * folder" clause — `vscode.workspace.openTextDocument` itself does not.
- *
- * Platform-aware absolute detection: VS Code's `Uri.file()` is used to
- * determine whether `reqPath` is absolute on the current host (POSIX
- * `/…`, Windows drive `C:\\…`, UNC `\\\\host\\share\\…`). A bare
- * `startsWith("/")` check would misclassify Windows paths as relative
- * and bypass the workspace gate.
+ * True when `p` is absolute on any of: POSIX (`/foo`), Windows drive
+ * (`C:\\foo`), UNC (`\\\\server\\share\\foo`). VS Code's `Uri.file`
+ * accepts each; a string-only check would miss all but the POSIX case.
+ */
+function pathIsAbsolute(p: string): boolean {
+  if (!p) return false;
+  if (p.startsWith("/") || p.startsWith("\\")) return true;
+  return /^[A-Za-z]:[\\/]?/.test(p);
+}
+
+/**
+ * Resolve an ACP `req.path` (relative) against `folder.uri`, then
+ * confirm the result still lives inside the folder — `Uri.joinPath`
+ * does NOT clamp `..` segments, so a malicious agent could escape via
+ * `../../etc/passwd`. Cross-platform separator-safe comparison.
+ */
+function resolveRelative(folder: vscode.WorkspaceFolder, reqPath: string) {
+  const joined = vscode.Uri.joinPath(folder.uri, reqPath);
+  const rootFs = folder.uri.fsPath.replace(/[\\/]+$/, "");
+  const joinedFs = joined.fsPath;
+  const sameRoot =
+    joinedFs === rootFs ||
+    joinedFs.startsWith(rootFs + "/") ||
+    joinedFs.startsWith(rootFs + "\\");
+  return { joined, insideRoot: sameRoot };
+}
+
+/**
+ * Confirm that `uri` lands inside one of the open workspace folders.
+ * Throws `RequestError(-32000)` (via `fsError`) if not.
+ */
+function assertInsideWorkspace(uri: vscode.Uri, reqPath: string, op: string): void {
+  const folder = vscode.workspace.getWorkspaceFolder(uri);
+  if (!folder) {
+    throw fsError(
+      reqPath,
+      op,
+      new Error("path is outside every trusted workspace folder"),
+    );
+  }
+}
+
+/**
+ * Map an ACP `req.path` to a workspace-allowed `vscode.Uri`. This
+ * enforces the contract's "absolute paths must be inside a trusted
+ * workspace folder" clause — `openTextDocument` itself does not.
  */
 function pathToUri(reqPath: string, op: string): vscode.Uri {
   if (!pathIsAbsolute(reqPath)) {
@@ -74,15 +114,8 @@ function pathToUri(reqPath: string, op: string): vscode.Uri {
         ),
       );
     }
-    const joined = vscode.Uri.joinPath(first.uri, reqPath);
-    // Post-validate: `Uri.joinPath` does NOT clamp `..` segments — a
-    // malicious agent could escape via `../../etc/passwd`. Confirm the
-    // resolved URI's fsPath is inside the workspace folder's fsPath.
-    const rootFs = first.uri.fsPath.replace(/[\\/]+$/, "");
-    const joinedFs = joined.fsPath;
-    const inside = joinedFs === rootFs || joinedFs.startsWith(rootFs + "/")
-      || joinedFs.startsWith(rootFs + "\\");
-    if (!inside) {
+    const { joined, insideRoot } = resolveRelative(first, reqPath);
+    if (!insideRoot) {
       throw fsError(
         reqPath,
         op,
@@ -92,37 +125,14 @@ function pathToUri(reqPath: string, op: string): vscode.Uri {
     return joined;
   }
   const uri = vscode.Uri.file(reqPath);
-  const folder = vscode.workspace.getWorkspaceFolder(uri);
-  if (!folder) {
-    throw fsError(
-      reqPath,
-      op,
-      new Error("path is outside every trusted workspace folder"),
-    );
-  }
+  assertInsideWorkspace(uri, reqPath, op);
   return uri;
-}
-
-/**
- * True when `p` is absolute on any of: POSIX (`/foo`), Windows drive
- * (`C:\\foo`), UNC (`\\\\server\\share\\foo`). VS Code's `Uri.file`
- * accepts each; a string-only check would miss all but the POSIX case.
- */
-function pathIsAbsolute(p: string): boolean {
-  if (!p) return false;
-  if (p.startsWith("/") || p.startsWith("\\")) return true;
-  // Windows drive letter: single letter followed by `:` then sep-or-EOS.
-  if (/^[A-Za-z]:[\\/]?/.test(p)) return true;
-  return false;
 }
 
 /**
  * Slice a `TextDocument` by 1-based `line` and `limit`, matching the
  * ACP `ReadTextFileRequest` semantics. Both arguments are optional;
- * missing means "from the start" / "to the end". Out-of-range values
- * are clamped by `Math.min` and the loop bound. Uses `doc.lineAt()`
- * so the document's full text is never materialised in one buffer
- * (important for large files).
+ * missing means "from the start" / "to the end".
  */
 function sliceLines(
   doc: vscode.TextDocument,
@@ -162,16 +172,12 @@ async function fullDocumentRange(uri: vscode.Uri): Promise<vscode.Range> {
     // Document does not exist or could not be opened (e.g. file-missing
     // for a brand-new write target). The caller treats the zero-width
     // range at (0,0) as the anchor for a freshly-created resource.
-    // Explicit `void` so we consciously acknowledge the swallow.
     void err;
     return zero;
   }
 }
 
-/**
- * `true` if `uri` exists on disk. Returns `false` for
- * `FileNotFound`-style errors; rethrows anything else.
- */
+/** `true` if `uri` exists on disk; `false` for FileNotFound/EntryNotFound. */
 async function uriExists(uri: vscode.Uri): Promise<boolean> {
   try {
     await vscode.workspace.fs.stat(uri);
@@ -181,6 +187,23 @@ async function uriExists(uri: vscode.Uri): Promise<boolean> {
     if (/FileNotFound|EntryNotFound/i.test(msg)) return false;
     throw err;
   }
+}
+
+/**
+ * Build the `WorkspaceEdit` for a write request. When `exists` is
+ * false, `createFile` runs first so the `replace` can materialise a
+ * new resource (a plain `replace` against a missing URI is a no-op
+ * on VS Code's WorkspaceEdit).
+ */
+async function buildWriteEdit(
+  uri: vscode.Uri,
+  content: string,
+  exists: boolean,
+): Promise<vscode.WorkspaceEdit> {
+  const edit = new vscode.WorkspaceEdit();
+  if (!exists) edit.createFile(uri, { overwrite: false });
+  edit.replace(uri, await fullDocumentRange(uri), content);
+  return edit;
 }
 
 export function makeFsHandlers(): {
@@ -206,10 +229,8 @@ export function makeFsHandlers(): {
       try {
         const uri = pathToUri(req.path, "write_text_file");
         const exists = await uriExists(uri);
-        const verb = exists ? "Overwrite" : "Create";
-
         const choice = await vscode.window.showInformationMessage(
-          `${verb} ${req.path}?`,
+          exists ? `Overwrite ${req.path}?` : `Create ${req.path}?`,
           "Apply",
           "Cancel",
         );
@@ -219,14 +240,7 @@ export function makeFsHandlers(): {
             `write_text_file denied by user for ${req.path}`,
           );
         }
-
-        const edit = new vscode.WorkspaceEdit();
-        if (!exists) {
-          // `replace` cannot create a new file; `createFile` is required.
-          edit.createFile(uri, { overwrite: false });
-        }
-        edit.replace(uri, await fullDocumentRange(uri), req.content);
-
+        const edit = await buildWriteEdit(uri, req.content, exists);
         const ok = await vscode.workspace.applyEdit(edit);
         if (!ok) {
           throw new Error("applyEdit returned false");
