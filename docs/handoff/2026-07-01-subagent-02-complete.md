@@ -208,7 +208,7 @@ These are real doc fixes that should land in a follow-up PR:
 - **`docs/specs.md`** Section "Other ACP agents" lists "Kilo" as an agent (it's an editor, not an ACP agent). Either remove or reclassify.
 - **`docs/architecture.md`** Section §Why ACP and not the SDK: accurate as written.
 
-These have been mostly addressed in PR #1's review iterations, but PR #02 (the doc fixes attached to the merge of subagent 03) is the natural place to land a small doc-update PR for the items that linger.
+These have been mostly addressed in PR #1's review iterations, but PR #4 (the doc fixes attached to the merge of subagent 03) is the natural place to land a small doc-update PR for the items that linger.
 
 ---
 
