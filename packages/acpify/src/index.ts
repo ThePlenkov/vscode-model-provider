@@ -25,3 +25,12 @@ export { AcpSession, PromptHandle } from "./session/acpSession.js";
 export type { SessionConnectFn } from "./session/acpSession.js";
 export { PermissionStore } from "./session/permissions.js";
 export type { PermissionRule, PermissionDecision } from "./session/permissions.js";
+// NOTE: `makeFsHandlers` (./capabilities/vscodeFsBridge) is a
+// VS Code-host module and imports the `vscode` runtime. It is
+// intentionally NOT re-exported here so Node consumers of
+// `@theplenkov/acpify` can import the package without pulling in
+// `vscode` at module-resolution time. Consumers inside a VS Code
+// extension should import it directly from the sub-entrypoint:
+//   `import { makeFsHandlers } from "@theplenkov/acpify/capabilities/vscodeFsBridge";`
+// (registered as `./capabilities/vscodeFsBridge` in `package.json`
+// `exports` and as a separate tsdown entry below).
