@@ -124,7 +124,12 @@ async function fullDocumentRange(uri: vscode.Uri): Promise<vscode.Range> {
       new vscode.Position(0, 0),
       new vscode.Position(lastLine, lastChar),
     );
-  } catch {
+  } catch (err) {
+    // Document does not exist or could not be opened (e.g. file-missing
+    // for a brand-new write target). The caller treats the zero-width
+    // range at (0,0) as the anchor for a freshly-created resource.
+    // Explicit `void` so we consciously acknowledge the swallow.
+    void err;
     return zero;
   }
 }

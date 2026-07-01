@@ -148,9 +148,24 @@ describe("vscodeFsBridge", () => {
     vi.mocked(vscode.workspace.openTextDocument).mockResolvedValue({
       getText: () => "line1\nline2\nline3\nline4\nline5",
       lineCount: 5,
-      lineAt: (i: number) => ({
-        text: ["line1", "line2", "line3", "line4", "line5"][i] ?? "",
-      }),
+      lineAt: (i: number) => {
+        // Explicit branching to avoid Codacy's "generic-object-injection-sink"
+        // warning on dynamic array indexing in the test mock.
+        switch (i) {
+          case 0:
+            return { text: "line1" };
+          case 1:
+            return { text: "line2" };
+          case 2:
+            return { text: "line3" };
+          case 3:
+            return { text: "line4" };
+          case 4:
+            return { text: "line5" };
+          default:
+            return { text: "" };
+        }
+      },
     } as never);
 
     const handlers = makeFsHandlers();
