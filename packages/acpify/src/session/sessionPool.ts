@@ -36,8 +36,12 @@ export interface SessionPoolOptions {
    * Production wires this from configuration; tests override to 5 s.
    */
   idleEvictMs?: number;
-  onSessionCreated?: (sessionId: string) => void;
-  onSessionEvicted?: (sessionId: string, reason: "idle" | "error") => void;
+  /**
+   * Called after a session is evicted. The payload is the session's
+   * `SessionKey` (not its `sessionId`) because eviction can happen
+   * before the handshake resolves — `sessionId` would not yet exist.
+   */
+  onSessionEvicted?: (key: SessionKey, reason: "idle" | "error") => void;
 }
 
 const DEFAULT_IDLE_MS = 30 * 60_000;
@@ -50,8 +54,7 @@ const DEFAULT_IDLE_MS = 30 * 60_000;
 export class SessionPool {
   private readonly clientFactory: () => CliAcpClient;
   private readonly idleEvictMs: number;
-  private readonly onSessionCreated?: (sessionId: string) => void;
-  private readonly onSessionEvicted?: (sessionId: string, reason: "idle" | "error") => void;
+  private readonly onSessionEvicted?: (key: SessionKey, reason: "idle" | "error") => void;
 
   private readonly sessions = new Map<string, AcpSession>();
   private readonly inflightCreate = new Map<string, Promise<AcpSession>>();
@@ -64,9 +67,6 @@ export class SessionPool {
   ) {
     this.clientFactory = clientFactory;
     this.idleEvictMs = options.idleEvictMs ?? DEFAULT_IDLE_MS;
-    if (options.onSessionCreated !== undefined) {
-      this.onSessionCreated = options.onSessionCreated;
-    }
     if (options.onSessionEvicted !== undefined) {
       this.onSessionEvicted = options.onSessionEvicted;
     }
@@ -77,6 +77,9 @@ export class SessionPool {
    * Get or create the `AcpSession` for `key`. Concurrent calls with the
    * same key share a single in-flight create promise (so two concurrent
    * `getOrCreate` calls produce one client, not two).
+   *
+   * Disposed sessions are dropped from the cache so the next caller
+   * gets a fresh one instead of inheriting a dead session.
    */
   async getOrCreate(key: SessionKey): Promise<AcpSession> {
     if (this.disposed) {
@@ -84,9 +87,12 @@ export class SessionPool {
     }
     const mapKey = this.keyToString(key);
     const existing = this.sessions.get(mapKey);
-    if (existing) {
+    if (existing && !existing.isDisposed) {
       existing.touch();
       return existing;
+    }
+    if (existing) {
+      this.sessions.delete(mapKey);
     }
     const inflight = this.inflightCreate.get(mapKey);
     if (inflight) return inflight;
@@ -123,7 +129,6 @@ export class SessionPool {
     const client = this.clientFactory();
     const session = new AcpSession(key, client);
     this.sessions.set(mapKey, session);
-    this.onSessionCreated?.(session.sessionId);
     return session;
   }
 
@@ -145,6 +150,13 @@ export class SessionPool {
     const now = Date.now();
     const toEvict: Array<{ mapKey: string; session: AcpSession }> = [];
     for (const [mapKey, session] of this.sessions.entries()) {
+      // Skip sessions that are actively dispatching or have queued
+      // work — evicting a long-running prompt mid-flight would
+      // destroy the in-flight `PromptHandle`'s settlement. Sessions
+      // receive `handleSessionUpdate` for streamed chunks which
+      // touches `lastUsed`, so an active prompt will not actually
+      // cross the idle threshold.
+      if (session.isDispatching || session.queueLength > 0) continue;
       if (now - session.lastUsed >= this.idleEvictMs) {
         toEvict.push({ mapKey, session });
       }
@@ -154,13 +166,13 @@ export class SessionPool {
       try {
         await session.disconnect();
       } catch (err) {
-        this.onSessionEvicted?.(session.sessionId, "error");
+        this.onSessionEvicted?.(session.key, "error");
         if (process.env["ACP_DEBUG"] === "1") {
           console.error("[SessionPool] disconnect error:", err);
         }
         continue;
       }
-      this.onSessionEvicted?.(session.sessionId, "idle");
+      this.onSessionEvicted?.(session.key, "idle");
     }
   }
 

@@ -3,11 +3,14 @@
  *
  * Per `docs/agent-tasks/02-session-pool.md`:
  *   1. Settlement on `end_of_turn`. The fake drives 5+ intermediate
- *      `agent_message_chunk` updates (no `stopReason`) BEFORE the
- *      final resolve. None of the intermediate updates must settle
- *      `done`; only the final resolve (carrying `end_of_turn`)
- *      settles it. This is precisely the bug the archive's
- *      `acpProvider.ts:139` got wrong.
+ *      `agent_message_chunk` notifications (no `stopReason`) BEFORE
+ *      the final resolve. None of the intermediate notifications
+ *      must settle `done`; only the final resolve (carrying
+ *      `end_turn`) settles it. This is precisely the bug the
+ *      archive's `acpProvider.ts:139` got wrong. The notifications
+ *      must flow through `AcpSession.handleSessionUpdate` (the
+ *      public hook) and as a side effect must bump `lastUsed` so
+ *      long-running prompts survive idle eviction.
  *   2. FIFO queue across two concurrent `prompt()` calls.
  *   3. `session/cancel` is delivered to the agent within 1 s of
  *      `PromptHandle.cancel()`, and the prompt settles with
@@ -41,13 +44,15 @@ class FakeClient {
   cancelCalls: { sessionId: string }[] = [];
   disconnectCalls = 0;
 
+  /** Wired by the test to deliver notifications to `AcpSession.handleSessionUpdate`. */
+  onSessionUpdate: ((n: acp.SessionNotification) => void) | null = null;
+
   /**
-   * Updates that have been "pushed" through the simulated
-   * `onSessionUpdate` channel. The settlement contract says NONE of
-   * these may settle `prompt()`'s `done` — they are streamed text
-   * with no terminal `stopReason`.
+   * Side-channel populated by the test connectFn so the test can
+   * wire `onSessionUpdate` to `session.handleSessionUpdate` once
+   * `ensureStarted` has created the `AcpSession`.
    */
-  chunks: acp.SessionNotification[] = [];
+  __wireHandler?: (session: WireSession) => void;
 
   sessionNew = vi.fn(async (_req: acp.NewSessionRequest): Promise<acp.NewSessionResponse> => {
     this.newSessionCalls++;
@@ -91,13 +96,21 @@ class FakeClient {
   }
 
   /**
-   * Simulate an inbound `session/update` notification carrying an
-   * intermediate `agent_message_chunk` with no `stopReason`. Under
-   * the archive bug this would have settled `done`; under the
-   * refactored contract it MUST NOT.
+   * Deliver an inbound `session/update` notification to the wired
+   * handler. If no handler is wired yet, the notification is
+   * dropped — matching the production wiring (PR 09 sets the
+   * handler inside `ensureStarted`).
+   */
+  emit(notification: acp.SessionNotification): void {
+    this.onSessionUpdate?.(notification);
+  }
+
+  /**
+   * Convenience: emit an intermediate `agent_message_chunk` with
+   * no `stopReason`. Used to drive the streaming path.
    */
   pushChunk(text: string): void {
-    this.chunks.push({
+    this.emit({
       sessionId: "fake-session-id",
       update: {
         sessionUpdate: "agent_message_chunk",
@@ -120,10 +133,30 @@ function makePool(opts: { idleEvictMs?: number } = {}) {
 
 /**
  * PR 09 (the registry) wires the real `connectFn`. For this PR the
- * test fake returns the deterministic id `"fake-session-id"` so the
- * tests can assert on it.
+ * test fake wires `client.onSessionUpdate` to `session.handleSessionUpdate`
+ * inside `ensureStarted` and returns the deterministic id
+ * `"fake-session-id"` so the tests can assert on it.
  */
-const TEST_CONNECT_FN = async () => ({ sessionId: "fake-session-id" });
+function makeConnectFn(client: FakeClient) {
+  return async (
+    _c: CliAcpClient,
+    _key: { agentId: string; cwd: string },
+  ): Promise<{ sessionId: string }> => {
+    const realClient = client;
+    // Late-bind the notification handler once the session is up. PR
+    // 09 wires this against the SDK's `connect(..., { onSessionUpdate })`
+    // call; here we do it in the test fake after `ensureStarted` has
+    // created the AcpSession.
+    realClient.__wireHandler = (session) => {
+      realClient.onSessionUpdate = (n) => session.handleSessionUpdate(n);
+    };
+    return { sessionId: "fake-session-id" };
+  };
+}
+
+interface WireSession {
+  handleSessionUpdate: (n: acp.SessionNotification) => void;
+}
 
 const KEY = { agentId: "claude", cwd: "/tmp/repo" };
 
@@ -156,18 +189,25 @@ async function hasSettled(p: Promise<unknown>, n = 5): Promise<boolean> {
 describe("SessionPool", () => {
   it("settles a prompt on end_of_turn (and not on continued chunks)", async () => {
     const { pool, client } = makePool();
+    const connectFn = makeConnectFn(client);
     const session = await pool.getOrCreate(KEY);
-    await session.ensureStarted(TEST_CONNECT_FN);
+    await session.ensureStarted(connectFn);
+    // Wire the notification handler now that the session exists.
+    client.__wireHandler?.(session);
     expect(session.sessionId).toBe("fake-session-id");
+
+    const beforeTouch = session.lastUsed;
+    await new Promise((r) => setTimeout(r, 5));
 
     const handle = session.prompt([{ type: "text", text: "hello" } as acp.ContentBlock]);
     await flush();
 
-    // Drive 5+ intermediate `agent_message_chunk` updates. None of
-    // these carry a `stopReason`, so the settlement contract says
-    // `done` MUST NOT resolve on any of them. Under the archive bug
-    // (`acpProvider.ts:139`) the first chunk would have settled the
-    // handle; this test catches that.
+    // Drive 5+ intermediate `agent_message_chunk` notifications
+    // through the wired handler. None of these carry a `stopReason`,
+    // so the settlement contract says `done` MUST NOT resolve on
+    // any of them. Under the archive bug (`acpProvider.ts:139`) the
+    // first chunk would have settled the handle; this test catches
+    // that.
     for (let i = 0; i < 6; i++) {
       client.pushChunk(`token-${i}`);
       // Microtask-flush enough that a buggy synchronous settle call
@@ -175,7 +215,9 @@ describe("SessionPool", () => {
       const settled = await hasSettled(handle.done);
       expect(settled).toBe(false);
     }
-    expect(client.chunks.length).toBe(6);
+    // CRITICAL (FIX-7 + FIX-4): each notification must touch
+    // lastUsed so a long-running prompt survives idle eviction.
+    expect(session.lastUsed).toBeGreaterThan(beforeTouch);
 
     // The final response carries the terminal `stopReason`. THIS is
     // what settles the handle.
@@ -187,10 +229,58 @@ describe("SessionPool", () => {
     expect(sessionIdForPrompt).toBe("fake-session-id");
   });
 
+  it("handleSessionUpdate ignores notifications for other session ids", async () => {
+    const { pool, client } = makePool();
+    const connectFn = makeConnectFn(client);
+    const session = await pool.getOrCreate(KEY);
+    await session.ensureStarted(connectFn);
+    client.__wireHandler?.(session);
+
+    const handle = session.prompt([{ type: "text", text: "hi" } as acp.ContentBlock]);
+    await flush();
+
+    const beforeTouch = session.lastUsed;
+    await new Promise((r) => setTimeout(r, 5));
+
+    // Notifications for a different session id must be dropped
+    // (they will not bump lastUsed).
+    client.emit({
+      sessionId: "some-other-session",
+      update: {
+        sessionUpdate: "agent_message_chunk",
+        content: { type: "text", text: "noise" },
+      },
+    });
+    await flush();
+    expect(session.lastUsed).toBe(beforeTouch);
+
+    // Notifications that carry a `stopReason` via _meta while a
+    // dispatch is in flight must NOT prematurely settle the handle
+    // (settlement is via the prompt promise per the contract).
+    client.emit({
+      sessionId: "fake-session-id",
+      update: {
+        sessionUpdate: "agent_message_chunk",
+        content: { type: "text", text: "x" },
+      },
+      _meta: { stopReason: "end_turn" },
+    });
+    await flush();
+    const settled = await hasSettled(handle.done);
+    expect(settled).toBe(false);
+
+    // Real settlement path: resolve the prompt.
+    client.settle("end_turn");
+    const resp = await handle.done;
+    expect(resp.stopReason).toBe("end_turn");
+  });
+
   it("queues a second prompt behind the first (FIFO)", async () => {
     const { pool, client } = makePool();
+    const connectFn = makeConnectFn(client);
     const session = await pool.getOrCreate(KEY);
-    await session.ensureStarted(TEST_CONNECT_FN);
+    await session.ensureStarted(connectFn);
+    client.__wireHandler?.(session);
 
     const h1 = session.prompt([{ type: "text", text: "one" } as acp.ContentBlock]);
     const h2 = session.prompt([{ type: "text", text: "two" } as acp.ContentBlock]);
@@ -216,8 +306,10 @@ describe("SessionPool", () => {
 
   it("delivers session/cancel within 1 s of PromptHandle.cancel()", async () => {
     const { pool, client } = makePool();
+    const connectFn = makeConnectFn(client);
     const session = await pool.getOrCreate(KEY);
-    await session.ensureStarted(TEST_CONNECT_FN);
+    await session.ensureStarted(connectFn);
+    client.__wireHandler?.(session);
 
     const handle = session.prompt([{ type: "text", text: "hi" } as acp.ContentBlock]);
     await flush();
@@ -236,8 +328,10 @@ describe("SessionPool", () => {
 
   it("short-circuits a cancelled-but-undispatched entry with stopReason: cancelled", async () => {
     const { pool, client } = makePool();
+    const connectFn = makeConnectFn(client);
     const session = await pool.getOrCreate(KEY);
-    await session.ensureStarted(TEST_CONNECT_FN);
+    await session.ensureStarted(connectFn);
+    client.__wireHandler?.(session);
 
     // Queue three prompts. drain() will dispatch h1 first, then
     // process h2, then h3. We cancel h2 and h3 BEFORE drain has had a

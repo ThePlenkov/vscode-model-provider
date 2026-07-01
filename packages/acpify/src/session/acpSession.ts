@@ -55,14 +55,15 @@ type SettleResolver = (resp: acp.PromptResponse) => void;
 
 /**
  * Connection function passed to `AcpSession.ensureStarted`. PR 09 (the
- * registry) wires the real implementation that spawns the CLI and runs
- * `initialize` + `session/new`; for this PR the extension supplies one
- * that throws immediately so the handshake contract is preserved at
- * the type level. The function receives the underlying
- * `CliAcpClient` plus the session key so the registry can drive the
+ * registry) wires the real implementation that spawns the CLI and
+ * runs `initialize` + `session/new`. The function receives the
+ * underlying `CliAcpClient` and the session key so it can drive the
  * handshake against the right process for this `(adapter.id, cwd)`.
  */
-export type SessionConnectFn = () => Promise<{ sessionId: string }>;
+export type SessionConnectFn = (
+  client: CliAcpClient,
+  key: SessionKey,
+) => Promise<{ sessionId: string }>;
 
 /**
  * One process = one `AcpSession`. Created and managed by `SessionPool`.
@@ -121,6 +122,25 @@ export class AcpSession {
   }
 
   /**
+   * Whether a `prompt()` is currently being dispatched (the entry
+   * pulled off the queue and awaiting the agent's response). Exposed
+   * for the pool's idle-eviction policy so a long-running prompt
+   * isn't evicted mid-flight.
+   */
+  get isDispatching(): boolean {
+    return this.dispatchingEntry !== null;
+  }
+
+  /**
+   * Number of prompts currently queued behind the in-flight one (or
+   * queued in front of the empty queue). Exposed for the pool's
+   * idle-eviction policy.
+   */
+  get queueLength(): number {
+    return this.queue.length;
+  }
+
+  /**
    * Run the per-session handshake (`initialize` + `session/new`).
    *
    * The `connectFn` is supplied by the caller — typically the registry
@@ -137,7 +157,7 @@ export class AcpSession {
     if (this._sessionId !== null) return this._sessionId;
     if (this.startPromiseInner) return this.startPromiseInner;
     this.startPromiseInner = (async () => {
-      const { sessionId } = await connectFn();
+      const { sessionId } = await connectFn(this.client, this.key);
       this._sessionId = sessionId;
       this.started = true;
       return sessionId;
@@ -179,6 +199,32 @@ export class AcpSession {
 
     const handle = new PromptHandle(done, () => this.cancelEntry(entry));
     return handle;
+  }
+
+  /**
+   * Handle an inbound `session/update` notification routed to this
+   * session by the SDK client.
+   *
+   * Behavior:
+   *   - Notifications whose `sessionId` does not match this session
+   *     are dropped (a single client multiplexes many sessions).
+   *   - Every matching notification bumps `lastUsed` so long-running
+   *     prompts survive idle eviction (the pool's only signal of
+   *     liveness for an in-flight prompt).
+   *   - The notification MUST NOT settle the `PromptHandle`. The
+   *     settlement contract is the SDK `sessionPrompt` promise
+   *     carrying a terminal `stopReason`. This method is purely a
+   *     observability / liveness hook — the actual settlement comes
+   *     from `dispatch`. Tests rely on this guarantee to catch the
+   *     archive bug (`acpProvider.ts:139`) which settled on the
+   *     first chunk.
+   */
+  handleSessionUpdate(notification: acp.SessionNotification): void {
+    if (this.disposed) return;
+    if (this._sessionId !== null && notification.sessionId !== this._sessionId) {
+      return;
+    }
+    this.touch();
   }
 
   /**
@@ -276,9 +322,8 @@ export class AcpSession {
       });
       // The SDK only resolves `sessionPrompt` once the agent has
       // answered with a terminal stopReason. Intermediate
-      // `agent_message_chunk` updates flow through `onSessionUpdate`
-      // and do not settle this handle. (This is precisely the bug
-      // the archive `acpProvider.ts:139` got wrong.)
+      // `agent_message_chunk` updates flow through
+      // `handleSessionUpdate` and do not settle this handle.
       entry.settle(resp);
     } catch (err) {
       // Errors on the RPC are surfaced as a `cancelled`-flavoured
@@ -305,7 +350,12 @@ export class AcpSession {
     // `stopReason: 'cancelled'` directly — no RPC needed because no
     // prompt was ever sent.
     if (this.dispatchingEntry === entry) {
-      void this.client.sessionCancel({ sessionId: this.sessionId });
+      void this.client
+        .sessionCancel({ sessionId: this.sessionId })
+        .catch(() => {
+          // The agent is likely gone; the dispatch loop will
+          // surface this on settlement.
+        });
     }
   }
 }
