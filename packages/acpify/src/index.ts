@@ -25,3 +25,4 @@ export { AcpSession, PromptHandle } from "./session/acpSession.js";
 export type { SessionConnectFn } from "./session/acpSession.js";
 export { PermissionStore } from "./session/permissions.js";
 export type { PermissionRule, PermissionDecision } from "./session/permissions.js";
+export { makeFsHandlers } from "./capabilities/vscodeFsBridge.js";

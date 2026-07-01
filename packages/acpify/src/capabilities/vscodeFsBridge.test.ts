@@ -32,6 +32,21 @@ vi.mock("vscode", () => ({
   Uri: {
     file: (p: string) => ({ fsPath: p, scheme: "file", path: p, toString: () => p }),
   },
+  // Constructors used by the bridge when building a WorkspaceEdit.
+  // The mock does not validate edits — applyEdit is what the tests
+  // assert against. Recording the calls here would be noise; the
+  // production behaviour is covered by VS Code's own tests.
+  WorkspaceEdit: class {
+    replace = vi.fn();
+    insert = vi.fn();
+    delete = vi.fn();
+  },
+  Position: class {
+    constructor(public line: number, public character: number) {}
+  },
+  Range: class {
+    constructor(public start: unknown, public end: unknown) {}
+  },
 }));
 
 // Pull the mocked handle for assertions.
@@ -65,15 +80,31 @@ describe("vscodeFsBridge", () => {
   });
 
   it("write_text_file: returns content null on applyEdit success", async () => {
-    vi.mocked(vscode.window.showInformationMessage).mockResolvedValue("Apply");
+    // The bridge calls `showInformationMessage(msg, "Apply", "Cancel")`
+    // so the `T extends string` overload applies; cast keeps vi.mocked
+    // from picking the unrelated `MessageItem` overload.
+    vi.mocked(
+      vscode.window.showInformationMessage as (
+        message: string,
+        ...items: string[]
+      ) => Thenable<string | undefined>,
+    ).mockResolvedValue("Apply");
     vi.mocked(vscode.workspace.applyEdit).mockResolvedValue(true);
 
     const handlers = makeFsHandlers();
-    const resp = await handlers.writeTextFile({
+    const resp = (await handlers.writeTextFile({
       path: "/abs/file.txt",
       content: "new content",
-    } as acp.WriteTextFileRequest);
+    } as acp.WriteTextFileRequest)) as unknown as { content: null };
     expect(resp.content).toBeNull();
+    // Falsification trace: a buggy implementation that silently
+    // overwrites without prompting would still pass `resp.content === null`
+    // on its own. Asserting the exact prompt + options catches it.
+    expect(vscode.window.showInformationMessage).toHaveBeenCalledWith(
+      "Overwrite /abs/file.txt?",
+      "Apply",
+      "Cancel",
+    );
   });
 
   it("write_text_file: returns RequestError when user denies", async () => {
