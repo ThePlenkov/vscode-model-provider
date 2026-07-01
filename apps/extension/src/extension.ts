@@ -10,9 +10,9 @@
  * real registry). For the barebone, we register an empty provider that
  * proves the activation path works.
  *
- * PR 01 (this PR) also instantiates a `CliAcpClient` and registers no-op
- * reverse-call handlers. The pool (PR 02) will replace the in-handler
- * logging with a real session pool. The bridges (PRs 03–06) will replace
+ * PR 01 also instantiates a `CliAcpClient` and registers no-op
+ * reverse-call handlers. The pool (PR 02) replaces the in-handler
+ * logging with a real session pool. The bridges (PRs 03–06) replace
  * each no-op handler below with the real implementation. The barebone
  * import stays — it is deleted by PR 09.
  */
@@ -31,6 +31,7 @@ import * as vscode from "vscode";
 import { AcpBareboneProvider } from "../../../packages/acpify/src/provider/barebone.js";
 import { CliAcpClient } from "../../../packages/acpify/src/client/cliClient.js";
 import type { CliClientHandlers } from "../../../packages/acpify/src/client/cliClient.js";
+import { SessionPool } from "../../../packages/acpify/src/session/sessionPool.js";
 
 const OUTPUT_CHANNEL_NAME = "ACP Model Provider";
 
@@ -86,16 +87,30 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<void> {
   void client;
   void noopHandlers(output);
 
-  ctx.subscriptions.push(registration, output, { dispose: () => { void client.disconnect(); } });
+  /* Session pool — constructed but not yet started. The pool takes a
+     `clientFactory` (returns a fresh `CliAcpClient` per session) and
+     a key-based cache. Per-session handshakes are owned by
+     `AcpSession.ensureStarted(connectFn)`, which the future registry
+     (PR 09) will wire; for now the pool is held so PR 02's lifecycle
+     is testable without spawning a process. */
+  const pool = new SessionPool(() => new CliAcpClient());
+  void pool;
+
+  ctx.subscriptions.push(registration, output, {
+    dispose: () => {
+      void pool.shutdownAll();
+      void client.disconnect();
+    },
+  });
 
   output.appendLine(
     "[ACP Model Provider] Registered as vendor 'acp'. " +
     "Barebone provider + CliAcpClient shell online. " +
-    "PR 02 will own CLI spawn; PR 09 swaps the barebone for the real registry.",
+    "SessionPool constructed; PR 07/10 wires the per-session " +
+    "ensureStarted hook. PR 09 swaps the barebone for the real registry.",
   );
 }
 
 export function deactivate(): void {
-  // No persistent resources to release in the barebone. The full session
-  // pool is added by subagent PR 02 (see docs/agent-tasks/02-session-pool.md).
+  // The pool shuts itself down via its `dispose` subscription above.
 }
