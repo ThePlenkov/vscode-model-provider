@@ -49,14 +49,20 @@ function fsError(path: string, op: string, cause: unknown): acp.RequestError {
 /**
  * Resolve an ACP `req.path` to a workspace-validated `vscode.uri`.
  * Workspace-relative paths are resolved against the first open
- * workspace folder; absolute paths must be inside a workspace folder,
- * otherwise a `RequestError(-32000)` is thrown. This enforces the
- * contract's "absolute paths must be inside a trusted workspace folder"
- * clause — `vscode.workspace.openTextDocument` itself does not.
+ * workspace folder and post-validated to refuse path-traversal escapes
+ * (`../../etc/passwd` style); absolute paths must be inside a workspace
+ * folder, otherwise a `RequestError(-32000)` is thrown. This enforces
+ * the contract's "absolute paths must be inside a trusted workspace
+ * folder" clause — `vscode.workspace.openTextDocument` itself does not.
+ *
+ * Platform-aware absolute detection: VS Code's `Uri.file()` is used to
+ * determine whether `reqPath` is absolute on the current host (POSIX
+ * `/…`, Windows drive `C:\\…`, UNC `\\\\host\\share\\…`). A bare
+ * `startsWith("/")` check would misclassify Windows paths as relative
+ * and bypass the workspace gate.
  */
 function pathToUri(reqPath: string, op: string): vscode.Uri {
-  const relative = !reqPath.startsWith("/");
-  if (relative) {
+  if (!pathIsAbsolute(reqPath)) {
     const folders = vscode.workspace.workspaceFolders;
     const first = folders?.[0];
     if (!first) {
@@ -68,7 +74,22 @@ function pathToUri(reqPath: string, op: string): vscode.Uri {
         ),
       );
     }
-    return vscode.Uri.joinPath(first.uri, reqPath);
+    const joined = vscode.Uri.joinPath(first.uri, reqPath);
+    // Post-validate: `Uri.joinPath` does NOT clamp `..` segments — a
+    // malicious agent could escape via `../../etc/passwd`. Confirm the
+    // resolved URI's fsPath is inside the workspace folder's fsPath.
+    const rootFs = first.uri.fsPath.replace(/[\\/]+$/, "");
+    const joinedFs = joined.fsPath;
+    const inside = joinedFs === rootFs || joinedFs.startsWith(rootFs + "/")
+      || joinedFs.startsWith(rootFs + "\\");
+    if (!inside) {
+      throw fsError(
+        reqPath,
+        op,
+        new Error("relative path escapes the workspace folder"),
+      );
+    }
+    return joined;
   }
   const uri = vscode.Uri.file(reqPath);
   const folder = vscode.workspace.getWorkspaceFolder(uri);
@@ -80,6 +101,19 @@ function pathToUri(reqPath: string, op: string): vscode.Uri {
     );
   }
   return uri;
+}
+
+/**
+ * True when `p` is absolute on any of: POSIX (`/foo`), Windows drive
+ * (`C:\\foo`), UNC (`\\\\server\\share\\foo`). VS Code's `Uri.file`
+ * accepts each; a string-only check would miss all but the POSIX case.
+ */
+function pathIsAbsolute(p: string): boolean {
+  if (!p) return false;
+  if (p.startsWith("/") || p.startsWith("\\")) return true;
+  // Windows drive letter: single letter followed by `:` then sep-or-EOS.
+  if (/^[A-Za-z]:[\\/]?/.test(p)) return true;
+  return false;
 }
 
 /**

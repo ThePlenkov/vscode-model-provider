@@ -35,6 +35,10 @@ vi.mock("vscode", () => ({
         size: 1,
       })),
     },
+    // Tests that exercise relative-path resolution override this via
+    // \`mockReturnValue\` / \`mockReturnValueOnce\`. Default: no folder
+    // open (which is what the absolute-path tests want).
+    workspaceFolders: vi.fn(),
   },
   window: {
     showInformationMessage: vi.fn(),
@@ -47,12 +51,26 @@ vi.mock("vscode", () => ({
       path: p,
       toString: () => p,
     }),
-    joinPath: (uri: { fsPath: string }, p: string) => ({
-      fsPath: `${uri.fsPath}/${p}`.replace(/\/+/g, "/"),
-      scheme: "file",
-      path: `${uri.fsPath}/${p}`,
-      toString: () => `${uri.fsPath}/${p}`,
-    }),
+    joinPath: (uri: { fsPath: string }, p: string) => {
+      // minimal POSIX joiner that resolves "../" segments (the test
+      // relies on this real-path-traversal simulation to prove the
+      // impl's post-validation gate is exercised).
+      const base = uri.fsPath.replace(/\/+$/, "");
+      const parts = `${base}/${p}`.split("/");
+      const resolved: string[] = [];
+      for (const part of parts) {
+        if (part === "" || part === ".") continue;
+        if (part === "..") resolved.pop();
+        else resolved.push(part);
+      }
+      const fsPath = "/" + resolved.join("/");
+      return {
+        fsPath,
+        scheme: "file",
+        path: fsPath,
+        toString: () => fsPath,
+      };
+    },
   },
   // Constructors used by the bridge when building a WorkspaceEdit.
   // The mock does not validate edits — applyEdit is what the tests
@@ -185,6 +203,24 @@ describe("vscodeFsBridge", () => {
     await expect(
       handlers.readTextFile({
         path: "/outside/file.txt",
+      } as acp.ReadTextFileRequest),
+    ).rejects.toMatchObject({ code: -32000 });
+  });
+
+  it("read_text_file: refuses workspace-relative path that escapes via '../'", async () => {
+    // The post-join fence inside `pathToUri` must catch a relative
+    // path that `Uri.joinPath` resolves outside the workspace folder.
+    // The mock's Uri.joinPath above simulates POSIX path resolution,
+    // so `../../etc/passwd` joined to `/abs` lands at `/etc/passwd`.
+    vi.mocked(
+      vscode.workspace.workspaceFolders as unknown as ReturnType<typeof vi.fn>,
+    ).mockReturnValue([
+      { uri: { fsPath: "/abs" }, name: "abs", index: 0 },
+    ] as never);
+    const handlers = makeFsHandlers();
+    await expect(
+      handlers.readTextFile({
+        path: "../../etc/passwd",
       } as acp.ReadTextFileRequest),
     ).rejects.toMatchObject({ code: -32000 });
   });

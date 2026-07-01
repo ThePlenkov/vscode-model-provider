@@ -6,5 +6,6 @@ export default defineConfig({
   entry: {
     index: "./src/index.ts",
     "provider/barebone": "./src/provider/barebone.ts",
+    "capabilities/vscodeFsBridge": "./src/capabilities/vscodeFsBridge.ts",
   },
 });
