@@ -8,5 +8,6 @@ export default defineConfig({
     "provider/barebone": "./src/provider/barebone.ts",
     "capabilities/vscodeFsBridge": "./src/capabilities/vscodeFsBridge.ts",
     "capabilities/vscodeTerminalBridge": "./src/capabilities/vscodeTerminalBridge.ts",
+    "capabilities/vscodePermissionBridge": "./src/capabilities/vscodePermissionBridge.ts",
   },
 });
