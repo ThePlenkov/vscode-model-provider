@@ -16,8 +16,9 @@
  *      decision as the response `optionId` ("allow" / "deny") without
  *      showing any UI.
  *   3. Otherwise build a QuickPick from request.options plus two
- *      sentinels (`__allow_always`, `__deny_always`). Honour signal
- *      while showing.
+ *      sentinels (`__allow_always`, `__deny_always`). Forward the
+ *      AbortSignal as a `vscode.CancellationToken` (the third
+ *      positional argument of `showQuickPick`).
  *   4. User picks a request option → return its optionId as-is.
  *      User picks `__allow_always` / `__deny_always` → persist a new
  *      PermissionRule to the store and return "allow" / "deny".
@@ -36,6 +37,7 @@
  */
 
 import type * as acp from "@agentclientprotocol/sdk";
+import { RequestError } from "@agentclientprotocol/sdk";
 import * as vscode from "vscode";
 
 import type { PermissionStore } from "../session/permissions.js";
@@ -74,6 +76,53 @@ function buildPickItems(req: acp.RequestPermissionRequest): PickEntry[] {
 }
 
 /**
+ * Convert the `AbortSignal` to a VS Code `CancellationToken` so the
+ * `showQuickPick` UI closes when the signal is aborted. VS Code's
+ * showQuickPick signature is `(items, options, token)` — the token
+ * is the THIRD positional argument; the options bag does not
+ * accept a signal (Codacy HIGH RISK finding).
+ */
+function abortSignalToToken(
+  signal: AbortSignal | undefined,
+): vscode.CancellationToken | undefined {
+  if (!signal) return undefined;
+  // `CancellationTokenSource` is the only public surface for creating
+  // a token whose cancellation we can wire to an external signal.
+  const source = new vscode.CancellationTokenSource();
+  const onAbort = () => {
+    source.cancel();
+    signal.removeEventListener("abort", onAbort);
+  };
+  if (signal.aborted) {
+    source.cancel();
+  } else {
+    signal.addEventListener("abort", onAbort, { once: true });
+  }
+  return source.token;
+}
+
+/**
+ * Stable key for indexing permission rules. Per the contract, the
+ * `__allow_always` / `__deny_always` sentinel picks must produce a
+ * rule that matches FUTURE calls for the same tool — so the key
+ * must be stable across requests. `toolCallId` is per-request unique
+ * and would break "Always" if used as a fallback (Codacy MEDIUM
+ * finding). We require `title` (the natural human-readable tool
+ * name) and fall back to `kind`; if both are missing, throw a
+ * RequestError so the caller is forced to set at least one.
+ */
+function toolKey(req: acp.RequestPermissionRequest): string {
+  const title = req.toolCall.title;
+  if (title && title.length > 0) return title;
+  const kind = req.toolCall.kind;
+  if (kind && kind.length > 0) return kind;
+  throw new RequestError(
+    -32000,
+    "request_permission requires toolCall.title or toolCall.kind; neither was provided",
+  );
+}
+
+/**
  * Persist a sentinel-pick rule to the store. Reads existing rules
  * via `store.load(...)`, appends the new rule, and saves the merged
  * list. Uses `JSON.stringify(rawInput)` as the pattern so identical
@@ -104,7 +153,9 @@ async function persistSentinelRule(
  * request `optionId` as the response `optionId`. The bridge does not
  * rewrite these — the protocol's caller asked for that exact ID.
  */
-function responseForRequestOption(optionId: string): acp.RequestPermissionResponse {
+function responseForRequestOption(
+  optionId: string,
+): acp.RequestPermissionResponse {
   return {
     outcome: {
       outcome: "selected",
@@ -146,7 +197,7 @@ export function makePermissionHandlers(
       }
 
       // 2. Consult the store. A hit short-circuits the UI.
-      const tool = req.toolCall.title ?? req.toolCall.toolCallId;
+      const tool = toolKey(req);
       const input = req.toolCall.rawInput;
       const decision = store.match(tool, input);
       if (decision === "allow") {
@@ -161,15 +212,13 @@ export function makePermissionHandlers(
       }
 
       // 3. Show the QuickPick. Items include request.options plus the
-      //    two sentinels. The signal (if any) is forwarded to VS Code
-      //    so a mid-prompt abort closes the UI and rejects.
+      //    two sentinels. The CancellationToken (third positional
+      //    argument) closes the UI when the signal aborts.
+      const token = abortSignalToToken(signal);
       const pick = (await vscode.window.showQuickPick(
         buildPickItems(req) as never,
-        // showQuickPick in modern VS Code accepts an options bag that
-        // may include `signal` (cancellation token). Older runtimes
-        // ignore unknown fields; the signal is also handled here in
-        // case the host doesn't honour it.
-        ...(signal ? [{ signal } as unknown as never] : []),
+        {},
+        token,
       )) as PickEntry | undefined;
 
       if (!pick) return { outcome: { outcome: "cancelled" } };

@@ -95,7 +95,7 @@ describe("vscodePermissionBridge", () => {
     // pulled from `sampleRequest.options` — that array is irrelevant
     // when the store short-circuits.
     const store = new PermissionStore();
-    store.save(fakeContext(), [
+    await store.save(fakeContext(), [
       { tool: "execute_command", decision: "allow" },
     ]);
     const handlers = makePermissionHandlers(store, fakeContext());
@@ -111,7 +111,7 @@ describe("vscodePermissionBridge", () => {
     // As above: the response `optionId: "deny"` is the bridge's
     // decision→optionId mapping, not pulled from the request's options.
     const store = new PermissionStore();
-    store.save(fakeContext(), [
+    await store.save(fakeContext(), [
       { tool: "execute_command", decision: "deny" },
     ]);
     const handlers = makePermissionHandlers(store, fakeContext());
