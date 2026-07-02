@@ -166,6 +166,36 @@ Always chain a `.catch` (or `await` it). If you genuinely want the error to prop
 
 ---
 
+### Rule 16 (NEW, from subagent 04). Sanity-check contract-doc type names against the installed SDK before scaffolding tests
+
+**Why it matters:** The contract doc for subagent 04 listed `acp.WaitForExitRequest` and `acp.WaitForExitResponse` as the public surface, but the installed `@agentclientprotocol/sdk` exports these as `acp.WaitForTerminalExitRequest` and `acp.WaitForTerminalExitResponse`. The RED-phase test scaffold was uncompilable until the type names were tightened. This blocked GREEN for an entire round and forced a test rewrite under the patcher's deadline.
+
+**Pattern:** before dispatching a PATCHER, run a single grep against the installed SDK and confirm the type names in the contract doc actually exist:
+
+```bash
+grep -E "type WaitFor|type Create|type Terminal" \
+  node_modules/@agentclientprotocol/sdk/dist/schema/index.d.ts
+```
+
+If the contract doc's type names don't appear, the contract is wrong — either rewrite the contract doc (if scope allows) or pre-emptively use the SDK names in the scaffold and document the deviation in the handoff.
+
+**Concrete hit:** subagent 04's `docs/agent-tasks/04-terminal-bridge.md` "Public surface (required)" block used `acp.WaitForExitRequest` / `acp.WaitForExitResponse`. The SDK has no such types. The RED scaffold was uncompilable; the PATCHER had to rewrite the test to use `acp.WaitForTerminalExitRequest` / `acp.WaitForTerminalExitResponse` before GREEN could even start.
+
+### Rule 17 (NEW, from subagent 04). When a contract clause is internally inconsistent with the SDK, pick the SDK interpretation and document
+
+**Why it matters:** Rule 4 says "public surface must match the contract doc exactly." Rule 17 refines: when the contract doc contradicts the installed SDK (which it sometimes does — contract docs are written ahead of, or out of sync with, SDK releases), the SDK wins. Document the deviation in the handoff and (if scope allows) the contract doc itself. This keeps the bridge code compileable AND the contract auditable.
+
+**Pattern:**
+
+1. Identify the contract clause that contradicts the SDK.
+2. Pick the SDK interpretation. The bridge compiles against the SDK, not the contract doc.
+3. Document in the handoff: "Contract doc says X; SDK actually does Y; this PR implements Y and records the deviation here."
+4. If `docs/` is in allowed scope, edit the contract doc in the same PR. Otherwise, the next agent picking up the contract doc sees the deviation in the handoff history.
+
+**Concrete hit:** subagent 04's contract doc claimed `terminal/output` "writes the bytes via `terminal.sendText`" but the SDK's `TerminalOutputRequest` has no `data` field. The bridge reads `(req as unknown as { data?: string }).data` and writes through `sendText`; the deviation is recorded in `docs/handoff/2026-07-02-subagent-04-complete.md` §3.
+
+---
+
 ### Rule 15 (NEW, from subagent 03). Use a sub-entrypoint for VS Code-coupled packages
 
 **Why it matters:** `vscodeFsBridge` imports the `vscode` runtime module, which is only available in the VS Code host. If a Node consumer (e.g. a CLI tool, a test runner) accidentally imports the package's main `index.ts`, they get `ERR_MODULE_NOT_FOUND` because `vscode` is a devDependency only.
