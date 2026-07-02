@@ -174,7 +174,7 @@ describe("vscodeTerminalBridge", () => {
         { sessionId: "s1", terminalId } as acp.WaitForTerminalExitRequest,
         controller.signal,
       ),
-    ).rejects.toBeDefined(); // any rejection is acceptable; spec says AbortError
+    ).rejects.toMatchObject({ code: -32000 }); // AbortError -> RequestError(-32000)
   });
 
   it("release: after dispose, output for the same id returns RequestError", async () => {
