@@ -40,6 +40,7 @@ export function termError(op: string, cause: unknown): acp.RequestError {
  *   - 0x7F      → DEL            (stripped)
  */
 export function sanitiseOutput(data: string): string {
+  // eslint-disable-next-line no-control-regex -- intentional: strip C0/C1 control bytes
   return data.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "");
 }
 

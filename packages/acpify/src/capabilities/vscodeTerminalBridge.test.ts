@@ -78,7 +78,7 @@ describe("vscodeTerminalBridge", () => {
     // Falsification trace (Rule 3): a buggy impl that skips
     // `sendText` entirely would still satisfy `resp.output === ""`,
     // so we additionally assert the captured sendText payload.
-    let captured: { text?: string } = {};
+    const captured: { text?: string } = {};
     vi.mocked(vscode.window.createTerminal).mockReturnValue({
       sendText: (text: string) => {
         captured.text = text;
