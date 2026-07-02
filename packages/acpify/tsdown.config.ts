@@ -7,5 +7,6 @@ export default defineConfig({
     index: "./src/index.ts",
     "provider/barebone": "./src/provider/barebone.ts",
     "capabilities/vscodeFsBridge": "./src/capabilities/vscodeFsBridge.ts",
+    "capabilities/vscodeTerminalBridge": "./src/capabilities/vscodeTerminalBridge.ts",
   },
 });

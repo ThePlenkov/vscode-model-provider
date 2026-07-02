@@ -64,6 +64,6 @@ export function makePermissionHandlers(
 
 - `cd packages/acpify && npx tsc --noEmit -p tsconfig.json` exits 0
 - `cd packages/acpify && npx vitest run src/capabilities/vscodePermissionBridge.test.ts` exits 0
-- `git diff --stat base/barebone..HEAD` shows ≤ 5 files changed
+- `git diff --stat main..HEAD` shows ≤ 5 files changed
 
 **Output contract** — same shape as task 01.

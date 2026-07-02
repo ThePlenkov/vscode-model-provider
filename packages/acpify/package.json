@@ -10,6 +10,7 @@
   "exports": {
     ".": "./dist/index.mjs",
     "./capabilities/vscodeFsBridge": "./dist/capabilities/vscodeFsBridge.mjs",
+    "./capabilities/vscodeTerminalBridge": "./dist/capabilities/vscodeTerminalBridge.mjs",
     "./provider/barebone": "./dist/provider/barebone.mjs",
     "./package.json": "./package.json"
   },

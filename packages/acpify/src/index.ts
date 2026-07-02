@@ -34,3 +34,6 @@ export type { PermissionRule, PermissionDecision } from "./session/permissions.j
 //   `import { makeFsHandlers } from "@theplenkov/acpify/capabilities/vscodeFsBridge";`
 // (registered as `./capabilities/vscodeFsBridge` in `package.json`
 // `exports` and as a separate tsdown entry below).
+// Same story for `makeTerminalHandlers` (./capabilities/vscodeTerminalBridge):
+// import it from the sub-entrypoint
+// `@theplenkov/acpify/capabilities/vscodeTerminalBridge`.
