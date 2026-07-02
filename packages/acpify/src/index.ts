@@ -37,3 +37,5 @@ export type { PermissionRule, PermissionDecision } from "./session/permissions.j
 // Same story for `makeTerminalHandlers` (./capabilities/vscodeTerminalBridge):
 // import it from the sub-entrypoint
 // `@theplenkov/acpify/capabilities/vscodeTerminalBridge`.
+// And `makePermissionHandlers` (./capabilities/vscodePermissionBridge):
+// `@theplenkov/acpify/capabilities/vscodePermissionBridge`.
