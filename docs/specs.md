@@ -32,7 +32,10 @@ implementing their subagent task.
   - `ANTHROPIC_AUTH_TOKEN` — bearer token (preferred for proxies)
   - `ANTHROPIC_BASE_URL` — proxy / API helper endpoint
   - `CLAUDE_CONFIG_DIR` — overrides `~/.claude` (used for multi-account isolation)
-  - `NO_COLOR` — set by the extension to keep stderr parsing simple
+
+  Note: Claude Code does **not** honour `NO_COLOR`. ANSI can be stripped by
+  launching the CLI through a wrapper (e.g. `--output-format json` or
+  `script -qfc ...`) or by parsing with a tolerant decoder.
 - **Where the session lives** — `~/.claude/projects/<sha(cwd)>/` —
   per-cwd conversation log, slash-command history, permission rules.
 
@@ -53,16 +56,23 @@ these; the rest of the codebase talks to a uniform `AcpSession`.
 
 ## VS Code capability advertisement (in `initialize`)
 
-The extension advertises, in `clientCapabilities`:
+Current advertisement (matched by the SDK client in `packages/acpify/src/client/cliClient.ts`):
 
 ```ts
 {
   fs:       { readTextFile: true, writeTextFile: true },
   terminal: true,
-  auth:     { _meta: { "api-helper": true } },
-  _meta:    { "terminal-auth": true },
 }
 ```
 
 Each capability *must* have a matching reverse-call handler in the
-extension. PRs 03–06 land them one at a time.
+extension. PRs 03–06 land the bridges one at a time:
+- PR 03: `fs.readTextFile`, `fs.writeTextFile`
+- PR 04: `terminal` (4 calls: create / output / wait_for_exit / release)
+- PR 05: `session/request_permission`
+- PR 06: `unstable/create_elicitation` (added to the capabilities when the bridge lands)
+
+`auth` and the `_meta` extension keys (`api-helper`, `terminal-auth`)
+were aspirational in the barebone doc; not advertised in the current
+SDK client. PR 10 (api-helper) will add the `auth` capability once the
+helper flag exists in the SDK's `acp.ClientCapabilities` shape.

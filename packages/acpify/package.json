@@ -9,6 +9,7 @@
   "types": "./dist/index.d.mts",
   "exports": {
     ".": "./dist/index.mjs",
+    "./capabilities/vscodeFsBridge": "./dist/capabilities/vscodeFsBridge.mjs",
     "./provider/barebone": "./dist/provider/barebone.mjs",
     "./package.json": "./package.json"
   },
