@@ -44,11 +44,23 @@ export function sanitiseOutput(data: string): string {
   return data.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "");
 }
 
-/** Convert ACP `env: EnvVariable[]` → VS Code `TerminalOptions.env`. */
+/**
+ * Convert ACP `env: EnvVariable[]` → VS Code `TerminalOptions.env`.
+ * Skips prototype-pollution vector names (Codacy HIGH RISK finding)
+ * and uses a null-prototype object as defence in depth.
+ */
+const DANGEROUS_KEYS = new Set([
+  "__proto__",
+  "constructor",
+  "prototype",
+]);
 export function envArrayToRecord(
   env: ReadonlyArray<acp.EnvVariable> | undefined,
 ): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const { name, value } of env ?? []) out[name] = value;
+  const out = Object.create(null) as Record<string, string>;
+  for (const { name, value } of env ?? []) {
+    if (DANGEROUS_KEYS.has(name)) continue;
+    out[name] = value;
+  }
   return out;
 }

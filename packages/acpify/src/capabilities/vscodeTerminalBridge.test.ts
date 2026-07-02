@@ -178,11 +178,16 @@ describe("vscodeTerminalBridge", () => {
   });
 
   it("release: after dispose, output for the same id returns RequestError", async () => {
+    // Falsification trace (Rule 3): a buggy impl that removed the
+    // terminal from its map but did not call dispose would leak the
+    // VS Code terminal. Assert the spy is invoked, then assert the
+    // map-clear behaviour.
+    const disposeSpy = vi.fn();
     vi.mocked(vscode.window.createTerminal).mockReturnValue({
       sendText: () => undefined,
       show: () => undefined,
       hide: () => undefined,
-      dispose: () => undefined,
+      dispose: disposeSpy,
       exitStatus: undefined,
       processId: Promise.resolve(undefined),
       creationOptions: {},
@@ -199,6 +204,8 @@ describe("vscodeTerminalBridge", () => {
       sessionId: "s1",
       terminalId,
     } as acp.ReleaseTerminalRequest);
+
+    expect(disposeSpy).toHaveBeenCalledTimes(1);
 
     // After release, the bridge should not have any record of this id.
     // A second output for the same id must throw RequestError.

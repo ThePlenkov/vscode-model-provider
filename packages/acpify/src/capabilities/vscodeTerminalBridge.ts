@@ -42,10 +42,7 @@ import * as vscode from "vscode";
 import { envArrayToRecord, sanitiseOutput, termError } from "./vscodeTerminalBridge.helpers.js";
 
 export function makeTerminalHandlers(): {
-  create: (
-    req: acp.CreateTerminalRequest,
-    signal?: AbortSignal,
-  ) => Promise<acp.CreateTerminalResponse>;
+  create: (req: acp.CreateTerminalRequest) => Promise<acp.CreateTerminalResponse>;
   output: (
     req: acp.TerminalOutputRequest,
   ) => Promise<acp.TerminalOutputResponse>;
@@ -76,14 +73,8 @@ export function makeTerminalHandlers(): {
   }
 
   return {
-    async create(req, signal) {
+    async create(req) {
       try {
-        if (signal?.aborted) {
-          throw new acp.RequestError(
-            -32000,
-            "terminal_create aborted before start",
-          );
-        }
         // The SDK has no `name` field on `CreateTerminalRequest`. Use
         // the requested command as the display name so the embedded
         // terminal panel shows something recognisable to the user.
@@ -111,9 +102,12 @@ export function makeTerminalHandlers(): {
         // The SDK's `TerminalOutputRequest` shape has no `data` field;
         // agents write bytes to the embedded terminal via the bridge
         // reading an extension field. The contract's "no raw ANSI"
-        // clause is enforced through `sanitiseOutput`.
+        // clause is enforced through `sanitiseOutput`. The second
+        // `addNewLine=false` arg tells VS Code not to inject a
+        // trailing newline (Codacy finding; gives the caller full
+        // control over line breaks).
         const data = (req as unknown as { data?: string }).data ?? "";
-        terminal.sendText(sanitiseOutput(data));
+        terminal.sendText(sanitiseOutput(data), false);
         return { output: "", truncated: false };
       } catch (err) {
         throw termError("terminal_output", err);
@@ -127,6 +121,15 @@ export function makeTerminalHandlers(): {
           -32000,
           `wait_for_exit aborted for ${req.terminalId}`,
         );
+      }
+      // VS Code does not replay past close events. If the terminal
+      // already closed before this handler was called, return its
+      // exit code immediately instead of subscribing to a future
+      // event that will never fire.
+      if (terminal.exitStatus !== undefined) {
+        return {
+          exitCode: terminal.exitStatus.code,
+        } as acp.WaitForTerminalExitResponse;
       }
       return await new Promise<acp.WaitForTerminalExitResponse>(
         (resolve, reject) => {
