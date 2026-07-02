@@ -146,11 +146,45 @@ Always chain a `.catch` (or `await` it). If you genuinely want the error to prop
 
 - Codacy, CodeScene flag FAILURE/ACTION_REQUIRED with opaque details.
 - Document the verdict in the PR body. Proceed with the merge if GitHub considers it MERGEABLE. File a follow-up PR when the user grants the auth token (or just split files if size is the heuristic trigger).
+- **Workaround for CodeScene file-size flags**: when CodeScene flips to FAILURE on a large diff, the next agent's response (subagent 03 round 4) was to **split the implementation file** AND **extract helpers** into separate files. This dropped CodeScene complexity flags. Rule 14 below.
 
-### Rule 13. Branch switches in the cloud sandbox leave conflicts when working tree is dirty
+---
 
-- Always `git stash` or commit before `git checkout <other-branch>`.
-- The `session/agent_bb130001-...` branch tracks compile-time state in this sandbox. Use it carefully.
+### Rule 14 (NEW, from subagent 03). Keep new files under ~200 LOC
+
+**Why it matters:** CodeScene's code-health heuristic flags files over ~250 LOC as complexity violations. Subagent 03's fs bridge PR got flagged because the implementation file was 257 LOC; the next agent split the file and extracted helpers to address it. The git history explicitly shows `refactor(acpify): extract helpers to drop CodeScene complexity flags`.
+
+**Patterns:**
+
+- One main file (~150–200 LOC) for the public surface + glue.
+- Optional helpers file (~100 LOC) for the I/O, validation, and error-mapping logic.
+- Test file is exempt from this rule (test files can be longer; they read as a list of cases).
+- When a file approaches 200 LOC, **proactively split** before submitting. Don't wait for CodeScene to flag it.
+
+**Concrete hit:**
+- PR #4 had `vscodeFsBridge.ts` at 257 LOC. The next agent did commit `e8f814a feat(acpify): split fs bridge into sub-entrypoint + harden path resolution` and `d193b703 refactor(acpify): extract helpers to drop CodeScene complexity flags`.
+
+---
+
+### Rule 15 (NEW, from subagent 03). Use a sub-entrypoint for VS Code-coupled packages
+
+**Why it matters:** `vscodeFsBridge` imports the `vscode` runtime module, which is only available in the VS Code host. If a Node consumer (e.g. a CLI tool, a test runner) accidentally imports the package's main `index.ts`, they get `ERR_MODULE_NOT_FOUND` because `vscode` is a devDependency only.
+
+**Pattern:** export the bridge from a sub-entrypoint, not the package root.
+
+```ts
+// packages/acpify/package.json
+"exports": {
+  ".": { "import": "./dist/index.js" },                       // package root
+  "./capabilities/vscodeFsBridge": {                         // sub-entrypoint
+    "import": "./dist/capabilities/vscodeFsBridge.js"
+  }
+}
+```
+
+The package root re-exports only the agent-agnostic core (client, session). The bridge is reachable via the explicit sub-entrypoint.
+
+**Concrete hit:** subagent 03's commit `e8f814a feat(acpify): split fs bridge into sub-entrypoint + harden path resolution` introduced this pattern. Subagent 04 (terminal bridge) and 05/06 (permission/elicitation bridges) should follow the same pattern.
 
 ---
 
@@ -163,5 +197,7 @@ When writing a `SUBAGENT_CONTEXT_CAPSULE`, include the relevant rule IDs:
 - Rule 5 (callbacks after operation): "if you add a callback, fire it AFTER the inner operation resolves — see `docs/lessons-learned.md` Rule 5."
 - Rule 6 (lastUsed on every event): "every async event handler must `touch()` the session — see `docs/lessons-learned.md` Rule 6."
 - Rule 7 (catch RPC errors): "`void somePromise` is not enough — chain `.catch` — see `docs/lessons-learned.md` Rule 7."
+- Rule 14 (file-size): "keep new files under ~200 LOC; split before CodeScene complains. See `docs/lessons-learned.md` Rule 14."
+- Rule 15 (sub-entrypoint): "VS Code-coupled bridges go under a sub-entrypoint, not the package root. See `docs/lessons-learned.md` Rule 15."
 
-Most subagent bugs in this codebase have been violations of these 7 rules. The list is exhaustive.
+Most subagent bugs in this codebase have been violations of these 9 rules. The list is exhaustive.
