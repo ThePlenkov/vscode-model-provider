@@ -7,6 +7,8 @@ dist/
 .vscode-test/
 .nx/
 bun.lockb
-.kilocode/
+# Kilo tool: skills + caches are per-user; instructions are project-level.
+.kilocode/*
+!.kilocode/instructions.md
 .agents/
 skills-lock.json
