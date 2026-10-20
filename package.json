@@ -19,15 +19,21 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
-    "@nx/js": "23.0.1",
+    "@nx/js": "^23.3.0",
     "@types/node": "^20.0.0",
     "eslint": "^9.0.0",
-    "nx": "23.0.1",
+    "nx": "^23.3.0",
     "tsdown": "^0.22.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.0.0"
   },
   "overrides": {
-    "browserslist": "^4.28.7"
+    "browserslist": "^4.28.7",
+    "axios": "1.20.0",
+    "js-yaml": "4.3.2",
+    "postcss": "8.5.23",
+    "@vitest/mocker": "4.1.12",
+    "brace-expansion@>= 1.0.0 < 1.1.16": "1.1.16",
+    "brace-expansion@>= 4.0.0 < 5.0.12": "5.0.12"
   }
 }
